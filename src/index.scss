@@ -4,6 +4,10 @@ body {
     h2 {
         font-size: 45px;
       }
+    h5 {
+        font-size: 40px;
+      }
+
     .align-center {
         text-align: center;
       }
@@ -16,8 +20,33 @@ body {
         width: 755px;
         margin: 20px auto 0;
     }
+    .text-3 {
+        font-size: 30px;
+        width: 755px;
+        margin: 20px auto 0;
+    }
     .text-yellow{
         color: yellow;
     }
-
+    .frontPageBtn {
+        display: flex;
+        gap: 20px;
+        align-items: baseline;
+        justify-content: space-evenly;
+        margin-top: 40px; 
+      }
+      
+    .btnArea {
+        height: 250px;
+        width: 250px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        background-color: #3f3f3f;
+        
+        h6 {
+            font-size: 30px;
+            margin-top: 0px;
+            text-align: center;
+          }  
+    }
   }

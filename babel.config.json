@@ -1,12 +1,3 @@
-// babel.config.json
-{
-    "presets": [
-      [
-        "@babel/env",
-        {
-          "useBuiltIns": "usage",
-          "corejs": "3"
-        }
-      ]
-    ]
-  }
+version https://git-lfs.github.com/spec/v1
+oid sha256:3191b38e2e8b38a709cea82bc32a836bee026099d5c1c3d72e22be3e01115d5d
+size 165

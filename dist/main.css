@@ -1,1 +1,52 @@
-body{background:#000;color:#fff}body h2{font-size:45px}body .align-center{text-align:center}body .text{word-wrap:break-word;position:relative}body .text-2{font-size:20lpx;width:755px}body .text-yellow{color:#ff0}
+/*!*************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
+  \*************************************************************************************************************************************/
+body {
+  background: black;
+  color: white;
+}
+body h2 {
+  font-size: 45px;
+}
+body h5 {
+  font-size: 40px;
+}
+body .align-center {
+  text-align: center;
+}
+body .text {
+  word-wrap: break-word;
+  position: relative;
+}
+body .text-2 {
+  font-size: 20px;
+  width: 755px;
+  margin: 20px auto 0;
+}
+body .text-3 {
+  font-size: 30px;
+  width: 755px;
+  margin: 20px auto 0;
+}
+body .text-yellow {
+  color: yellow;
+}
+body .frontPageBtn {
+  display: flex;
+  gap: 20px;
+  align-items: baseline;
+  justify-content: space-evenly;
+  margin-top: 40px;
+}
+body .btnArea {
+  height: 250px;
+  width: 250px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #3f3f3f;
+}
+body .btnArea h6 {
+  font-size: 30px;
+  margin-top: 0px;
+  text-align: center;
+}
