@@ -30,12 +30,7 @@ In Steam Games Statistics, users will be able to:
   </li>
 </ol>
 <h2>Wireframes</h2>
-![alt text](https://github.com/dominicchanDmc/Steam-Games-Statistics/blob/master/assets/wireframe.png)
-<img
-  src="https://github.com/dominicchanDmc/Steam-Games-Statistics/blob/master/assets/wireframe.png"
-  alt="Alt text"
-  title="Optional title"
-  style="display: inline-block; margin: 0 auto; max-width: 300px">
+  ![Wireframes](https://github.com/dominicchanDmc/Steam-Games-Statistics/blob/master/assets/wireframe.png)
 <ul>
   <li>Nav bar have a link to each function pages</li>
   <li>Nav links include links to this project's Github repo, my LinkedIn</li>
