@@ -25,8 +25,24 @@
         Choose the service you want :</p>
       <div class="frontPageBtn"></div>
     </section>
+    <!-- searchPage -->
     <section id="searchPage" class="searchPage">
-      <div id="search-searchArea"></div>
+      <div id="search-searchArea">
+        <table class="user-input-table">
+          <tr>
+            <td><label for="gameName">Name:</label></td>
+            <td><input type="text" id="gameName" name="gameName" /></td>
+            <td><label for="releaseFrom">Release From:</label></td>
+            <td><input type="month" id="releaseFrom" name="releaseFrom" /></td>
+            <td><label for="releaseTo">Release To:</label></td>
+            <td><input type="month" id="releaseTo" name="releaseTo" value="2023-06"/></td>
+          </tr>
+          <tr>
+            <td><label for="price">Price (USD):</label></td>
+            <td><input type="number" id="price" name="price" step="0.01" /></td>
+          </tr>
+        </table>
+      </div>
       <div id="search-resultArea">
         <p><h1>Select the criteria to search game</h1></p>
       </div>

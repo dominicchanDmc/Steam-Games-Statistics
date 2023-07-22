@@ -26,20 +26,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const frontPageBtn = document.querySelector(".frontPageBtn");
 
     function populateFrontPageBtnArea(createStr){
-        const divBtnArea = document.createElement("div");
-        const spanBtnArea = document.createElement("span");
-        const iBtnArea = document.createElement("i");
-        const pBtnArea = document.createElement("p");
-        const h6BtnArea = document.createElement("h6");
-    
-    
-        divBtnArea.classList.add("btnArea");
-        spanBtnArea.classList.add("icon", "icon-circle");
-        iBtnArea.classList.add(createStr[0],createStr[1],"icon-1", "icon-1b");
-        h6BtnArea.innerHTML = createStr[2];
-        pBtnArea.classList.add("text-6");
-        pBtnArea.innerHTML = createStr[4];
+        const divBtnArea =  buildElement("div","btnArea","");
+        const spanBtnArea = buildElement("span",["icon", "icon-circle"],"");
+        const iBtnArea = buildElement("i",[createStr[0],createStr[1],"icon-1", "icon-1b"],"");
+        const pBtnArea =  buildElement("p","text-6",createStr[4]);
+        const h6BtnArea =  buildElement("h6","",createStr[2]);
         
+        divBtnArea.addEventListener("click", () => {
+            document.getElementById(createStr[3]).scrollIntoView();
+          });
+
         spanBtnArea.appendChild(iBtnArea);
         divBtnArea.appendChild(spanBtnArea);
         divBtnArea.appendChild(h6BtnArea);
@@ -54,15 +50,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function populateNavSubBtn(createStr) {
-        const buttonNavSub = document.createElement("button");
-        const spanNavSub = document.createElement("span");
-        const iNavSub = document.createElement("i");
-
-        buttonNavSub.classList.add("navSubBtn");
-        document.querySelector(`#${createStr[3]}`).scrollIntoView();
-        spanNavSub.classList.add("text");
-        spanNavSub.innerHTML = createStr[2];
-        iNavSub.classList.add(createStr[0],createStr[1]);
+        const buttonNavSub =  buildElement("button","navSubBtn","");
+        const spanNavSub =  buildElement("span","text",createStr[2]);
+        const iNavSub =  buildElement("i",[createStr[0],createStr[1]],"");
+        
+        buttonNavSub.addEventListener("click", () => {
+            document.getElementById(createStr[3]).scrollIntoView();
+          });
 
         buttonNavSub.appendChild(iNavSub);
         buttonNavSub.appendChild(spanNavSub);
@@ -82,3 +76,17 @@ document.addEventListener("DOMContentLoaded", () => {
     populateFrontPageBtn();
     populateNavBtn();
 });
+
+function buildElement(type,classList,innerHTML){
+    let element = document.createElement(type);
+    if (Array.isArray(classList)) {
+        classList.forEach((c) =>{
+            element.classList.add(c);
+        });
+    }
+    else if (classList !="")
+        element.classList.add(classList);
+    if (innerHTML != "")
+        element.innerHTML = innerHTML;
+    return element;
+}
