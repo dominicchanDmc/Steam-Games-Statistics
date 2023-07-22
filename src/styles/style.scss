@@ -1,0 +1,131 @@
+body {
+    background: black;
+    color: white;
+    h2 {
+        font-size: 45px;
+      }
+    h5 {
+        font-size: 40px;
+      }
+
+    .align-center {
+        text-align: center;
+      }
+    .text {
+        word-wrap: break-word;
+        position: relative;
+      }
+    .text-2 {
+        font-size: 20px;
+        width: 755px;
+        margin: 20px auto 0;
+    }
+    .text-3 {
+        font-size: 30px;
+        width: 755px;
+        margin: 20px auto 0;
+    }
+    .text-6 {
+        margin: 20px 0 0;
+        color: #afaeae
+    }
+    .text-yellow{
+        color: yellow;
+    }
+    .frontPageBtn {
+        display: flex;
+        gap: 20px;
+        align-items: baseline;
+        justify-content: space-evenly;
+        margin-top: 60px; 
+        
+      }
+      
+    .btnArea {
+        height: 250px;
+        width: 250px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        background-color: #3f3f3f;
+        
+        h6 {
+            font-size: 30px;
+            margin-top: 0px;
+            text-align: center;
+          }  
+        .icon {
+            display: block;
+            line-height: 0;
+            border-width: 0px;
+        }
+        .icon-circle {
+            border-radius: 50%;
+            background: #2a63ec;
+            // color: #ffffff;
+            width: 30px;
+            height:30px;
+            // font-size: 50px;
+            background-image: none;
+            margin: 0 0 0 auto;
+            padding: 19px;
+        }
+        .icon-1 {
+            width: 30px;
+            height: 30px;
+            font-size: 35px; 
+            color: white; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+    }
+
+     .navSubBtn {
+        background: #49D75C;
+        border: 0px solid #49D75C;
+        border-radius: 35px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        outline: none;
+        transition: all .25s ease;
+        width: 210px;
+        position: relative;
+        height: 60px;
+        overflow: hidden;
+    }
+    .navSubBtn:not(.loading):hover {
+        box-shadow: 0px 10px 25px 0px rgba(73, 215, 92,.4);
+    }
+    .navSubBtn:not(.loading):hover i {
+        transform: translate(7px);
+    }
+    .navSubBtn i {
+        font-size: 1.45rem;
+        position: absolute;
+        left: 0px;
+        pointer-events: none;
+        z-index: 10;
+        background: inherit;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all .25s ease;
+    }
+    .navSubBtn .text {
+        width: 130px;
+        display: block;
+        position: relative;
+        pointer-events: none;
+        transition: all .25s ease;
+        position: absolute;
+        left: 60px;
+    }
+  }
