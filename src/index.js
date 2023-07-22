@@ -12,16 +12,17 @@ async function getData (){
     // console.log("string",newObj["Second Sight"].price);
 }
 //  getData();
-const createSearchBtnStr = ["fa-solid", "fa-magnifying-glass","Search","Search and display detail information by different criteria"];
-const createCompareBtnStr = ["fa-solid", "fa-table","Compare","Compare item between 2 games with table or chart"];
-const createStatisticsBtnStr = ["fa-solid", "fa-chart-simple","Statistics","Data statistics for the period"];
-const createHomeBtnStr = ["fa-solid", "fa-house","Home"];
+
+const createSearchBtnStr = ["fa-solid", "fa-magnifying-glass","Search","searchPage","Search and display detail information by different criteria"];
+const createCompareBtnStr = ["fa-solid", "fa-table","Compare","comparePage","Compare item between 2 games with table or chart"];
+const createStatisticsBtnStr = ["fa-solid", "fa-chart-simple","Statistics","statistPage","Data statistics for the period"];
+const createHomeBtnStr = ["fa-solid", "fa-house","Home","frontPage",];
 
 
 document.addEventListener("DOMContentLoaded", () => {
 
     const navBtn = document.getElementById("navBtn");
-    const btnScrollUp = document.getElementById("scrollUp");
+    // const btnScrollUp = document.getElementById("scrollUp");
     const frontPageBtn = document.querySelector(".frontPageBtn");
 
     function populateFrontPageBtnArea(createStr){
@@ -37,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
         iBtnArea.classList.add(createStr[0],createStr[1],"icon-1", "icon-1b");
         h6BtnArea.innerHTML = createStr[2];
         pBtnArea.classList.add("text-6");
-        pBtnArea.innerHTML = createStr[3];
+        pBtnArea.innerHTML = createStr[4];
         
         spanBtnArea.appendChild(iBtnArea);
         divBtnArea.appendChild(spanBtnArea);
@@ -58,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const iNavSub = document.createElement("i");
 
         buttonNavSub.classList.add("navSubBtn");
+        document.querySelector(`#${createStr[3]}`).scrollIntoView();
         spanNavSub.classList.add("text");
         spanNavSub.innerHTML = createStr[2];
         iNavSub.classList.add(createStr[0],createStr[1]);
@@ -71,6 +73,10 @@ document.addEventListener("DOMContentLoaded", () => {
         populateNavSubBtn(createSearchBtnStr);
         populateNavSubBtn(createCompareBtnStr);
         populateNavSubBtn(createStatisticsBtnStr);
+    }
+
+    function populateSearchPage(createStr) {
+        
     }
     
     populateFrontPageBtn();

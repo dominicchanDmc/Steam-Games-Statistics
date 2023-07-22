@@ -2,6 +2,8 @@ body {
     background: black;
     color: white;
     h2 {
+        padding-top: 40px;
+        padding-bottom: 20px;
         font-size: 45px;
       }
     h5 {
@@ -37,8 +39,8 @@ body {
         gap: 20px;
         align-items: baseline;
         justify-content: space-evenly;
-        margin-top: 60px; 
-        
+        margin-top: 80px; 
+        margin-bottom: 80px;
       }
       
     .btnArea {
@@ -145,6 +147,10 @@ body {
         }
 
     }
-
+    .searchPage{
+        background-color: #3f3f3f;
+        margin-top: 80px; 
+        margin-bottom: 80px;
+    }
 
   }

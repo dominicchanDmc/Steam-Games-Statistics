@@ -24,7 +24,6 @@ time, mark, audio, video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
-  box-sizing: content-box;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -61,6 +60,8 @@ body {
   color: white;
 }
 body h2 {
+  padding-top: 40px;
+  padding-bottom: 20px;
   font-size: 45px;
 }
 body h5 {
@@ -95,7 +96,8 @@ body .frontPageBtn {
   gap: 20px;
   align-items: baseline;
   justify-content: space-evenly;
-  margin-top: 60px;
+  margin-top: 80px;
+  margin-bottom: 80px;
 }
 body .btnArea {
   height: 250px;
@@ -193,6 +195,11 @@ body #navBtn .text {
   left: 60px;
   opacity: 0;
   transition: opacity 0.25s ease;
+}
+body .searchPage {
+  background-color: #3f3f3f;
+  margin-top: 80px;
+  margin-bottom: 80px;
 }
 /*!*********************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/@fortawesome/fontawesome-free/css/all.min.css ***!
