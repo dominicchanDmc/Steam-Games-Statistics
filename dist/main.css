@@ -99,7 +99,7 @@ body .frontPageBtn {
 }
 body .btnArea {
   height: 250px;
-  width: 250px;
+  width: 200px;
   padding: 20px;
   border: 1px solid #ccc;
   background-color: #3f3f3f;
@@ -132,11 +132,16 @@ body .btnArea .icon-1 {
   align-items: center;
   justify-content: center;
 }
-body .navSubBtn {
-  background: #49D75C;
-  border: 0px solid #49D75C;
+body #navBtn {
+  position: absolute;
+  top: 50%;
+  left: 30px;
+}
+body #navBtn .navSubBtn {
+  background: #2a63ec;
+  border: 0px solid #2a63ec;
   border-radius: 35px;
-  font-size: 1rem;
+  font-size: 15;
   font-weight: bold;
   color: #fff;
   display: flex;
@@ -145,19 +150,26 @@ body .navSubBtn {
   cursor: pointer;
   outline: none;
   transition: all 0.25s ease;
-  width: 210px;
+  width: 60px;
   position: relative;
   height: 60px;
   overflow: hidden;
+  margin-bottom: 20px;
 }
-body .navSubBtn:not(.loading):hover {
+body #navBtn .navSubBtn:hover {
+  width: 200px;
+}
+body #navBtn .navSubBtn:hover .text {
+  opacity: 1;
+}
+body #navBtn .navSubBtn:not(.loading):hover {
   box-shadow: 0px 10px 25px 0px rgba(73, 215, 92, 0.4);
 }
-body .navSubBtn:not(.loading):hover i {
+body #navBtn .navSubBtn:not(.loading):hover i {
   transform: translate(7px);
 }
-body .navSubBtn i {
-  font-size: 1.45rem;
+body #navBtn .navSubBtn i {
+  font-size: 20;
   position: absolute;
   left: 0px;
   pointer-events: none;
@@ -169,16 +181,18 @@ body .navSubBtn i {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  transition: all 0.25s ease;
+  transition: transform 0.25s ease;
 }
-body .navSubBtn .text {
-  width: 130px;
+body #navBtn .text {
+  width: 80px;
   display: block;
   position: relative;
   pointer-events: none;
   transition: all 0.25s ease;
   position: absolute;
   left: 60px;
+  opacity: 0;
+  transition: opacity 0.25s ease;
 }
 /*!*********************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/@fortawesome/fontawesome-free/css/all.min.css ***!

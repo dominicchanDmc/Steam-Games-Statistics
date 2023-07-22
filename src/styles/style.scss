@@ -43,7 +43,7 @@ body {
       
     .btnArea {
         height: 250px;
-        width: 250px;
+        width: 200px;
         padding: 20px;
         border: 1px solid #ccc;
         background-color: #3f3f3f;
@@ -79,53 +79,72 @@ body {
             justify-content: center;
           }
     }
+    #navBtn {
+        position: absolute;
+        top: 50%;
+        left: 30px;
+        .navSubBtn {
+            background: #2a63ec;
+            border: 0px solid #2a63ec;
+            border-radius: 35px;
+            font-size: 15;
+            font-weight: bold;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            outline: none;
+            transition: all .25s ease;
+            width: 60px;
+            position: relative;
+            height: 60px;
+            overflow: hidden;
+            margin-bottom: 20px;
 
-     .navSubBtn {
-        background: #49D75C;
-        border: 0px solid #49D75C;
-        border-radius: 35px;
-        font-size: 1rem;
-        font-weight: bold;
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        outline: none;
-        transition: all .25s ease;
-        width: 210px;
-        position: relative;
-        height: 60px;
-        overflow: hidden;
+            &:hover {
+                width: 200px; 
+              }
+            &:hover .text {
+                opacity: 1;
+              }
+        }
+ 
+        .navSubBtn:not(.loading):hover {
+            box-shadow: 0px 10px 25px 0px rgba(73, 215, 92,.4);
+        }
+        .navSubBtn:not(.loading):hover i {
+            transform: translate(7px);
+        }
+        .navSubBtn i {
+            font-size: 20;
+            position: absolute;
+            left: 0px;
+            pointer-events: none;
+            z-index: 10;
+            background: inherit;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: transform  .25s ease;
+
+        }        
+        .text {
+            width: 80px;
+            display: block;
+            position: relative;
+            pointer-events: none;
+            transition: all .25s ease;
+            position: absolute;
+            left: 60px;
+            opacity: 0; 
+            transition: opacity 0.25s ease; 
+        }
+
     }
-    .navSubBtn:not(.loading):hover {
-        box-shadow: 0px 10px 25px 0px rgba(73, 215, 92,.4);
-    }
-    .navSubBtn:not(.loading):hover i {
-        transform: translate(7px);
-    }
-    .navSubBtn i {
-        font-size: 1.45rem;
-        position: absolute;
-        left: 0px;
-        pointer-events: none;
-        z-index: 10;
-        background: inherit;
-        width: 60px;
-        height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        transition: all .25s ease;
-    }
-    .navSubBtn .text {
-        width: 130px;
-        display: block;
-        position: relative;
-        pointer-events: none;
-        transition: all .25s ease;
-        position: absolute;
-        left: 60px;
-    }
+
+
   }
