@@ -2,17 +2,19 @@ import './index.scss';
 import BuildObj from "./scripts/BuildObj.js"
 import OptionObj from "./scripts/OptionObj.js"
 
+let dataSet;
 async function getData (){
     const request = await fetch("/data/steamData-after2019.json")
     const respone = await request.json();
+    dataSet = respone;
     // console.log(respone);
-    const array =Object.values(respone);
-    console.log(array);
-    const newObj = array.reduce((obj,item)=>Object.assign(obj,{[item.name]: item}),{})
-    console.log("string",newObj["Second Sight"]);
+    // const array =Object.values(respone);
+    // console.log(array);
+    // const newObj = array.reduce((obj,item)=>Object.assign(obj,{[item.name]: item}),{})
+    // console.log("string",newObj["Second Sight"]);
     // console.log("string",newObj["Second Sight"].price);
 }
-//  getData();
+
 //pullDownList 
 const operatorList = optionObjHashHelper({greaterEqual:"Greater and Equal (>=)",greater:"Greater (>)",samller:"Samller (<)"});
 const languagesValue = ["English","French","German","Italian","Japanese","Korean","Russian","Simplified Chinese","Traditional Chinese"];
@@ -39,17 +41,15 @@ const categoriesInputObj = buildObjHelper({tag:"select",id:"categories",options:
 const searchBtnObj = buildObjHelper({tag:"button",classArr:["searchCriteriaBtn"], id:"searchBtn",innerHTML:"Search"});
 const searchBtnIconObj = buildObjHelper({tag:"i",classArr:["fa-solid", "fa-magnifying-glass"]});
 
-
 const searchCriteriaCreateArr = [[nameInputObj,releaseFromInputObj,releaseToInputObj]
 ,[[ratingInputObj,numberInputObj],languagesInputObj,categoriesInputObj],[[searchBtnObj,searchBtnIconObj]]];
 
 document.addEventListener("DOMContentLoaded", () => {
-
+    getData();
     const navBtn = document.getElementById("navBtn");
     // const btnScrollUp = document.getElementById("scrollUp");
     const frontPageBtn = document.querySelector(".frontPageBtn");
     const searchSearchArea = document.querySelector("#search-searchArea");
-
 
     function populateFrontPageBtnArea(buildObj){
         const divBtnArea = buildElement(new BuildObj("div","btnArea"));
@@ -102,42 +102,21 @@ document.addEventListener("DOMContentLoaded", () => {
              tableSearchArea.appendChild(tr);
         });
         searchSearchArea.appendChild(tableSearchArea);
+
+        let searchBtn = document.querySelector(".searchCriteriaBtn")
+        searchBtn.addEventListener("click",(e)=>{
+            e.preventDefault();
+            
+            // currencies = fetchAndUpdate(true)
+            // localStorage.setItem('currencies', JSON.stringify(currencies))
+        })
     }
     
     populateFrontPageBtn();
     populateNavBtn(); 
     populateSearchPage(searchCriteriaCreateArr);
+    // buildEventListener();
 });
-
-function buildObjHelper(createHash) {
-    let buildObj = new BuildObj();
-
-    for (const key in createHash) {
-        buildObj[key] = createHash[key];
-    }
-    return buildObj;
-}
-
-function optionObjHashHelper(operatorHash) {
-    let optionObjList = [];
-    for (const key in operatorHash) {
-        let optionObj = new OptionObj();
-        optionObj.value = key;
-        optionObj.displayText = operatorHash[key];
-        optionObjList.push(optionObj);
-    }
-    return optionObjList;
-}
-function optionObjArrHelper(valueList,keyList) {
-    let optionObjList = [];
-    for (let i=0;i<valueList.length;i++) {
-        let optionObj = new OptionObj();
-        optionObj.value = keyList[i];
-        optionObj.displayText = valueList[i];
-        optionObjList.push(optionObj);
-    }
-    return optionObjList;
-}
 
 function buildElement(buildObj){
     let newElement = document.createElement(buildObj.tag);
@@ -171,11 +150,6 @@ function buildElement(buildObj){
         newElement.value  = buildObj.value;
     else if (buildObj.innerHTML)
         newElement.innerHTML = buildObj.innerHTML;
-    
-    // if (buildObj.innerText)
-    //     newElement.append = buildObj.innerText;
-
-        
     
     return newElement;
 }
@@ -242,10 +216,37 @@ function createTableTdHelper(tdCreateObj) {
     }
     
     let innterTd =  buildElement(tdCreateObj);
-    // if (returnArr.length > 0) {
-        returnArr.push(innterTd);
-        return returnArr;
-    // }
-    // else
-        // return innterTd;
+    returnArr.push(innterTd);
+    return returnArr;
+
+}
+
+function buildObjHelper(createHash) {
+    let buildObj = new BuildObj();
+
+    for (const key in createHash) {
+        buildObj[key] = createHash[key];
+    }
+    return buildObj;
+}
+
+function optionObjHashHelper(operatorHash) {
+    let optionObjList = [];
+    for (const key in operatorHash) {
+        let optionObj = new OptionObj();
+        optionObj.value = key;
+        optionObj.displayText = operatorHash[key];
+        optionObjList.push(optionObj);
+    }
+    return optionObjList;
+}
+function optionObjArrHelper(valueList,keyList) {
+    let optionObjList = [];
+    for (let i=0;i<valueList.length;i++) {
+        let optionObj = new OptionObj();
+        optionObj.value = keyList[i];
+        optionObj.displayText = valueList[i];
+        optionObjList.push(optionObj);
+    }
+    return optionObjList;
 }
