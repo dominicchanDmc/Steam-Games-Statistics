@@ -1,6 +1,7 @@
 import './index.scss';
 import BuildObj from "./scripts/BuildObj.js"
 import OptionObj from "./scripts/OptionObj.js"
+import SearchObj from "./scripts/SearchObj.js"
 
 let dataSet;
 async function getData (){
@@ -106,7 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
         let searchBtn = document.querySelector(".searchCriteriaBtn")
         searchBtn.addEventListener("click",(e)=>{
             e.preventDefault();
-            
+            // alert(dataSet);
+            searchData();
             // currencies = fetchAndUpdate(true)
             // localStorage.setItem('currencies', JSON.stringify(currencies))
         })
@@ -117,6 +119,25 @@ document.addEventListener("DOMContentLoaded", () => {
     populateSearchPage(searchCriteriaCreateArr);
     // buildEventListener();
 });
+function searchData() {
+    const searchObj = searchObjArrHelper();
+// alert(searchBtnObj);
+    if (!searchVaildation(searchObj))
+        return;
+    else{
+        
+    }
+}
+
+function searchVaildation(searchObj){
+    if (searchObj.releaseFrom && searchObj.releaseTo){
+        if (searchObj.releaseTo < searchObj.releaseFrom){
+            alert('Release To must later than Release From')
+            return false;
+        }
+    }
+    return true;
+}
 
 function buildElement(buildObj){
     let newElement = document.createElement(buildObj.tag);
@@ -150,7 +171,10 @@ function buildElement(buildObj){
         newElement.value  = buildObj.value;
     else if (buildObj.innerHTML)
         newElement.innerHTML = buildObj.innerHTML;
-    
+
+    if (buildObj.id)
+        newElement.id = buildObj.id;
+
     return newElement;
 }
 
@@ -232,6 +256,7 @@ function buildObjHelper(createHash) {
 
 function optionObjHashHelper(operatorHash) {
     let optionObjList = [];
+    optionObjList.push(new OptionObj("",""));
     for (const key in operatorHash) {
         let optionObj = new OptionObj();
         optionObj.value = key;
@@ -242,6 +267,7 @@ function optionObjHashHelper(operatorHash) {
 }
 function optionObjArrHelper(valueList,keyList) {
     let optionObjList = [];
+    optionObjList.push(new OptionObj("",""));
     for (let i=0;i<valueList.length;i++) {
         let optionObj = new OptionObj();
         optionObj.value = keyList[i];
@@ -249,4 +275,25 @@ function optionObjArrHelper(valueList,keyList) {
         optionObjList.push(optionObj);
     }
     return optionObjList;
+}
+function searchObjArrHelper() {
+    let gameName = document.getElementById("gameName");
+    let releaseFrom = document.getElementById("releaseFrom");
+    let releaseTo = document.getElementById("releaseTo");
+    let operator = document.getElementById("operator");
+    let rating = document.getElementById("rating");
+    let languages = document.getElementById("languages");
+    let categories = document.getElementById("categories");
+
+    let searchObj = new SearchObj();
+
+    searchObj.gameName = gameName.value;
+    searchObj.releaseFrom = releaseFrom.value;
+    searchObj.releaseTo = releaseTo.value;
+    searchObj.operator = operator.value;
+    searchObj.rating = rating.value;
+    searchObj.languages = languages.value;
+    searchObj.categories = categories.value;
+
+    return searchObj;
 }
