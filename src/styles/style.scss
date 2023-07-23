@@ -156,29 +156,44 @@ body {
         .user-input-table {
             border-collapse: collapse;
             width: 100%;
-          }
-          
-          .user-input-table td {
-            padding: 8px;
-            border-bottom: 1px solid #ddd;
-          }
-          
-          .user-input-table label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 4px;
-          }
-          
-          .user-input-table input {
-            width: 100%;
-            padding: 4px 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-          }
-          
-          .user-input-table input[type="number"] {
-            text-align: right;
+
+            td {
+                padding: 8px;
+                border-bottom: 1px solid #ddd;
+              }
+
+            label {
+                font-weight: bold;
+                display: block;
+                margin-bottom: 4px;
+              }
+            input{
+                width: 100%;
+                padding: 4px 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+              }
+            select{
+                width: 150;
+                padding: 4px 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+              }
+            
+            input[type="text"] {
+                width: 200px;
+              }
+            
+            input[type="month"] {
+                width: 140px;
+              }
+            
+              input[type="number"] {
+                width: 100px;
+                text-align: right;
+              }
           }
     }
 
