@@ -91,6 +91,9 @@ body .text-6 {
 body .text-yellow {
   color: yellow;
 }
+body #frontPage {
+  flex: 1;
+}
 body .frontPageBtn {
   display: flex;
   gap: 20px;
@@ -198,13 +201,17 @@ body #navBtn .text {
   transition: opacity 0.25s ease;
 }
 body .searchPage {
+  width: 100%;
+  min-height: 595px;
   background-color: #3f3f3f;
   margin-top: 80px;
   margin-bottom: 80px;
+  padding-left: 100px;
 }
 body .searchPage .user-input-table {
   border-collapse: collapse;
-  width: 100%;
+  width: 80%;
+  align-items: center;
 }
 body .searchPage .user-input-table td {
   padding: 8px;

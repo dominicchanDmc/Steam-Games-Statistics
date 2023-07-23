@@ -34,6 +34,9 @@ body {
     .text-yellow{
         color: yellow;
     }
+    #frontPage {
+        flex: 1; 
+      }
     .frontPageBtn {
         display: flex;
         gap: 20px;
@@ -149,14 +152,18 @@ body {
 
     }
     .searchPage{
+        width: 100%;
+        min-height: 595px;
         background-color: #3f3f3f;
-        margin-top: 80px; 
+        margin-top: 80px;
         margin-bottom: 80px;
+        padding-left: 100px;
+
 
         .user-input-table {
             border-collapse: collapse;
-            width: 100%;
-
+            width: 80%;
+            align-items: center;
             td {
                 padding: 8px;
                 border-bottom: 1px solid #ddd;

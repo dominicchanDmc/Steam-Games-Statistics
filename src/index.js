@@ -2,8 +2,6 @@ import './index.scss';
 import BuildObj from "./scripts/BuildObj.js"
 import OptionObj from "./scripts/OptionObj.js"
 
-// import '@fortawesome/fontawesome-free/css/all.min.css';
-
 async function getData (){
     const request = await fetch("/data/steamData-after2019.json")
     const respone = await request.json();
@@ -16,7 +14,14 @@ async function getData (){
 }
 //  getData();
 //pullDownList 
-const operatorHash = {greaterEqual:"Greater and Equal (>=)",greater:"Greater (>)",samller:"Samller (<)"};
+const operatorList = optionObjHashHelper({greaterEqual:"Greater and Equal (>=)",greater:"Greater (>)",samller:"Samller (<)"});
+const languagesValue = ["English","French","German","Italian","Japanese","Korean","Russian","Simplified Chinese","Traditional Chinese"];
+const languagesKey = ["Eng","Fre","Ger","Ita","Jap","Koean","Rus","SC","TC"];
+const languagesList = optionObjArrHelper(languagesValue,languagesKey);
+const categoriesValue = ["Co-op","Full controller support","LAN Co-op","MMO","Multi-player","Online Co-op","Online PvP","Partial Controller Support","PvP","Shared/Split Screen","Single-player","Steam Achievements"];
+const categoriesKey = ["Coo","FCS","LCoo","MMO","Mp","OCoo","OPvP","PCS","PvP","SSS","SP","SA"];
+const categoriesList = optionObjArrHelper(categoriesValue,categoriesKey);
+
 
 //frontPage
 const searchBtnStrBuildObj = new BuildObj("",["fa-solid", "fa-magnifying-glass"],"Search","searchPage","Search and display detail information by different criteria");
@@ -27,11 +32,13 @@ const homeBtnStrBuildObj = new BuildObj("",["fa-solid", "fa-house"],"Home","fron
 const nameInputObj = new BuildObj("input",null,null,"gameName",null,"text","Name:");
 const releaseFromInputObj = new BuildObj("input",null,null,"releaseFrom",null,"month","Release From:");
 const releaseToInputObj = new BuildObj("input",null,null,"releaseTo",null,"month","Release To:","2023-06");
-const ratingInputObj = buildObjHelper({tag:"select",id:"operator"});
-const numberInputObj = buildObjHelper({tag:"input",name:"rating", id:"operator",inputType:"number",attribute:"0.01",lableName:"Rating:"});
+const ratingInputObj = buildObjHelper({tag:"select",id:"operator",options:operatorList});
+const numberInputObj = buildObjHelper({tag:"input",name:"rating", id:"rating",inputType:"number",attribute:"0.01",lableName:"Rating:"});
+const languagesInputObj = buildObjHelper({tag:"select",id:"languages",options:languagesList,lableName:"Supported languages:"});
+const categoriesInputObj = buildObjHelper({tag:"select",id:"categories",options:categoriesList,lableName:"Categories:"});
 
 const searchCriteriaCreateArr = [[nameInputObj,releaseFromInputObj,releaseToInputObj]
-,[[ratingInputObj,numberInputObj]]];
+,[[ratingInputObj,numberInputObj],languagesInputObj,categoriesInputObj]];
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -108,12 +115,44 @@ function buildObjHelper(createHash) {
     return buildObj;
 }
 
+function optionObjHashHelper(operatorHash) {
+    let optionObjList = [];
+    for (const key in operatorHash) {
+        let optionObj = new OptionObj();
+        optionObj.value = key;
+        optionObj.displayText = operatorHash[key];
+        optionObjList.push(optionObj);
+    }
+    return optionObjList;
+}
+function optionObjArrHelper(valueList,keyList) {
+    let optionObjList = [];
+    for (let i=0;i<valueList.length;i++) {
+        let optionObj = new OptionObj();
+        optionObj.value = keyList[i];
+        optionObj.displayText = valueList[i];
+        optionObjList.push(optionObj);
+    }
+    return optionObjList;
+}
+
 function buildElement(buildObj){
     let newElement = document.createElement(buildObj.tag);
-    if (buildObj.tag === "input"){
+
+    if (buildObj.tag === "select"){
+        buildObj.options.forEach((options)=>{
+            let optionElement = document.createElement("option");
+            optionElement.value = options.value;
+            optionElement.innerHTML = options.displayText;
+            newElement.appendChild(optionElement);
+        });
+    }
+    else if (buildObj.tag === "input"){
         if (buildObj.inputType!="text")
             newElement.type = buildObj.inputType;
     }
+    else if (buildObj.tag === 'label' && buildObj.lableName) 
+        newElement.setAttribute('for', buildObj.lableName);
 
     if (Array.isArray(buildObj.classArr)) {
         buildObj.classArr.forEach((c) =>{
@@ -130,8 +169,7 @@ function buildElement(buildObj){
     else if (buildObj.innerHTML)
         newElement.innerHTML = buildObj.innerHTML;
 
-    if (buildObj.tag === 'label' && buildObj.lableName) 
-        newElement.setAttribute('for', buildObj.lableName);
+
         
     
     return newElement;
@@ -140,15 +178,25 @@ function buildElement(buildObj){
 function createTableTr(trCreateObjArr) {
     let masterTr =  buildElement(new BuildObj("tr"));
     trCreateObjArr.forEach((tdCreateObj)=>{
-        let innerTd =  createTableTd(tdCreateObj);
+        if (Array.isArray(tdCreateObj)) {
+            //for rating only
+            let rating = createTableTd(tdCreateObj[0]);
+            let numberInputObjArr = createTableTd(tdCreateObj[1]);
+            masterTr.appendChild(numberInputObjArr[0]);
+            rating.forEach((td) => masterTr.appendChild(td));
+            masterTr.appendChild(numberInputObjArr[1]);
+        }else{
+            let innerTd = createTableTd(tdCreateObj);
 
-        if (Array.isArray(innerTd)) {
-            innerTd.forEach((td)=>{
-                masterTr.appendChild(td);
-            });
-        }
-        else
-            masterTr.appendChild(innerTd);
+            if (Array.isArray(innerTd)) {
+                innerTd.forEach((td)=>{
+                    masterTr.appendChild(td);
+                });
+            }
+            else
+                masterTr.appendChild(innerTd);
+         }
+
     });
     return masterTr;
 }
@@ -161,12 +209,13 @@ function createTableTd(tdCreateObjArr) {
         });
     }
     else
-        returnArr = returnArr.concat(createTableTdHelper(tdCreateObjArr));
+        returnArr = createTableTdHelper(tdCreateObjArr);
     return returnArr;
 }
 
 function createTableTdHelper(tdCreateObj) {
     let returnArr = [];
+    
     if (tdCreateObj.lableName){
         let labelmasterTd =  buildElement(new BuildObj("td"));
         let labelObj = new BuildObj("label",null,null,null,tdCreateObj.lableName,tdCreateObj.id);
@@ -175,10 +224,10 @@ function createTableTdHelper(tdCreateObj) {
         returnArr.push(labelmasterTd);
     }
     let innterTd =  buildElement(tdCreateObj);
-    if (returnArr.length > 0) {
+    // if (returnArr.length > 0) {
         returnArr.push(innterTd);
         return returnArr;
-    }
-    else
-        return innterTd;
+    // }
+    // else
+        // return innterTd;
 }
