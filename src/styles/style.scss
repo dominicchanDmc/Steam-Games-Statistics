@@ -158,8 +158,9 @@ body {
         margin-top: 80px;
         margin-bottom: 80px;
         padding-left: 100px;
-
-
+    #search-searchArea{
+      padding-top: 50px
+    }
         .user-input-table {
             border-collapse: collapse;
             width: 80%;
@@ -202,6 +203,29 @@ body {
                 text-align: right;
               }
           }
+
+        .searchCriteriaBtn {
+            background-color: #2a63ec;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 25px;
+            cursor: pointer;
+            border-radius: 4px;
+            align-items: center;
+            width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left:300px;
+            i {
+              padding: 10px;
+            }
+        }
+          
+        .searchCriteriaBtn:hover {
+            background-color: #1e449c;
+        }
     }
 
 

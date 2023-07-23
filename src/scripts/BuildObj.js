@@ -11,6 +11,7 @@ class BuildObj{
         this.value = value;
         this.options = options;
         this.attribute = attribute;
+        // this.innerText = innerText;
     }
 }
 

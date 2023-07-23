@@ -36,9 +36,12 @@ const ratingInputObj = buildObjHelper({tag:"select",id:"operator",options:operat
 const numberInputObj = buildObjHelper({tag:"input",name:"rating", id:"rating",inputType:"number",attribute:"0.01",lableName:"Rating:"});
 const languagesInputObj = buildObjHelper({tag:"select",id:"languages",options:languagesList,lableName:"Supported languages:"});
 const categoriesInputObj = buildObjHelper({tag:"select",id:"categories",options:categoriesList,lableName:"Categories:"});
+const searchBtnObj = buildObjHelper({tag:"button",classArr:["searchCriteriaBtn"], id:"searchBtn",innerHTML:"Search"});
+const searchBtnIconObj = buildObjHelper({tag:"i",classArr:["fa-solid", "fa-magnifying-glass"]});
+
 
 const searchCriteriaCreateArr = [[nameInputObj,releaseFromInputObj,releaseToInputObj]
-,[[ratingInputObj,numberInputObj],languagesInputObj,categoriesInputObj]];
+,[[ratingInputObj,numberInputObj],languagesInputObj,categoriesInputObj],[[searchBtnObj,searchBtnIconObj]]];
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -168,7 +171,9 @@ function buildElement(buildObj){
         newElement.value  = buildObj.value;
     else if (buildObj.innerHTML)
         newElement.innerHTML = buildObj.innerHTML;
-
+    
+    // if (buildObj.innerText)
+    //     newElement.append = buildObj.innerText;
 
         
     
@@ -180,11 +185,23 @@ function createTableTr(trCreateObjArr) {
     trCreateObjArr.forEach((tdCreateObj)=>{
         if (Array.isArray(tdCreateObj)) {
             //for rating only
-            let rating = createTableTd(tdCreateObj[0]);
-            let numberInputObjArr = createTableTd(tdCreateObj[1]);
-            masterTr.appendChild(numberInputObjArr[0]);
-            rating.forEach((td) => masterTr.appendChild(td));
-            masterTr.appendChild(numberInputObjArr[1]);
+            if (tdCreateObj[0].id === "operator"){
+                let rating = createTableTd(tdCreateObj[0]);
+                let numberInputObjArr = createTableTd(tdCreateObj[1]);
+                masterTr.appendChild(numberInputObjArr[0]);
+                rating.forEach((td) => masterTr.appendChild(td));
+                masterTr.appendChild(numberInputObjArr[1]);
+            }
+            else if (tdCreateObj[0].id === "searchBtn"){
+                // for searchBtn 
+                let searchBtn = buildElement(tdCreateObj[0]);
+                let searchBtnIcon = createTableTd(tdCreateObj[1]);
+                searchBtn.appendChild(searchBtnIcon[0]);
+                let newTd =  buildElement(new BuildObj("td"));
+                newTd.colSpan = "6";
+                newTd.appendChild(searchBtn);
+                masterTr.appendChild(newTd);
+            }
         }else{
             let innerTd = createTableTd(tdCreateObj);
 
@@ -223,6 +240,7 @@ function createTableTdHelper(tdCreateObj) {
         labelmasterTd.appendChild(labelTd);
         returnArr.push(labelmasterTd);
     }
+    
     let innterTd =  buildElement(tdCreateObj);
     // if (returnArr.length > 0) {
         returnArr.push(innterTd);
