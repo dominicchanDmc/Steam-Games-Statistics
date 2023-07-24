@@ -119,7 +119,7 @@ const searchSearchArea = document.querySelector("#search-searchArea");
          })
     }
 
-    function addDataForCreateArr(headerTrCreateArr_i,data) {
+    function addDataForCreateSearchResultArr(headerTrCreateArr_i,data) {
         const headerTrCreateArr_new = headerTrCreateArr_i.map((element) => {
             return { ...element };
           });
@@ -239,7 +239,7 @@ function displaySeachResult(filteredData) {
         tableSearchResult.appendChild(headerTrSearchResult);
 
         filteredData.forEach((data)=>{
-            let headerTrCreateArrWithData = addDataForCreateArr(headerTrCreateArr,data)
+            let headerTrCreateArrWithData = addDataForCreateSearchResultArr(headerTrCreateArr,data)
             const trSearchResult = createTableTr(headerTrCreateArrWithData);
             tableSearchResult.appendChild(trSearchResult);
         });       
@@ -392,10 +392,9 @@ function displayDetial(name) {
     const platformsObj= Helper.buildObjHelper({tag:"input",inputType:"text",value:Helper.stringCut(game.platforms),readonly:"true",lableName:"Platforms:"});
     const priceObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.price,readonly:"true",lableName:"Price (USD):"});
 
-    const detailSelectBtnObj = Helper.buildObjHelper({tag:"button",classArr:["detailBtn"],innerHTML:"Select"});
-    const detailAddToCompareBtnObj = Helper.buildObjHelper({tag:"button",classArr:["detailBtn"],innerHTML:"Compare"});
+    const detailAddToCompareBtnObj = Helper.buildObjHelper({tag:"button",classArr:["detailBtn"],innerHTML:"Add To Compare"});
+    const detailAddToCompareBtnIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-table"]});
     
-
     const detialCreateArr = [[nameObj],[releaseDateObj,ratingObj],[ownersObj,priceObj],[languagesObj],[platformsObj,achievementsObj],[genresObj],[tagsObj]];
     detialPage.innerHTML = "";
 
@@ -405,6 +404,14 @@ function displayDetial(name) {
         let headerImage = buildElement(headerImageObj);
         detialPage.append(headerImage);
     }
+    let detailAddToCompareBtn = buildElement(detailAddToCompareBtnObj);
+    detailAddToCompareBtn.onclick = function () {
+        alert(name);
+    }
+    let detailAddToCompareBtnIcon = buildElement(detailAddToCompareBtnIconObj);
+    detailAddToCompareBtn.appendChild(detailAddToCompareBtnIcon);
+    detialPage.append(detailAddToCompareBtn);
+    
     const detialTable =  buildElement(new BuildObj("table"));
     detialCreateArr.forEach((row) =>{
             let tr = createTableTr(row);

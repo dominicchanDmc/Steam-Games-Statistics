@@ -224,7 +224,6 @@ body {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                // margin-left:300px;
                 i {
                   padding: 10px;
                 }
@@ -261,12 +260,10 @@ body {
         
     }
     .detialPage {
-      /* Your existing styles for .detialPage */
         margin-top: 80px;
         margin-bottom: 80px;
         margin-left: 100px;
 
-        // width: 100%;
         min-height: 595px;
         width: 1243px;
       table {
@@ -278,8 +275,6 @@ body {
       }
     
       td {
-        // width: 300px;
-        // padding: 10px;
         text-align: left;
         border-bottom: 1px solid #ddd;
       }
@@ -291,10 +286,13 @@ body {
       tr:last-child {
         border-bottom: none;
       }
+      label{
+        color: white;
+      }
       input {
           border: none;
           background-color: transparent;
-          color: white;
+          color: yellow;
           font-size: 18px; 
           font-weight: bold;
           padding-left: 20px;
@@ -304,10 +302,28 @@ body {
         width: 1200px;
         border: none;
         background-color: transparent;
-        color: white;
+        color: yellow;
       }
-  
+      
+      .detailBtn {
+        background-color: #2a63ec;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 20px;
+        cursor: pointer;
+        border-radius: 4px;
+        align-items: center;
+        width: 300px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        i {
+          padding: 10px;
+        }
     }
+  }
     
 
-  }
+}

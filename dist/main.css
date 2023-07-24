@@ -296,7 +296,6 @@ body .searchPage .searchResultBtn {
   margin-left: 10px;
 }
 body .detialPage {
-  /* Your existing styles for .detialPage */
   margin-top: 80px;
   margin-bottom: 80px;
   margin-left: 100px;
@@ -320,10 +319,13 @@ body .detialPage tr:nth-child(even) {
 body .detialPage tr:last-child {
   border-bottom: none;
 }
+body .detialPage label {
+  color: white;
+}
 body .detialPage input {
   border: none;
   background-color: transparent;
-  color: white;
+  color: yellow;
   font-size: 18px;
   font-weight: bold;
   padding-left: 20px;
@@ -332,5 +334,23 @@ body .detialPage .detialCol-200 {
   width: 1200px;
   border: none;
   background-color: transparent;
-  color: white;
+  color: yellow;
+}
+body .detialPage .detailBtn {
+  background-color: #2a63ec;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  align-items: center;
+  width: 300px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .detialPage .detailBtn i {
+  padding: 10px;
 }
