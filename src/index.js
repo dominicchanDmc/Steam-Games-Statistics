@@ -1,6 +1,5 @@
 import './index.scss';
 import BuildObj from "./scripts/buildObj.js"
-
 import * as Helper from "./scripts/helper.js"
 
 async function getData (){
@@ -56,10 +55,10 @@ const headerTrAddToCompareBtnObj = Helper.buildObjHelper({tag:"button",classArr:
 const headerTrCreateArr = [headerTrNameObj,headerTrRatingObj,headerTrReleaseDateObj,headerTrLanguagesObj,headerTrCategoriesObj];
 
 
-    const dataSet = await getData();
-    const navBtn = document.getElementById("navBtn");
-    const frontPageBtn = document.querySelector(".frontPageBtn");
-    const searchSearchArea = document.querySelector("#search-searchArea");
+const dataSet = await getData();
+const navBtn = document.getElementById("navBtn");
+const frontPageBtn = document.querySelector(".frontPageBtn");
+const searchSearchArea = document.querySelector("#search-searchArea");
 
     function populateFrontPageBtnArea(buildObj){
         const divBtnArea = buildElement(new BuildObj("div","btnArea"));
@@ -233,7 +232,7 @@ function displaySeachResult(filteredData) {
     if (filteredData.length === 0)
         searchResultP.innerHTML = "No result";
     else if (filteredData.length === 1){
-
+        displayDetial(filteredData[0].name);
     }
     else{
         searchResultP.innerHTML = "";
@@ -269,6 +268,9 @@ function buildElement(buildObj){
         newElement.setAttribute('for', buildObj.lableName);
     else if (buildObj.tag === 'button'&& buildObj.attribute){
         newElement.setAttribute(`data-name`,buildObj.attribute) 
+    }
+    else if (buildObj.tag === 'img'&& buildObj.src){
+        newElement.src = buildObj.src;
     }
 
     if (Array.isArray(buildObj.classArr)) {
@@ -342,15 +344,15 @@ function createTableTd(tdCreateObjArr) {
     let returnArr = [];
     if (Array.isArray(tdCreateObjArr)) {
         tdCreateObjArr.forEach((tdCreateObj)=>{
-            returnArr = returnArr.concat(createTableTdHelper(tdCreateObj));
+            returnArr = returnArr.concat(createTableTdInner(tdCreateObj));
         });
     }
     else
-        returnArr = createTableTdHelper(tdCreateObjArr);
+        returnArr = createTableTdInner(tdCreateObjArr);
     return returnArr;
 }
 
-function createTableTdHelper(tdCreateObj) {
+function createTableTdInner(tdCreateObj) {
     let returnArr = [];
     
     if (tdCreateObj.lableName){
@@ -373,18 +375,23 @@ function createTableTdHelper(tdCreateObj) {
         const detialPage = document.getElementById("detialPage");
 
         const nameObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.name,readonly:"true",lableName:"Name:"});
+        const headerImageObj = Helper.buildObjHelper({tag:"img",classArr:["headerImage"],src:game["Header image"]});
         const releaseDateObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.release_date,readonly:"true",lableName:"Release Date:"});
         const ratingObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.rating,readonly:"true",lableName:"Rating:"});
         const languagesObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:Helper.stringCut(game.supported_languages),readonly:"true",lableName:"Supported Languages:"});
     
         const detialCreateArr = [[nameObj],[releaseDateObj,ratingObj],[languagesObj]];
-        
+        detialPage.innerHTML = "";
+
+        if (game["Header image"]){
+            let headerImage = buildElement(headerImageObj);
+            detialPage.append(headerImage);
+        }
         const detialTable =  buildElement(new BuildObj("table"));
         detialCreateArr.forEach((row) =>{
              let tr = createTableTr(row);
              detialTable.appendChild(tr);
         });
-        detialPage.innerHTML = "";
         detialPage.appendChild(detialTable);
         detialPage.scrollIntoView();
     }

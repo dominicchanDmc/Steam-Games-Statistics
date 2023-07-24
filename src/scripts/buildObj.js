@@ -1,6 +1,6 @@
 class BuildObj{
     constructor(tag,classArr, name,id,innerHTML
-        ,inputType,lableName,value,attribute,options,readonly,onClick) {
+        ,inputType,lableName,value,attribute,options,readonly,onClick,src) {
         this.tag = tag;
         this.classArr = classArr;
         this.name = name;
@@ -13,6 +13,7 @@ class BuildObj{
         this.attribute = attribute;
         this.readonly = readonly;
         this.onClick = onClick;
+        this.src = this.src;
     }
 }
 
