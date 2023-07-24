@@ -173,7 +173,8 @@ function filterData(criteria, dataSet) {
           criteria.operator === "greaterEqual" && item.rating >= criteria.rating) ||
           (criteria.operator === "greater" && item.rating > criteria.rating) ||
           (criteria.operator === "smaller" && item.rating < criteria.rating)
-        ) &&
+        ) && 
+        // (item.type==='game') &&
         (!criteria.languages || criteria.languages.length === 0 || criteria.languages.includes(item.supported_languages)) &&
         (!criteria.categories || criteria.categories.length === 0 || criteria.categories.some(category => item.categories.includes(category)))
       ) {
@@ -231,9 +232,6 @@ function displaySeachResult(filteredData) {
 
     if (filteredData.length === 0)
         searchResultP.innerHTML = "No result";
-    else if (filteredData.length === 1){
-        displayDetial(filteredData[0].name);
-    }
     else{
         searchResultP.innerHTML = "";
         const tableSearchResult = buildElement(new BuildObj("table"));
@@ -246,6 +244,10 @@ function displaySeachResult(filteredData) {
             tableSearchResult.appendChild(trSearchResult);
         });       
         searchResultList.appendChild(tableSearchResult);
+
+        if (filteredData.length === 1){
+            displayDetial(filteredData[0].name);
+        }
     }
 }
 
