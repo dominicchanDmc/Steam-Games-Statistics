@@ -241,7 +241,23 @@ body {
           text-align: center;
           margin: 10px auto 0;
           padding-right: 160px;
-        }  
+        }
+        .searchListCol-80{
+          width: 80px;
+        }
+        .searchListCol-150{
+          width: 200px;
+        }
+        .searchResultBtn{
+          width: 80px;
+          height: 20px;
+          // background-color: #2a63ec;
+          border: none;
+          font-size:15px;
+          cursor: pointer;          
+          margin-left: 10px;
+
+        }
     }
 
 

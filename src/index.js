@@ -44,11 +44,14 @@ const searchBtnIconObj = buildObjHelper({tag:"i",classArr:["fa-solid", "fa-magni
 const searchCriteriaCreateArr = [[nameInputObj,releaseFromInputObj,releaseToInputObj]
 ,[[ratingInputObj,numberInputObj],languagesInputObj,categoriesInputObj],[orderInputObj,[searchBtnObj,searchBtnIconObj]]];
 //searchResultList
-const headerTrNameObj = buildObjHelper({tag:"input",type:"text",value:"Name",readonly:"true"});
-const headerTrReleaseDateObj = buildObjHelper({tag:"input",type:"text",value:"Release Date",readonly:"true"});
-const headerTrRatingObj = buildObjHelper({tag:"input",type:"text",value:"Rating",readonly:"true"});
-const headerTrLanguagesObj = buildObjHelper({tag:"input",type:"text",value:"Languages",readonly:"true"});
-const headerTrCategoriesObj = buildObjHelper({tag:"input",type:"text",value:"Categories",readonly:"true"});
+const headerTrNameObj = buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],value:"Name",readonly:"true"});
+const headerTrReleaseDateObj = buildObjHelper({tag:"input",classArr:["searchListCol-80"],inputType:"text",value:"Release Date",readonly:"true"});
+const headerTrRatingObj = buildObjHelper({tag:"input",classArr:["searchListCol-80"],inputType:"text",value:"Rating",readonly:"true"});
+const headerTrLanguagesObj = buildObjHelper({tag:"input",inputType:"text",value:"Languages",classArr:["searchListCol-150"],readonly:"true"});
+const headerTrCategoriesObj = buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],value:"Categories",readonly:"true"});
+const headerTrSelectBtnObj = buildObjHelper({tag:"button",classArr:["searchResultBtn"],innerHTML:"Select"});
+const headerTrAddToCompareBtnObj = buildObjHelper({tag:"button",classArr:["searchResultBtn"],innerHTML:"Compare"});
+
 const headerTrCreateArr = [headerTrNameObj,headerTrRatingObj,headerTrReleaseDateObj,headerTrLanguagesObj,headerTrCategoriesObj];
 
 
@@ -246,6 +249,9 @@ function buildElement(buildObj){
     }
     else if (buildObj.tag === 'label' && buildObj.lableName) 
         newElement.setAttribute('for', buildObj.lableName);
+    else if (buildObj.tag === 'button'&& buildObj.attribute){
+        newElement.setAttribute(`data-name`,buildObj.attribute) 
+    }
 
     if (Array.isArray(buildObj.classArr)) {
         buildObj.classArr.forEach((c) =>{
@@ -254,19 +260,24 @@ function buildElement(buildObj){
     }
     else if (buildObj.classArr)
         newElement.classList.add(buildObj.classArr);
-    
-    if (buildObj.name)
-        newElement.innerHTML = buildObj.name;
-    else if (buildObj.value)
+
+    if (buildObj.value)
         newElement.value  = buildObj.value;
-    else if (buildObj.innerHTML)
-        newElement.innerHTML = buildObj.innerHTML;
+
+        if (buildObj.name)
+            newElement.innerHTML = buildObj.name;
+        else if (buildObj.innerHTML)
+            newElement.innerHTML = buildObj.innerHTML;
 
     if (buildObj.id)
         newElement.id = buildObj.id;
     
     if (buildObj.readonly)
         newElement.readOnly = true;
+
+    if (buildObj.onClick) {
+        newElement.onclick = buildObj.onClick;
+    }
 
     return newElement;
 }
@@ -403,5 +414,19 @@ function createArrHelper(headerTrCreateArr_i,data) {
     headerTrCreateArr_new[2].value = data.release_date;
     headerTrCreateArr_new[3].value = data.supported_languages.replace(/\[|\]|'/g, "");
     headerTrCreateArr_new[4].value = data.categories.replace(/\[|\]|'/g, "");
+
+    const headerTrSelectBtnObj_new = Object.assign({}, headerTrSelectBtnObj);
+    headerTrSelectBtnObj_new.attribute = data.name;
+    headerTrSelectBtnObj_new.onClick = function () {
+        alert(data.name);
+    }
+    headerTrCreateArr_new.push(headerTrSelectBtnObj_new)
+
+    const headerTrAddToCompareBtnObj_new = Object.assign({}, headerTrAddToCompareBtnObj);
+    headerTrAddToCompareBtnObj_new.attribute = data.name;
+    headerTrAddToCompareBtnObj_new.onClick = function () {
+        alert(data.name);
+    }
+    headerTrCreateArr_new.push(headerTrAddToCompareBtnObj_new);
     return headerTrCreateArr_new;
 }
