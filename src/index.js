@@ -3,18 +3,15 @@ import BuildObj from "./scripts/BuildObj.js"
 import OptionObj from "./scripts/OptionObj.js"
 import SearchObj from "./scripts/SearchObj.js"
 
-let dataSet;
 async function getData (){
     const request = await fetch("/data/steamData-after2019.json")
     const respone = await request.json();
-    dataSet = respone;
-    // console.log(respone);
-    // const array =Object.values(respone);
-    // console.log(array);
-    // const newObj = array.reduce((obj,item)=>Object.assign(obj,{[item.name]: item}),{})
+    const array = Object.values(respone);
+    const newObj = array.reduce((obj,item)=>Object.assign(obj,{[item.name]: item}),{})
     // console.log("string",newObj["Second Sight"]);
-    // console.log("string",newObj["Second Sight"].price);
+    return newObj;
 }
+
 
 //pullDownList 
 const operatorList = optionObjHashHelper({greaterEqual:"Greater and Equal (>=)",greater:"Greater (>)",samller:"Samller (<)"});
@@ -34,7 +31,7 @@ const homeBtnStrBuildObj = new BuildObj("",["fa-solid", "fa-house"],"Home","fron
 //searchCriteria
 const nameInputObj = new BuildObj("input",null,null,"gameName",null,"text","Name:");
 const releaseFromInputObj = new BuildObj("input",null,null,"releaseFrom",null,"month","Release From:");
-const releaseToInputObj = new BuildObj("input",null,null,"releaseTo",null,"month","Release To:","2023-06");
+const releaseToInputObj = new BuildObj("input",null,null,"releaseTo",null,"month","Release To:");
 const ratingInputObj = buildObjHelper({tag:"select",id:"operator",options:operatorList});
 const numberInputObj = buildObjHelper({tag:"input",name:"rating", id:"rating",inputType:"number",attribute:"0.01",lableName:"Rating:"});
 const languagesInputObj = buildObjHelper({tag:"select",id:"languages",options:languagesList,lableName:"Supported languages:"});
@@ -45,8 +42,8 @@ const searchBtnIconObj = buildObjHelper({tag:"i",classArr:["fa-solid", "fa-magni
 const searchCriteriaCreateArr = [[nameInputObj,releaseFromInputObj,releaseToInputObj]
 ,[[ratingInputObj,numberInputObj],languagesInputObj,categoriesInputObj],[[searchBtnObj,searchBtnIconObj]]];
 
-document.addEventListener("DOMContentLoaded", () => {
-    getData();
+document.addEventListener("DOMContentLoaded", async () => {
+    const dataSet = await getData();
     const navBtn = document.getElementById("navBtn");
     // const btnScrollUp = document.getElementById("scrollUp");
     const frontPageBtn = document.querySelector(".frontPageBtn");
@@ -107,8 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let searchBtn = document.querySelector(".searchCriteriaBtn")
         searchBtn.addEventListener("click",(e)=>{
             e.preventDefault();
-            // alert(dataSet);
-            searchData();
+            searchData(dataSet);
             // currencies = fetchAndUpdate(true)
             // localStorage.setItem('currencies', JSON.stringify(currencies))
         })
@@ -117,17 +113,49 @@ document.addEventListener("DOMContentLoaded", () => {
     populateFrontPageBtn();
     populateNavBtn(); 
     populateSearchPage(searchCriteriaCreateArr);
-    // buildEventListener();
 });
-function searchData() {
+
+function searchData(dataSet) {
     const searchObj = searchObjArrHelper();
-// alert(searchBtnObj);
+    if (searchObj.checkOnlyOneCriteria(0))
+        return;
     if (!searchVaildation(searchObj))
         return;
     else{
+
+        const filteredData = filterData(searchObj,dataSet);
+        console.log(filteredData);
+        // const criteriaHash = searchObj.getCriteriaHash();
+        // resultData = _searchFilter(dataSet,criteriaHash);
         
     }
 }
+
+function filterData(criteria, dataSet) {
+    const filteredData = Object.values(dataSet).filter((item) => {
+      const releaseFrom = Date.parse(criteria.releaseFrom);
+      const releaseTo = Date.parse(criteria.releaseTo);
+      const gameReleaseDate = Date.parse(item.release_date);
+  
+      if (
+        (!criteria.gameName || item.name.toLowerCase().includes(criteria.gameName.toLowerCase())) &&
+        (!criteria.releaseFrom || gameReleaseDate >= releaseFrom) &&
+        (!criteria.releaseTo || gameReleaseDate <= releaseTo) &&
+        (!criteria.operator || (
+          criteria.operator === "greaterEqual" && item.rating >= criteria.rating) ||
+          (criteria.operator === "greater" && item.rating > criteria.rating) ||
+          (criteria.operator === "smaller" && item.rating < criteria.rating)
+        ) &&
+        (!criteria.languages || criteria.languages.length === 0 || criteria.languages.includes(item.supported_languages)) &&
+        (!criteria.categories || criteria.categories.length === 0 || criteria.categories.some(category => item.categories.includes(category)))
+      ) {
+        return true;
+      }
+      return false;
+    });
+  
+    return filteredData;
+  }
 
 function searchVaildation(searchObj){
     if (searchObj.releaseFrom && searchObj.releaseTo){

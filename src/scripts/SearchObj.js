@@ -21,6 +21,22 @@ class SearchObj{
     
         return count === num;
       }
+      getCriteriaHash() {
+        const criteriaHash = {};
+    
+        if (this.gameName) criteriaHash["gameName"] = this.gameName;
+        if (this.releaseFrom) criteriaHash["releaseFrom"] = this.releaseFrom;
+        if (this.releaseTo) criteriaHash["releaseTo"] = this.releaseTo;
+        if (this.operator && this.rating) {
+          criteriaHash["operator"] = this.operator;
+          criteriaHash["rating"] = this.rating;
+        }
+        if (this.languages) criteriaHash["languages"] = this.languages;
+        if (this.categories) criteriaHash["categories"] = this.categories;
+    
+        return criteriaHash;
+      }
+      
 }
 
 export default SearchObj;
