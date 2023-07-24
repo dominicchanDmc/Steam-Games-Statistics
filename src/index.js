@@ -11,6 +11,7 @@ async function getData (){
     // console.log("string",newObj["Second Sight"]);
     return newObj;
 }
+document.addEventListener("DOMContentLoaded", async () => {
 
 //pullDownList 
 const operatorList = optionObjHashHelper({greaterEqual:"Greater and Equal (>=)",greater:"Greater (>)",samller:"Samller (<)"});
@@ -55,10 +56,8 @@ const headerTrAddToCompareBtnObj = buildObjHelper({tag:"button",classArr:["searc
 const headerTrCreateArr = [headerTrNameObj,headerTrRatingObj,headerTrReleaseDateObj,headerTrLanguagesObj,headerTrCategoriesObj];
 
 
-document.addEventListener("DOMContentLoaded", async () => {
     const dataSet = await getData();
     const navBtn = document.getElementById("navBtn");
-    // const btnScrollUp = document.getElementById("scrollUp");
     const frontPageBtn = document.querySelector(".frontPageBtn");
     const searchSearchArea = document.querySelector("#search-searchArea");
 
@@ -120,12 +119,34 @@ document.addEventListener("DOMContentLoaded", async () => {
             searchData(dataSet);
          })
     }
-    
-    populateFrontPageBtn();
-    populateNavBtn(); 
-    populateSearchPage(searchCriteriaCreateArr);
-});
 
+    function createArrHelper(headerTrCreateArr_i,data) {
+        const headerTrCreateArr_new = headerTrCreateArr_i.map((element) => {
+            return { ...element };
+          });
+        headerTrCreateArr_new[0].value = data.name;
+        headerTrCreateArr_new[1].value = data.rating;
+        headerTrCreateArr_new[2].value = data.release_date;
+        headerTrCreateArr_new[3].value = data.supported_languages.replace(/\[|\]|'/g, "");
+        headerTrCreateArr_new[4].value = data.categories.replace(/\[|\]|'/g, "");
+    
+        const headerTrSelectBtnObj_new = Object.assign({}, headerTrSelectBtnObj);
+        headerTrSelectBtnObj_new.attribute = data.name;
+        headerTrSelectBtnObj_new.onClick = function () {
+            displayDetial(data.name);
+        }
+        headerTrCreateArr_new.push(headerTrSelectBtnObj_new)
+    
+        const headerTrAddToCompareBtnObj_new = Object.assign({}, headerTrAddToCompareBtnObj);
+        headerTrAddToCompareBtnObj_new.attribute = data.name;
+        headerTrAddToCompareBtnObj_new.onClick = function () {
+            displayDetial(data.name);
+        }
+        headerTrCreateArr_new.push(headerTrAddToCompareBtnObj_new);
+        return headerTrCreateArr_new;
+    }
+
+    
 function searchData(dataSet) {
     const searchObj = searchObjArrHelper();
     if (searchObj.checkOnlyOneCriteria(0))
@@ -221,14 +242,11 @@ function displaySeachResult(filteredData) {
         tableSearchResult.appendChild(headerTrSearchResult);
 
         filteredData.forEach((data)=>{
-
             let headerTrCreateArrWithData = createArrHelper(headerTrCreateArr,data)
             const trSearchResult = createTableTr(headerTrCreateArrWithData);
             tableSearchResult.appendChild(trSearchResult);
-        });
-        
+        });       
         searchResultList.appendChild(tableSearchResult);
-
     }
 }
 
@@ -405,28 +423,14 @@ function searchObjArrHelper() {
     return searchObj;
 }
 
-function createArrHelper(headerTrCreateArr_i,data) {
-    const headerTrCreateArr_new = headerTrCreateArr_i.map((element) => {
-        return { ...element };
-      });
-    headerTrCreateArr_new[0].value = data.name;
-    headerTrCreateArr_new[1].value = data.rating;
-    headerTrCreateArr_new[2].value = data.release_date;
-    headerTrCreateArr_new[3].value = data.supported_languages.replace(/\[|\]|'/g, "");
-    headerTrCreateArr_new[4].value = data.categories.replace(/\[|\]|'/g, "");
-
-    const headerTrSelectBtnObj_new = Object.assign({}, headerTrSelectBtnObj);
-    headerTrSelectBtnObj_new.attribute = data.name;
-    headerTrSelectBtnObj_new.onClick = function () {
-        alert(data.name);
+    function displayDetial(name) {
+        console.log(dataSet[name]);
     }
-    headerTrCreateArr_new.push(headerTrSelectBtnObj_new)
+    
+    populateFrontPageBtn();
+    populateNavBtn(); 
+    populateSearchPage(searchCriteriaCreateArr);
+});
 
-    const headerTrAddToCompareBtnObj_new = Object.assign({}, headerTrAddToCompareBtnObj);
-    headerTrAddToCompareBtnObj_new.attribute = data.name;
-    headerTrAddToCompareBtnObj_new.onClick = function () {
-        alert(data.name);
-    }
-    headerTrCreateArr_new.push(headerTrAddToCompareBtnObj_new);
-    return headerTrCreateArr_new;
-}
+
+
