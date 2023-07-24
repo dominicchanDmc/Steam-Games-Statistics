@@ -312,9 +312,11 @@ function createTableTr(trCreateObjArr) {
             if (tdCreateObj[0].id === "operator"){
                 let rating = createTableTd(tdCreateObj[0]);
                 let numberInputObjArr = createTableTd(tdCreateObj[1]);
+                let ratingSelect = rating[0].children[0];
+                let numberInputTd = numberInputObjArr[0];
+ 
+                numberInputTd.insertBefore(ratingSelect, numberInputTd.lastElementChild);
                 masterTr.appendChild(numberInputObjArr[0]);
-                rating.forEach((td) => masterTr.appendChild(td));
-                masterTr.appendChild(numberInputObjArr[1]);
             }
             else if (tdCreateObj[0].id === "searchBtn"){
                 // for searchBtn 
@@ -356,47 +358,61 @@ function createTableTd(tdCreateObjArr) {
 
 function createTableTdInner(tdCreateObj) {
     let returnArr = [];
-    
+    let labelmasterTd =  buildElement(new BuildObj("td"));
+    if (tdCreateObj.colSpan)
+        labelmasterTd.colSpan = tdCreateObj.colSpan;
     if (tdCreateObj.lableName){
-        let labelmasterTd =  buildElement(new BuildObj("td"));
         let labelObj = new BuildObj("label",null,null,null,tdCreateObj.lableName,tdCreateObj.id);
         let labelTd =  buildElement(labelObj);
         labelmasterTd.appendChild(labelTd);
-        returnArr.push(labelmasterTd);
     }
     
-    let innterTd =  buildElement(tdCreateObj);
-    returnArr.push(innterTd);
+    let innterTd = buildElement(tdCreateObj);
+    labelmasterTd.appendChild(innterTd);
+    // returnArr.push(innterTd);
+    returnArr.push(labelmasterTd);
     return returnArr;
 
 }
 
-    function displayDetial(name) {
-        let game = dataSet[name];
-        console.log(game);
-        const detialPage = document.getElementById("detialPage");
+function displayDetial(name) {
+    let game = dataSet[name];
+    console.log(game);
+    const detialPage = document.getElementById("detialPage");
 
-        const nameObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.name,readonly:"true",lableName:"Name:"});
-        const headerImageObj = Helper.buildObjHelper({tag:"img",classArr:["headerImage"],src:game["Header image"]});
-        const releaseDateObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.release_date,readonly:"true",lableName:"Release Date:"});
-        const ratingObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.rating,readonly:"true",lableName:"Rating:"});
-        const languagesObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:Helper.stringCut(game.supported_languages),readonly:"true",lableName:"Supported Languages:"});
+    const nameObj = Helper.buildObjHelper({tag:"input",classArr:["detialCol-200"],inputType:"text",value:game.name,readonly:"true",lableName:"Name:",colSpan:"4"});
+    const headerImageObj = Helper.buildObjHelper({tag:"img",classArr:["headerImage"],src:game["Header image"]});
+    const releaseDateObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.release_date,readonly:"true",lableName:"Release Date:"});
+    const ratingObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.rating,readonly:"true",lableName:"Rating:"});
+    const languagesObj = Helper.buildObjHelper({tag:"textarea",classArr:["detialCol-200"],inputType:"text",value:Helper.stringCut(game.supported_languages),readonly:"true",lableName:"Supported Languages:",colSpan:"4"});
+    const achievementsObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.achievements,readonly:"true",lableName:"Achievements:"});
+    const genresObj = Helper.buildObjHelper({tag:"textarea",classArr:["detialCol-200"],inputType:"text",value:Helper.stringCut(game.genres),readonly:"true",lableName:"Genres:",colSpan:"4"});
+    const ownersObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.owners,readonly:"true",lableName:"Owners:"});
+    const tagsObj = Helper.buildObjHelper({tag:"textarea",classArr:["detialCol-200"],inputType:"text",value:Helper.stringCut(game.tags),readonly:"true",lableName:"Tags:",colSpan:"4"});
+    const platformsObj= Helper.buildObjHelper({tag:"input",inputType:"text",value:Helper.stringCut(game.platforms),readonly:"true",lableName:"Platforms:"});
+    const priceObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.price,readonly:"true",lableName:"Price (USD):"});
+
+    const detailSelectBtnObj = Helper.buildObjHelper({tag:"button",classArr:["detailBtn"],innerHTML:"Select"});
+    const detailAddToCompareBtnObj = Helper.buildObjHelper({tag:"button",classArr:["detailBtn"],innerHTML:"Compare"});
     
-        const detialCreateArr = [[nameObj],[releaseDateObj,ratingObj],[languagesObj]];
-        detialPage.innerHTML = "";
 
-        if (game["Header image"]){
-            let headerImage = buildElement(headerImageObj);
-            detialPage.append(headerImage);
-        }
-        const detialTable =  buildElement(new BuildObj("table"));
-        detialCreateArr.forEach((row) =>{
-             let tr = createTableTr(row);
-             detialTable.appendChild(tr);
-        });
-        detialPage.appendChild(detialTable);
-        detialPage.scrollIntoView();
+    const detialCreateArr = [[nameObj],[releaseDateObj,ratingObj],[ownersObj,priceObj],[languagesObj],[platformsObj,achievementsObj],[genresObj],[tagsObj]];
+    detialPage.innerHTML = "";
+
+
+    
+    if (game["Header image"]){
+        let headerImage = buildElement(headerImageObj);
+        detialPage.append(headerImage);
     }
+    const detialTable =  buildElement(new BuildObj("table"));
+    detialCreateArr.forEach((row) =>{
+            let tr = createTableTr(row);
+            detialTable.appendChild(tr);
+    });
+    detialPage.appendChild(detialTable);
+    detialPage.scrollIntoView();
+}
     
     populateFrontPageBtn();
     populateNavBtn(); 

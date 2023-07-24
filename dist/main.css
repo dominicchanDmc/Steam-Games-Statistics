@@ -200,7 +200,7 @@ body #navBtn .text {
   opacity: 0;
   transition: opacity 0.25s ease;
 }
-body .searchPage, body .detialPage {
+body .searchPage {
   width: 100%;
   min-height: 595px;
   width: 1243px;
@@ -209,51 +209,51 @@ body .searchPage, body .detialPage {
   margin-bottom: 80px;
   padding-left: 100px;
 }
-body .searchPage #search-searchArea, body .detialPage #search-searchArea {
+body .searchPage #search-searchArea {
   padding-top: 50px;
 }
-body .searchPage .user-input-table, body .detialPage .user-input-table {
+body .searchPage .user-input-table {
   border-collapse: collapse;
   width: 80%;
   align-items: center;
   border-bottom: 1px solid #ddd;
 }
-body .searchPage .user-input-table tr, body .detialPage .user-input-table tr {
+body .searchPage .user-input-table tr {
   border-bottom: 1px solid #ddd;
 }
-body .searchPage .user-input-table td, body .detialPage .user-input-table td {
+body .searchPage .user-input-table td {
   padding: 8px;
 }
-body .searchPage .user-input-table label, body .detialPage .user-input-table label {
+body .searchPage .user-input-table label {
   font-weight: bold;
   display: block;
   margin-bottom: 4px;
 }
-body .searchPage .user-input-table input, body .detialPage .user-input-table input {
+body .searchPage .user-input-table input {
   width: 100%;
   padding: 4px 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
 }
-body .searchPage .user-input-table select, body .detialPage .user-input-table select {
+body .searchPage .user-input-table select {
   width: 150;
   padding: 4px 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
 }
-body .searchPage .user-input-table input[type=text], body .detialPage .user-input-table input[type=text] {
+body .searchPage .user-input-table input[type=text] {
   width: 200px;
 }
-body .searchPage .user-input-table input[type=month], body .detialPage .user-input-table input[type=month] {
+body .searchPage .user-input-table input[type=month] {
   width: 140px;
 }
-body .searchPage .user-input-table input[type=number], body .detialPage .user-input-table input[type=number] {
+body .searchPage .user-input-table input[type=number] {
   width: 100px;
   text-align: right;
 }
-body .searchPage .user-input-table .searchCriteriaBtn, body .detialPage .user-input-table .searchCriteriaBtn {
+body .searchPage .user-input-table .searchCriteriaBtn {
   background-color: #2a63ec;
   color: #fff;
   border: none;
@@ -268,30 +268,69 @@ body .searchPage .user-input-table .searchCriteriaBtn, body .detialPage .user-in
   justify-content: center;
   align-items: center;
 }
-body .searchPage .user-input-table .searchCriteriaBtn i, body .detialPage .user-input-table .searchCriteriaBtn i {
+body .searchPage .user-input-table .searchCriteriaBtn i {
   padding: 10px;
 }
-body .searchPage .user-input-table .searchCriteriaBtn:hover, body .detialPage .user-input-table .searchCriteriaBtn:hover {
+body .searchPage .user-input-table .searchCriteriaBtn:hover {
   background-color: #1e449c;
 }
-body .searchPage #searchResultP, body .detialPage #searchResultP {
+body .searchPage #searchResultP {
   color: white;
   font-size: 30px;
   text-align: center;
   margin: 10px auto 0;
   padding-right: 160px;
 }
-body .searchPage .searchListCol-80, body .detialPage .searchListCol-80 {
+body .searchPage .searchListCol-80 {
   width: 80px;
 }
-body .searchPage .searchListCol-150, body .detialPage .searchListCol-150 {
+body .searchPage .searchListCol-150 {
   width: 200px;
 }
-body .searchPage .searchResultBtn, body .detialPage .searchResultBtn {
+body .searchPage .searchResultBtn {
   width: 80px;
   height: 20px;
   border: none;
   font-size: 15px;
   cursor: pointer;
   margin-left: 10px;
+}
+body .detialPage {
+  /* Your existing styles for .detialPage */
+  margin-top: 80px;
+  margin-bottom: 80px;
+  margin-left: 100px;
+  min-height: 595px;
+  width: 1243px;
+}
+body .detialPage table {
+  width: 80%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  color: white;
+  font-size: 18px;
+}
+body .detialPage td {
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+body .detialPage tr:nth-child(even) {
+  background-color: #3f3f3f;
+}
+body .detialPage tr:last-child {
+  border-bottom: none;
+}
+body .detialPage input {
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding-left: 20px;
+}
+body .detialPage .detialCol-200 {
+  width: 1200px;
+  border: none;
+  background-color: transparent;
+  color: white;
 }

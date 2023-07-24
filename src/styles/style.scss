@@ -151,7 +151,7 @@ body {
         }
 
     }
-    .searchPage,.detialPage{
+    .searchPage{
         width: 100%;
         min-height: 595px;
         width: 1243px;
@@ -258,7 +258,56 @@ body {
           margin-left: 10px;
 
         }
+        
     }
+    .detialPage {
+      /* Your existing styles for .detialPage */
+        margin-top: 80px;
+        margin-bottom: 80px;
+        margin-left: 100px;
 
+        // width: 100%;
+        min-height: 595px;
+        width: 1243px;
+      table {
+        width: 80%;
+        border-collapse: collapse;
+        margin-top: 30px;
+        color: white;
+        font-size: 18px;
+      }
+    
+      td {
+        // width: 300px;
+        // padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      tr:nth-child(even) {
+        background-color: #3f3f3f;
+      }
+    
+      tr:last-child {
+        border-bottom: none;
+      }
+      input {
+          border: none;
+          background-color: transparent;
+          color: white;
+          font-size: 18px; 
+          font-weight: bold;
+          padding-left: 20px;
+      }
+
+      .detialCol-200{
+        width: 1200px;
+        border: none;
+        background-color: transparent;
+        color: white;
+      }
+  
+    }
+    
 
   }
