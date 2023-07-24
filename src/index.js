@@ -1,7 +1,7 @@
 import './index.scss';
-import BuildObj from "./scripts/BuildObj.js"
-import OptionObj from "./scripts/OptionObj.js"
-import SearchObj from "./scripts/SearchObj.js"
+import BuildObj from "./scripts/buildObj.js"
+
+import * as Helper from "./scripts/helper.js"
 
 async function getData (){
     const request = await fetch("/data/steamData-after2019.json")
@@ -14,14 +14,14 @@ async function getData (){
 document.addEventListener("DOMContentLoaded", async () => {
 
 //pullDownList 
-const operatorList = optionObjHashHelper({greaterEqual:"Greater and Equal (>=)",greater:"Greater (>)",samller:"Samller (<)"});
+const operatorList = Helper.optionObjHashHelper({greaterEqual:"Greater and Equal (>=)",greater:"Greater (>)",samller:"Samller (<)"});
 const languagesValue = ["English","French","German","Italian","Japanese","Korean","Russian","Simplified Chinese","Traditional Chinese"];
 const languagesKey = ["Eng","Fre","Ger","Ita","Jap","Koean","Rus","SC","TC"];
-const languagesList = optionObjArrHelper(languagesValue,languagesKey);
+const languagesList = Helper.optionObjArrHelper(languagesValue,languagesKey);
 const categoriesValue = ["Co-op","Full controller support","LAN Co-op","MMO","Multi-player","Online Co-op","Online PvP","Partial Controller Support","PvP","Shared/Split Screen","Single-player","Steam Achievements"];
 const categoriesKey = ["Coo","FCS","LCoo","MMO","Mp","OCoo","OPvP","PCS","PvP","SSS","SP","SA"];
-const categoriesList = optionObjArrHelper(categoriesValue,categoriesKey);
-const orderList = optionObjHashHelper({ratingDesc:"Rating Descending",ratingAsc:"Rating Ascending",nameDesc:"Name Descending",nameAsc:"Name Ascending",releaseDateDesc:"Release Date Descending",releaseDateAsc:"Release Date Ascending",},"orderBy");
+const categoriesList = Helper.optionObjArrHelper(categoriesValue,categoriesKey);
+const orderList = Helper.optionObjHashHelper({ratingDesc:"Rating Descending",ratingAsc:"Rating Ascending",nameDesc:"Name Descending",nameAsc:"Name Ascending",releaseDateDesc:"Release Date Descending",releaseDateAsc:"Release Date Ascending",},"orderBy");
 
 
 //frontPage
@@ -33,25 +33,25 @@ const homeBtnStrBuildObj = new BuildObj("",["fa-solid", "fa-house"],"Home","fron
 const nameInputObj = new BuildObj("input",null,null,"gameName",null,"text","Name:");
 const releaseFromInputObj = new BuildObj("input",null,null,"releaseFrom",null,"month","Release From:");
 const releaseToInputObj = new BuildObj("input",null,null,"releaseTo",null,"month","Release To:");
-const ratingInputObj = buildObjHelper({tag:"select",id:"operator",options:operatorList});
-const numberInputObj = buildObjHelper({tag:"input",name:"rating", id:"rating",inputType:"number",attribute:"0.01",lableName:"Rating:"});
-const languagesInputObj = buildObjHelper({tag:"select",id:"languages",options:languagesList,lableName:"Supported languages:"});
-const categoriesInputObj = buildObjHelper({tag:"select",id:"categories",options:categoriesList,lableName:"Categories:"});
-const orderInputObj = buildObjHelper({tag:"select",id:"orderBy",options:orderList,lableName:"Order by:"});
+const ratingInputObj = Helper.buildObjHelper({tag:"select",id:"operator",options:operatorList});
+const numberInputObj = Helper.buildObjHelper({tag:"input",name:"rating", id:"rating",inputType:"number",attribute:"0.01",lableName:"Rating:"});
+const languagesInputObj = Helper.buildObjHelper({tag:"select",id:"languages",options:languagesList,lableName:"Supported languages:"});
+const categoriesInputObj = Helper.buildObjHelper({tag:"select",id:"categories",options:categoriesList,lableName:"Categories:"});
+const orderInputObj = Helper.buildObjHelper({tag:"select",id:"orderBy",options:orderList,lableName:"Order by:"});
 
-const searchBtnObj = buildObjHelper({tag:"button",classArr:["searchCriteriaBtn"], id:"searchBtn",innerHTML:"Search"});
-const searchBtnIconObj = buildObjHelper({tag:"i",classArr:["fa-solid", "fa-magnifying-glass"]});
+const searchBtnObj = Helper.buildObjHelper({tag:"button",classArr:["searchCriteriaBtn"], id:"searchBtn",innerHTML:"Search"});
+const searchBtnIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-magnifying-glass"]});
 
 const searchCriteriaCreateArr = [[nameInputObj,releaseFromInputObj,releaseToInputObj]
 ,[[ratingInputObj,numberInputObj],languagesInputObj,categoriesInputObj],[orderInputObj,[searchBtnObj,searchBtnIconObj]]];
 //searchResultList
-const headerTrNameObj = buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],value:"Name",readonly:"true"});
-const headerTrReleaseDateObj = buildObjHelper({tag:"input",classArr:["searchListCol-80"],inputType:"text",value:"Release Date",readonly:"true"});
-const headerTrRatingObj = buildObjHelper({tag:"input",classArr:["searchListCol-80"],inputType:"text",value:"Rating",readonly:"true"});
-const headerTrLanguagesObj = buildObjHelper({tag:"input",inputType:"text",value:"Languages",classArr:["searchListCol-150"],readonly:"true"});
-const headerTrCategoriesObj = buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],value:"Categories",readonly:"true"});
-const headerTrSelectBtnObj = buildObjHelper({tag:"button",classArr:["searchResultBtn"],innerHTML:"Select"});
-const headerTrAddToCompareBtnObj = buildObjHelper({tag:"button",classArr:["searchResultBtn"],innerHTML:"Compare"});
+const headerTrNameObj = Helper.buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],value:"Name",readonly:"true"});
+const headerTrReleaseDateObj = Helper.buildObjHelper({tag:"input",classArr:["searchListCol-80"],inputType:"text",value:"Release Date",readonly:"true"});
+const headerTrRatingObj = Helper.buildObjHelper({tag:"input",classArr:["searchListCol-80"],inputType:"text",value:"Rating",readonly:"true"});
+const headerTrLanguagesObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:"Languages",classArr:["searchListCol-150"],readonly:"true"});
+const headerTrCategoriesObj = Helper.buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],value:"Categories",readonly:"true"});
+const headerTrSelectBtnObj = Helper.buildObjHelper({tag:"button",classArr:["searchResultBtn"],innerHTML:"Select"});
+const headerTrAddToCompareBtnObj = Helper.buildObjHelper({tag:"button",classArr:["searchResultBtn"],innerHTML:"Compare"});
 
 const headerTrCreateArr = [headerTrNameObj,headerTrRatingObj,headerTrReleaseDateObj,headerTrLanguagesObj,headerTrCategoriesObj];
 
@@ -120,15 +120,15 @@ const headerTrCreateArr = [headerTrNameObj,headerTrRatingObj,headerTrReleaseDate
          })
     }
 
-    function createArrHelper(headerTrCreateArr_i,data) {
+    function addDataForCreateArr(headerTrCreateArr_i,data) {
         const headerTrCreateArr_new = headerTrCreateArr_i.map((element) => {
             return { ...element };
           });
         headerTrCreateArr_new[0].value = data.name;
         headerTrCreateArr_new[1].value = data.rating;
         headerTrCreateArr_new[2].value = data.release_date;
-        headerTrCreateArr_new[3].value = data.supported_languages.replace(/\[|\]|'/g, "");
-        headerTrCreateArr_new[4].value = data.categories.replace(/\[|\]|'/g, "");
+        headerTrCreateArr_new[3].value = Helper.stringCut(data.supported_languages);
+        headerTrCreateArr_new[4].value = Helper.stringCut(data.categories);
     
         const headerTrSelectBtnObj_new = Object.assign({}, headerTrSelectBtnObj);
         headerTrSelectBtnObj_new.attribute = data.name;
@@ -148,7 +148,7 @@ const headerTrCreateArr = [headerTrNameObj,headerTrRatingObj,headerTrReleaseDate
 
     
 function searchData(dataSet) {
-    const searchObj = searchObjArrHelper();
+    const searchObj = Helper.searchObjArrHelper();
     if (searchObj.checkOnlyOneCriteria(0))
         return;
     if (!searchVaildation(searchObj))
@@ -242,7 +242,7 @@ function displaySeachResult(filteredData) {
         tableSearchResult.appendChild(headerTrSearchResult);
 
         filteredData.forEach((data)=>{
-            let headerTrCreateArrWithData = createArrHelper(headerTrCreateArr,data)
+            let headerTrCreateArrWithData = addDataForCreateArr(headerTrCreateArr,data)
             const trSearchResult = createTableTr(headerTrCreateArrWithData);
             tableSearchResult.appendChild(trSearchResult);
         });       
@@ -367,64 +367,26 @@ function createTableTdHelper(tdCreateObj) {
 
 }
 
-function buildObjHelper(createHash) {
-    let buildObj = new BuildObj();
-
-    for (const key in createHash) {
-        buildObj[key] = createHash[key];
-    }
-    return buildObj;
-}
-
-function optionObjHashHelper(operatorHash,type) {
-    let optionObjList = [];
-    if (type != "orderBy")
-        optionObjList.push(new OptionObj("",""));
-    for (const key in operatorHash) {
-        let optionObj = new OptionObj();
-        optionObj.value = key;
-        optionObj.displayText = operatorHash[key];
-        optionObjList.push(optionObj);
-    }
-    return optionObjList;
-}
-function optionObjArrHelper(valueList,keyList) {
-    let optionObjList = [];
-    optionObjList.push(new OptionObj("",""));
-    for (let i=0;i<valueList.length;i++) {
-        let optionObj = new OptionObj();
-        optionObj.value = keyList[i];
-        optionObj.displayText = valueList[i];
-        optionObjList.push(optionObj);
-    }
-    return optionObjList;
-}
-function searchObjArrHelper() {
-    let gameName = document.getElementById("gameName");
-    let releaseFrom = document.getElementById("releaseFrom");
-    let releaseTo = document.getElementById("releaseTo");
-    let operator = document.getElementById("operator");
-    let rating = document.getElementById("rating");
-    let languages = document.getElementById("languages");
-    let categories = document.getElementById("categories");
-    let orderBy = document.getElementById("orderBy");
-
-    let searchObj = new SearchObj();
-
-    searchObj.gameName = gameName.value;
-    searchObj.releaseFrom = releaseFrom.value;
-    searchObj.releaseTo = releaseTo.value;
-    searchObj.operator = operator.value;
-    searchObj.rating = rating.value;
-    searchObj.languages = languages.value;
-    searchObj.categories = categories.value;
-    searchObj.orderBy = orderBy.value;
-
-    return searchObj;
-}
-
     function displayDetial(name) {
-        console.log(dataSet[name]);
+        let game = dataSet[name];
+        console.log(game);
+        const detialPage = document.getElementById("detialPage");
+
+        const nameObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.name,readonly:"true",lableName:"Name:"});
+        const releaseDateObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.release_date,readonly:"true",lableName:"Release Date:"});
+        const ratingObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.rating,readonly:"true",lableName:"Rating:"});
+        const languagesObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:Helper.stringCut(game.supported_languages),readonly:"true",lableName:"Supported Languages:"});
+    
+        const detialCreateArr = [[nameObj],[releaseDateObj,ratingObj],[languagesObj]];
+        
+        const detialTable =  buildElement(new BuildObj("table"));
+        detialCreateArr.forEach((row) =>{
+             let tr = createTableTr(row);
+             detialTable.appendChild(tr);
+        });
+        detialPage.innerHTML = "";
+        detialPage.appendChild(detialTable);
+        detialPage.scrollIntoView();
     }
     
     populateFrontPageBtn();
