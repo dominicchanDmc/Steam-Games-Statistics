@@ -203,6 +203,7 @@ body #navBtn .text {
 body .searchPage {
   width: 100%;
   min-height: 595px;
+  width: 1243px;
   background-color: #3f3f3f;
   margin-top: 80px;
   margin-bottom: 80px;
@@ -215,10 +216,13 @@ body .searchPage .user-input-table {
   border-collapse: collapse;
   width: 80%;
   align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+body .searchPage .user-input-table tr {
+  border-bottom: 1px solid #ddd;
 }
 body .searchPage .user-input-table td {
   padding: 8px;
-  border-bottom: 1px solid #ddd;
 }
 body .searchPage .user-input-table label {
   font-weight: bold;
@@ -249,24 +253,31 @@ body .searchPage .user-input-table input[type=number] {
   width: 100px;
   text-align: right;
 }
-body .searchPage .searchCriteriaBtn {
+body .searchPage .user-input-table .searchCriteriaBtn {
   background-color: #2a63ec;
   color: #fff;
   border: none;
   padding: 10px 20px;
-  font-size: 25px;
+  font-size: 20px;
   cursor: pointer;
   border-radius: 4px;
   align-items: center;
   width: 300px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 300px;
 }
-body .searchPage .searchCriteriaBtn i {
+body .searchPage .user-input-table .searchCriteriaBtn i {
   padding: 10px;
 }
-body .searchPage .searchCriteriaBtn:hover {
+body .searchPage .user-input-table .searchCriteriaBtn:hover {
   background-color: #1e449c;
+}
+body .searchPage #searchResultP {
+  color: white;
+  font-size: 30px;
+  text-align: center;
+  margin: 10px auto 0;
+  padding-right: 160px;
 }

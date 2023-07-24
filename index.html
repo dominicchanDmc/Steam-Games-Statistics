@@ -27,72 +27,12 @@
     </section>
     <!-- searchPage -->
     <section id="searchPage" class="searchPage">
-      <div id="search-searchArea">
-        <!-- <table class="user-input-table">
-          <tr>
-            <td><label for="gameName">Name:</label></td>
-            <td><input type="text" id="gameName" name="gameName" /></td>
-            <td><label for="releaseFrom">Release From:</label></td>
-            <td><input type="month" id="releaseFrom" name="releaseFrom" /></td>
-            <td><label for="releaseTo">Release To:</label></td>
-            <td><input type="month" id="releaseTo" name="releaseTo" value="2023-06"/></td>
-            
-          </tr>
-          <tr>
-            <!-- <td><label for="price">Price (USD):</label></td> -->
-            <!-- <td><input type="number" id="price" name="price" step="0.01" /></td> 
-            <td><label for="rating">Rating:</label></td>
-            <td>
-            <select id="operator" name="operator">
-                <option value="greaterEqual">Greater and Equal (>=)</option>
-                <option value="greater">Greater (>)</option>
-                <option value="samller">Samller (<)</option>
-            </select>
-            <input type="number" id="rating" name="rating" step="0.01" />
-            </td>
-            <!-- <td><label for="owners">Owners:</label></td> -->
-            <!-- <td>
-            <select id="owners" name="owners">
-                <option value="under20k">0-20000</option>
-                <option value="20k50k">20000-50000</option>
-                <option value="50k100k">50000-100000</option>
-                <option value="100k200k">100000-200000</option>
-                <option value="200k500k">200000-500000</option>
-                <option value="500k1000k">500000-1000000</option>
-            </select>
-            </td> 
-            
-          </tr>
-          <tr>
-            <td><label for="supported_languages">Supported languages:</label></td>
-            <td>
-              <select id="supported_languages" name="supported_languages">
-                  <option value="under20k">English</option>
-                  <option value="20k50k">German</option>
-                  <option value="50k100k">50000-100000</option>
-                  <option value="100k200k">100000-200000</option>
-                  <option value="200k500k">200000-500000</option>
-                  <option value="500k1000k">500000-1000000</option>
-              </select>
-              </td>
-              <td><label for="categories">Categories:</label></td>
-              <td>
-                <select id="categories" name="categories">
-                    <option value="under20k">English</option>
-                    <option value="20k50k">German</option>
-                    <option value="50k100k">50000-100000</option>
-                    <option value="100k200k">100000-200000</option>
-                    <option value="200k500k">200000-500000</option>
-                    <option value="500k1000k">500000-1000000</option>
-                </select>
-                </td>
-                <!-- <td><label for="tag">Tag:</label></td> 
-                <!-- <td><input type="text" id="tag" name="tag" /></td> 
-          </tr>
-        </table> -->
-      </div>
+      <div id="search-searchArea"></div>
       <div id="search-resultArea">
-        <p><h1>Select the criteria to search game</h1></p>
+        <p id="searchResultP">Select the criteria to search game.<br> 
+          Using <b class="text-yellow">AND</b> with multiple criteria
+        </p>
+        <div id="searchResultList"></div>
       </div>
     </section>
     <section id="detialPage"><h1>detialPage</section>

@@ -1,6 +1,6 @@
 class SearchObj{
     constructor(gameName,releaseFrom,releaseTo,operator,rating,languages
-        ,value) {
+        ,categories,orderBy) {
         this.gameName = gameName;
         this.releaseFrom = releaseFrom;
         this.releaseTo = releaseTo;
@@ -8,6 +8,7 @@ class SearchObj{
         this.rating = rating;
         this.languages = languages;
         this.categories = categories;
+        this.orderBy = orderBy;
     }
     checkOnlyOneCriteria(num) {
         let count = 0;
@@ -21,22 +22,6 @@ class SearchObj{
     
         return count === num;
       }
-      getCriteriaHash() {
-        const criteriaHash = {};
-    
-        if (this.gameName) criteriaHash["gameName"] = this.gameName;
-        if (this.releaseFrom) criteriaHash["releaseFrom"] = this.releaseFrom;
-        if (this.releaseTo) criteriaHash["releaseTo"] = this.releaseTo;
-        if (this.operator && this.rating) {
-          criteriaHash["operator"] = this.operator;
-          criteriaHash["rating"] = this.rating;
-        }
-        if (this.languages) criteriaHash["languages"] = this.languages;
-        if (this.categories) criteriaHash["categories"] = this.categories;
-    
-        return criteriaHash;
-      }
-      
 }
 
 export default SearchObj;

@@ -12,7 +12,6 @@ async function getData (){
     return newObj;
 }
 
-
 //pullDownList 
 const operatorList = optionObjHashHelper({greaterEqual:"Greater and Equal (>=)",greater:"Greater (>)",samller:"Samller (<)"});
 const languagesValue = ["English","French","German","Italian","Japanese","Korean","Russian","Simplified Chinese","Traditional Chinese"];
@@ -21,6 +20,7 @@ const languagesList = optionObjArrHelper(languagesValue,languagesKey);
 const categoriesValue = ["Co-op","Full controller support","LAN Co-op","MMO","Multi-player","Online Co-op","Online PvP","Partial Controller Support","PvP","Shared/Split Screen","Single-player","Steam Achievements"];
 const categoriesKey = ["Coo","FCS","LCoo","MMO","Mp","OCoo","OPvP","PCS","PvP","SSS","SP","SA"];
 const categoriesList = optionObjArrHelper(categoriesValue,categoriesKey);
+const orderList = optionObjHashHelper({ratingDesc:"Rating Descending",ratingAsc:"Rating Ascending",nameDesc:"Name Descending",nameAsc:"Name Ascending",releaseDateDesc:"Release Date Descending",releaseDateAsc:"Release Date Ascending",},"orderBy");
 
 
 //frontPage
@@ -36,11 +36,14 @@ const ratingInputObj = buildObjHelper({tag:"select",id:"operator",options:operat
 const numberInputObj = buildObjHelper({tag:"input",name:"rating", id:"rating",inputType:"number",attribute:"0.01",lableName:"Rating:"});
 const languagesInputObj = buildObjHelper({tag:"select",id:"languages",options:languagesList,lableName:"Supported languages:"});
 const categoriesInputObj = buildObjHelper({tag:"select",id:"categories",options:categoriesList,lableName:"Categories:"});
+const orderInputObj = buildObjHelper({tag:"select",id:"orderBy",options:orderList,lableName:"Order by:"});
+
 const searchBtnObj = buildObjHelper({tag:"button",classArr:["searchCriteriaBtn"], id:"searchBtn",innerHTML:"Search"});
 const searchBtnIconObj = buildObjHelper({tag:"i",classArr:["fa-solid", "fa-magnifying-glass"]});
 
+
 const searchCriteriaCreateArr = [[nameInputObj,releaseFromInputObj,releaseToInputObj]
-,[[ratingInputObj,numberInputObj],languagesInputObj,categoriesInputObj],[[searchBtnObj,searchBtnIconObj]]];
+,[[ratingInputObj,numberInputObj],languagesInputObj,categoriesInputObj],[orderInputObj,[searchBtnObj,searchBtnIconObj]]];
 
 document.addEventListener("DOMContentLoaded", async () => {
     const dataSet = await getData();
@@ -105,9 +108,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         searchBtn.addEventListener("click",(e)=>{
             e.preventDefault();
             searchData(dataSet);
-            // currencies = fetchAndUpdate(true)
-            // localStorage.setItem('currencies', JSON.stringify(currencies))
-        })
+         })
     }
     
     populateFrontPageBtn();
@@ -122,12 +123,9 @@ function searchData(dataSet) {
     if (!searchVaildation(searchObj))
         return;
     else{
-
         const filteredData = filterData(searchObj,dataSet);
         console.log(filteredData);
-        // const criteriaHash = searchObj.getCriteriaHash();
-        // resultData = _searchFilter(dataSet,criteriaHash);
-        
+        displaySeachResult(filteredData);
     }
 }
 
@@ -153,8 +151,31 @@ function filterData(criteria, dataSet) {
       }
       return false;
     });
-  
-    return filteredData;
+
+    switch (criteria.orderBy) {
+        case "ratingDesc":
+            filteredData.sort((a, b) => b.rating - a.rating);
+            break;
+        case "ratingAsc":
+            filteredData.sort((a, b) => a.rating - b.rating);
+            break;
+        case "nameDesc":
+            filteredData.sort((a, b) => b.name.localeCompare(a.name));
+            break;
+        case "nameAsc":
+            filteredData.sort((a, b) => a.name.localeCompare(b.name));
+            break;
+        case "releaseDateDesc":
+            filteredData.sort((a, b) => Date.parse(b.release_date) - Date.parse(a.release_date));
+            break;
+        case "releaseDateAsc":
+            filteredData.sort((a, b) => Date.parse(a.release_date) - Date.parse(b.release_date));
+            break;
+    }
+
+    const limitedData = filteredData.slice(0, 50);
+    return limitedData;
+    // return filteredData;
   }
 
 function searchVaildation(searchObj){
@@ -165,6 +186,19 @@ function searchVaildation(searchObj){
         }
     }
     return true;
+}
+
+function displaySeachResult(filteredData) {
+   const searchResultP = document.getElementById("searchResultP");
+
+    if (filteredData.length === 0)
+    searchResultP.innerHTML = "No result"
+    else if (filteredData.length === 1){
+
+    }
+    else{
+
+    }
 }
 
 function buildElement(buildObj){
@@ -282,9 +316,10 @@ function buildObjHelper(createHash) {
     return buildObj;
 }
 
-function optionObjHashHelper(operatorHash) {
+function optionObjHashHelper(operatorHash,type) {
     let optionObjList = [];
-    optionObjList.push(new OptionObj("",""));
+    if (type != "orderBy")
+        optionObjList.push(new OptionObj("",""));
     for (const key in operatorHash) {
         let optionObj = new OptionObj();
         optionObj.value = key;
@@ -312,6 +347,7 @@ function searchObjArrHelper() {
     let rating = document.getElementById("rating");
     let languages = document.getElementById("languages");
     let categories = document.getElementById("categories");
+    let orderBy = document.getElementById("orderBy");
 
     let searchObj = new SearchObj();
 
@@ -322,6 +358,7 @@ function searchObjArrHelper() {
     searchObj.rating = rating.value;
     searchObj.languages = languages.value;
     searchObj.categories = categories.value;
+    searchObj.orderBy = orderBy.value;
 
     return searchObj;
 }
