@@ -16,7 +16,7 @@ class SearchObj{
         if (this.gameName) count++;
         if (this.releaseFrom) count++;
         if (this.releaseTo) count++;
-        if (this.operator && this.rating) count++;
+        if (this.operator || this.rating) count++;
         if (this.languages) count++;
         if (this.categories) count++;
     

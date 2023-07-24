@@ -41,9 +41,16 @@ const orderInputObj = buildObjHelper({tag:"select",id:"orderBy",options:orderLis
 const searchBtnObj = buildObjHelper({tag:"button",classArr:["searchCriteriaBtn"], id:"searchBtn",innerHTML:"Search"});
 const searchBtnIconObj = buildObjHelper({tag:"i",classArr:["fa-solid", "fa-magnifying-glass"]});
 
-
 const searchCriteriaCreateArr = [[nameInputObj,releaseFromInputObj,releaseToInputObj]
 ,[[ratingInputObj,numberInputObj],languagesInputObj,categoriesInputObj],[orderInputObj,[searchBtnObj,searchBtnIconObj]]];
+//searchResultList
+const headerTrNameObj = buildObjHelper({tag:"input",type:"text",value:"Name",readonly:"true"});
+const headerTrReleaseDateObj = buildObjHelper({tag:"input",type:"text",value:"Release Date",readonly:"true"});
+const headerTrRatingObj = buildObjHelper({tag:"input",type:"text",value:"Rating",readonly:"true"});
+const headerTrLanguagesObj = buildObjHelper({tag:"input",type:"text",value:"Languages",readonly:"true"});
+const headerTrCategoriesObj = buildObjHelper({tag:"input",type:"text",value:"Categories",readonly:"true"});
+const headerTrCreateArr = [headerTrNameObj,headerTrRatingObj,headerTrReleaseDateObj,headerTrLanguagesObj,headerTrCategoriesObj];
+
 
 document.addEventListener("DOMContentLoaded", async () => {
     const dataSet = await getData();
@@ -185,18 +192,39 @@ function searchVaildation(searchObj){
             return false;
         }
     }
+
+    if ((searchObj.operator && !searchObj.rating)||
+     (!searchObj.operator && searchObj.rating)){
+        alert('Missing Operator or Rating')
+            return false;
+     }
     return true;
 }
 
 function displaySeachResult(filteredData) {
    const searchResultP = document.getElementById("searchResultP");
+   const searchResultList = document.getElementById("searchResultList");
+   searchResultList.innerHTML = "";
 
     if (filteredData.length === 0)
-    searchResultP.innerHTML = "No result"
+        searchResultP.innerHTML = "No result";
     else if (filteredData.length === 1){
 
     }
     else{
+        searchResultP.innerHTML = "";
+        const tableSearchResult = buildElement(new BuildObj("table"));
+        const headerTrSearchResult = createTableTr(headerTrCreateArr);
+        tableSearchResult.appendChild(headerTrSearchResult);
+
+        filteredData.forEach((data)=>{
+
+            let headerTrCreateArrWithData = createArrHelper(headerTrCreateArr,data)
+            const trSearchResult = createTableTr(headerTrCreateArrWithData);
+            tableSearchResult.appendChild(trSearchResult);
+        });
+        
+        searchResultList.appendChild(tableSearchResult);
 
     }
 }
@@ -236,6 +264,9 @@ function buildElement(buildObj){
 
     if (buildObj.id)
         newElement.id = buildObj.id;
+    
+    if (buildObj.readonly)
+        newElement.readOnly = true;
 
     return newElement;
 }
@@ -361,4 +392,16 @@ function searchObjArrHelper() {
     searchObj.orderBy = orderBy.value;
 
     return searchObj;
+}
+
+function createArrHelper(headerTrCreateArr_i,data) {
+    const headerTrCreateArr_new = headerTrCreateArr_i.map((element) => {
+        return { ...element };
+      });
+    headerTrCreateArr_new[0].value = data.name;
+    headerTrCreateArr_new[1].value = data.rating;
+    headerTrCreateArr_new[2].value = data.release_date;
+    headerTrCreateArr_new[3].value = data.supported_languages.replace(/\[|\]|'/g, "");
+    headerTrCreateArr_new[4].value = data.categories.replace(/\[|\]|'/g, "");
+    return headerTrCreateArr_new;
 }
