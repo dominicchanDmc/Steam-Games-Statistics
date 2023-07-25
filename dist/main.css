@@ -371,6 +371,9 @@ body .comparePage {
   margin-bottom: 80px;
   padding-left: 100px;
 }
+body .comparePage #compare-searchArea {
+  margin-top: 80px;
+}
 body .comparePage table {
   width: 100%;
   border-collapse: collapse;

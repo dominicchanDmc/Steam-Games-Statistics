@@ -54,8 +54,8 @@ const headerTrAddToCompareBtnObj = Helper.buildObjHelper({tag:"button",classArr:
 
 const headerTrCreateArr = [headerTrNameObj,headerTrRatingObj,headerTrReleaseDateObj,headerTrLanguagesObj,headerTrCategoriesObj];
 //compareCriteria
-const compareNameObj = Helper.buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],lableName:"Game 1:",readonly:"true",colSpan:2});
-const compareName2Obj = Helper.buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],lableName:"Game 2:",readonly:"true",colSpan:2});
+const compareNameObj = Helper.buildObjHelper({tag:"input",id:"gameCompare1",inputType:"text",classArr:["searchListCol-150"],lableName:"Game 1:",readonly:"true",colSpan:2});
+const compareName2Obj = Helper.buildObjHelper({tag:"input",id:"gameCompare2",inputType:"text",classArr:["searchListCol-150"],lableName:"Game 2:",readonly:"true",colSpan:2});
 const radioBtnTbObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"tb",value:"Table", attributes: { name: "displayBy", value: "Table", id: "tb" ,checked:"checked"}});
 const radioBtnChartObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"ch",value:"Chart", attributes: { name: "displayBy", value: "ch", id: "ch" }});
 const compareBtnObj = Helper.buildObjHelper({tag:"button",classArr:["compareCriteriaBtn"], id:"compareBtn",innerHTML:"Compare"});
@@ -74,7 +74,7 @@ const reviewScoreChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox
 const ratingChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"ratingChbObjChb",value:"ratingChbObj",lableName:"Rating (C)", skipTd:false, attributes: {value: "ratingChbObj", id: "ratingChbObj"}});
 
 
-const compareCriteriaCreateArr = [[compareNameObj,compareName2Obj],[ownersChbObj,releaseDateChbObj,priceChbObj,supportedLanguagesChbObj]
+const compareCriteriaCreateArr = [[ownersChbObj,releaseDateChbObj,priceChbObj,supportedLanguagesChbObj]
 ,[categoriesChbObj,reviewScoreChbObj,tagsChbObj,averageForeverChbObj]
 ,[totalNegativeChbObj,totalPositiveChbObj,genresChbObj,ratingChbObj]
 ,[[radioBtnTbObj,radioBtnChartObj],[compareBtnObj,compareBtnIconObj]]];
@@ -163,27 +163,56 @@ const searchSearchArea = document.querySelector("#search-searchArea");
         const headerTrAddToCompareBtnObj_new = Object.assign({}, headerTrAddToCompareBtnObj);
         headerTrAddToCompareBtnObj_new.attribute = data.name;
         headerTrAddToCompareBtnObj_new.onClick = function () {
-            displayDetial(data.name);
+            addToCompare(data.name);
         }
         headerTrCreateArr_new.push(headerTrAddToCompareBtnObj_new);
         return headerTrCreateArr_new;
     }
     
     function populateComparePage(createStr) {
-        const compareSearchArea = document.getElementById("compare-searchArea");
-        const tableSearchArea =  buildElement(new BuildObj("table"));
+        const compareCriteriaArea = document.getElementById("compare-searchArea");
+        const tableCompareArea =  buildElement(new BuildObj("table"));
+        const compareCriteriaTr =  buildElement(new BuildObj("tr"));
+        const compareCriteriaTd =  buildElement(new BuildObj("td"));
+        const compareCriteriaTd2 =  buildElement(new BuildObj("td"));
+        const labelG1Obj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Game1",lableName:"gameCompare1"}));
+        const labelG2Obj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Game2",lableName:"gameCompare2"}));
+        const compareBtnObj = buildElement(Helper.buildObjHelper({tag:"button",id:"clearBtn",innerHTML:"Clear"}));
+        const compareBtn2Obj = buildElement(Helper.buildObjHelper({tag:"button",id:"clearBtn2",innerHTML:"Clear"}));
+        const compareNameInput = buildElement(compareNameObj);
+        const compareNameInput2 = buildElement(compareName2Obj);
 
-        // const tableSearchArea =  buildElement(new BuildObj("table",["user-input-table"]));
+        compareBtnObj.onclick = function () {
+            compareNameInput.value = "";
+        }
+
+        compareBtn2Obj.onclick = function () {
+            compareNameInput2.value = "";
+        }
+        compareCriteriaTd.colSpan = 2;
+        compareCriteriaTd.appendChild(labelG1Obj);
+        compareCriteriaTd.appendChild(compareNameInput);
+        compareCriteriaTd.appendChild(compareBtnObj);
+        compareCriteriaTd2.colSpan = 2;
+        compareCriteriaTd2.appendChild(labelG2Obj);
+        compareCriteriaTd2.appendChild(compareNameInput2);
+        compareCriteriaTd2.appendChild(compareBtn2Obj);
+
+        compareCriteriaTr.appendChild(compareCriteriaTd);
+        compareCriteriaTr.appendChild(compareCriteriaTd2);
+        tableCompareArea.appendChild(compareCriteriaTr);
+
         createStr.forEach((row) =>{
              let tr = createTableTr(row);
-             tableSearchArea.appendChild(tr);
+             tableCompareArea.appendChild(tr);
         });
-        compareSearchArea.appendChild(tableSearchArea);
+        compareCriteriaArea.appendChild(tableCompareArea);
 
-        let searchBtn = document.querySelector(".searchCriteriaBtn")
-        searchBtn.addEventListener("click",(e)=>{
+        let compareBtn = document.querySelector(".compareCriteriaBtn")
+        compareBtn.addEventListener("click",(e)=>{
             e.preventDefault();
-            searchData(dataSet);
+            alert(1);
+            // searchData(dataSet);
          })
     }
     
@@ -290,6 +319,29 @@ function displaySeachResult(filteredData) {
             displayDetial(filteredData[0].name);
         }
     }
+}
+
+function addToCompare(name) {
+    const gameCompare1 = document.getElementById("gameCompare1");
+    const gameCompare2 = document.getElementById("gameCompare2");
+    const comparePage = document.getElementById("comparePage");
+    if (!gameCompare1.value){
+        gameCompare1.value = name;
+        alert("add success, you can add 1 more game for compare");
+    }
+    else if (!gameCompare2.value){
+        if (gameCompare1.value === name){
+            alert("This game alreadly added");
+            return;
+        }
+
+        gameCompare2.value = name;
+        const answer = window.confirm("add success, do you compare now?");
+        if (answer)
+            comparePage.scrollIntoView();
+    }
+    else
+        alert("Only can compare between 2 game ");
 }
 
 function buildElement(buildObj){
@@ -443,9 +495,7 @@ function createTableTd(tdCreateObjArr) {
 function createTableTdInner(tdCreateObj) {
     let returnArr = [];
     let labelmasterTd =  buildElement(new BuildObj("td"));
-    // if (tdCreateObj.inputType === "checkbox"){
 
-    // }else{
         if (tdCreateObj.colSpan)
             labelmasterTd.colSpan = tdCreateObj.colSpan;
         if (tdCreateObj.lableName){
@@ -461,7 +511,6 @@ function createTableTdInner(tdCreateObj) {
                 returnArr.push(innterTd);
             else
                 labelmasterTd.appendChild(innterTd);
-        // }
 
         if (!tdCreateObj.skipTd)
              returnArr.push(labelmasterTd);
@@ -510,7 +559,7 @@ function displayDetial(name) {
   
     let detailAddToCompareBtn = buildElement(detailAddToCompareBtnObj);
     detailAddToCompareBtn.onclick = function () {
-      alert(name);
+        addToCompare(name);
     };
     let detailAddToCompareBtnIcon = buildElement(detailAddToCompareBtnIconObj);
     detailAddToCompareBtn.appendChild(detailAddToCompareBtnIcon);
