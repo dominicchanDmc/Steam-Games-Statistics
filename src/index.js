@@ -78,7 +78,7 @@ const headerTrAddToCompareBtnObj = Helper.buildObjHelper({tag:"button",classArr:
 
 const headerTrCreateArr = [headerTrNameObj,headerTrRatingObj,headerTrReleaseDateObj,headerTrLanguagesObj,headerTrCategoriesObj];
 //compareCriteria
-const compareNameObj = Helper.buildObjHelper({tag:"input",id:"gameCompare1",inputType:"text",classArr:["searchListCol-150"],lableName:"Game 1:",readonly:"true",colSpan:2});
+const compareNameObj = Helper.buildObjHelper({tag:"input",id:"gameCompare1",inputType:"text",classArr:["CompareCol-300"],lableName:"Game 1:",readonly:"true",colSpan:2});
 const compareName2Obj = Helper.buildObjHelper({tag:"input",id:"gameCompare2",inputType:"text",classArr:["searchListCol-150"],lableName:"Game 2:",readonly:"true",colSpan:2});
 const radioBtnTbObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"tb",value:"Table", attributes: { name: "displayBy", value: "Table", id: "tb" ,checked:"checked"}});
 const radioBtnChartObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"ch",value:"Chart", attributes: { name: "displayBy", value: "ch", id: "ch" }});
@@ -238,16 +238,7 @@ const searchSearchArea = document.querySelector("#search-searchArea");
             compareData(dataSet);
          })
 
-         const masterCheckbox = document.getElementById('masterChb');
-        //  const checkboxes = document.querySelectorAll('.checkbox');
-       
-         masterCheckbox.addEventListener('change', () => {
-           if (masterCheckbox.checked) {
-             checkAllCheckboxes();
-           } else {
-             uncheckAllCheckboxes();
-           }
-         });
+
     }
     
 function searchData(dataSet) {
@@ -287,8 +278,11 @@ function compareData(dataSet) {
     const propertyList = searchObj.getCheckedPropertiesArray();
     const compareResultP = document.getElementById("compareResultP");
     const compareResult = document.getElementById("compareResult");
+    const chartArea = document.getElementById("chartArea");
+
     compareResultP.innerHTML = "";
     compareResult.innerHTML = "";
+    chartArea.innerHTML = "";
 
     if (searchObj.radioBtn === "Table")
         compareDisplayByTable(propertyList,gameData1,gameData2); 
@@ -350,7 +344,7 @@ function compareDisplayByChart(propertyList,gameData1,gameData2) {
     ,beginAtZero:false};
         const chartObj = Helper.chartObjHelper(createHash);
         
-        buildCompareChart(chartObj);
+        buildCompareChart(chartObj,i);
         i++;
     });
 
@@ -729,10 +723,9 @@ function appendCanvas(propertyList) {
     populateNavBtn(); 
     populateSearchPage(searchCriteriaCreateArr);
     populateComparePage(compareCriteriaCreateArr);
-    // test();
 });
-  function buildCompareChart(chartObj) {
-
+  function buildCompareChart(chartObj,i) {
+const colorList = ["skyblue","lavenderblush","wheat","powderblue","silver"];
     new Chart(chartObj.ctx, {
       type: chartObj.type,
       data: {
@@ -741,14 +734,56 @@ function appendCanvas(propertyList) {
           label: Helper.stringTran(chartObj.compareCol),
           data: [chartObj.game1Data[chartObj.compareCol],
           chartObj.game2Data[chartObj.compareCol]],
-          borderWidth: 1
+          borderWidth: 1,
+          backgroundColor: colorList[i]
         }]
       },
       options: {
+        plugins: {
+            legend: {
+              labels: {
+                font: {
+                  size: 18           
+                },
+                color: 'yellow'
+              }
+            }
+          },
         scales: {
           y: {
-            beginAtZero: chartObj.beginAtZero
-          }
+            beginAtZero: chartObj.beginAtZero,
+            grid: {
+                zeroLineColor: "yellow",
+                color: "white"
+            },
+            border: {
+                color: "yellow"
+            },
+            ticks: {
+                color: "yellow",
+                font: {
+                    size: 18
+                }
+            }
+          },
+          x: {
+            drawTicks: true,
+            beginAtZero: true,
+            grid: {
+                zeroLineColor: "yellow",
+                color: "white"
+            },
+            border: {
+                color: "yellow"
+            },
+            ticks: {
+                color: "yellow",
+                font: {
+                    size: 18
+                }
+            },
+            mirror: true
+        }
         }
       }
     });

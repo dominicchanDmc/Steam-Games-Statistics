@@ -86,7 +86,7 @@ body .text-3 {
 }
 body .text-6 {
   margin: 20px 0 0;
-  color: #afaeae;
+  color: #afaeae powderblue;
 }
 body .text-yellow {
   color: yellow;
@@ -400,6 +400,12 @@ body .comparePage input {
   font-size: 18px;
   font-weight: bold;
   padding-left: 20px;
+}
+body .comparePage .CompareCol-300 {
+  width: 300px;
+  border: none;
+  background-color: transparent;
+  color: yellow;
 }
 body .comparePage .compareCol-500 {
   width: 400px;
