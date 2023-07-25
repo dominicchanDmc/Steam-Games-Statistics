@@ -44,8 +44,23 @@ class SearchObj{
                 checkedProperties.push(property);
             }
         }
-        return checkedProperties;
+        const filter_checkedProperties = checkedProperties.filter((item)=>{
+            if (item ==="gameCompare1" || item ==="gameCompare2"||item ==="radioBtn")
+                return false;
+            else
+                return true;
+        });
+        return filter_checkedProperties;
     }
+
+    areOnlyFiveFieldsChecked() {
+        const requiredFields = ["rating", "total_negative", "total_positive", "review_score", "average_forever"];
+        const checkedFields = this.getCheckedPropertiesArray();
+        
+        return checkedFields.every(field => requiredFields.includes(field)); 
+        // &&
+        //   checkedFields.length === requiredFields.length;
+      }
 }
 
 export default SearchObj;

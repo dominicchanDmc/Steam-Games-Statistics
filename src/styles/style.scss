@@ -222,9 +222,8 @@ body {
   }
 
     .searchPage{
-        width: 100%;
+        // width: 100%;
         min-height: 595px;
-        width: 1243px;
 
         background-color: #3f3f3f;
         margin-top: 80px;
@@ -269,7 +268,7 @@ body {
         margin-left: 100px;
 
         min-height: 595px;
-        width: 1243px;
+        // width: 100%;
       table {
         width: 80%;
         border-collapse: collapse;
@@ -302,8 +301,9 @@ body {
           padding-left: 20px;
       }
 
-      .detialCol-200{
-        width: 1200px;
+      .detialCol-1000{
+        width: 1000px;
+        height: 40px;
         border: none;
         background-color: transparent;
         color: yellow;
@@ -335,9 +335,9 @@ body {
     }
     
     .comparePage {
-      width: 100%;
+      // width: 100%;
       min-height: 595px;
-      width: 1243px;
+      // width: 1000px;
       background-color: #3f3f3f;
       margin-top: 80px;
       margin-bottom: 80px;
@@ -357,6 +357,8 @@ body {
       td,th {
         text-align: left;
         border-bottom: 1px solid #ddd;
+        padding-bottom: 11px;
+        padding-top: 10px;
       }
     
       tr:nth-child(even) {
@@ -381,7 +383,8 @@ body {
         padding-left: 20px;
       }
       .compareCol-500{
-        width: 500px;
+        width: 400px;
+        height: 40px;
         border: none;
         background-color: transparent;
         color: yellow;
@@ -411,6 +414,10 @@ body {
         margin: 10px auto 0;
         padding-right: 160px;
       }
+      #chartArea{
+        height: 50%;
+        width: 80%;
+      }
     }
     
-}
+  }

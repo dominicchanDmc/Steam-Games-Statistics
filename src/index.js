@@ -1,6 +1,30 @@
 import './index.scss';
 import BuildObj from "./scripts/buildObj.js"
 import * as Helper from "./scripts/helper.js"
+  
+  function test() {
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+  }
+
 
 async function getData (){
     const request = await fetch("/data/steamData-after2019.json")
@@ -241,29 +265,27 @@ function compareData(dataSet) {
         alert("At least choose one Criteria");
         return;
     }
+    if (searchObj.radioBtn === "Chart" &&
+     !searchObj.areOnlyFiveFieldsChecked()){
+        alert("Display By Chart only support the criteria with (C)");
+        return;
+    }
        
     const gameData1 = dataSet[searchObj.gameCompare1];
     const gameData2 = dataSet[searchObj.gameCompare2];
-
-    if (searchObj.radioBtn === "Table")
-        compareDisplayByTable(searchObj,gameData1,gameData2); 
-    else
-    {}
-    
-}
-
-function compareDisplayByTable(searchObj,gameData1,gameData2) {
+    const propertyList = searchObj.getCheckedPropertiesArray();
     const compareResultP = document.getElementById("compareResultP");
     const compareResult = document.getElementById("compareResult");
     compareResultP.innerHTML = "";
     compareResult.innerHTML = "";
-    const propertyList_temp = (searchObj.getCheckedPropertiesArray());
-    const propertyList = propertyList_temp.filter((item)=>{
-        if (item ==="gameCompare1" || item ==="gameCompare2"||item ==="radioBtn")
-            return false;
-        else
-        return true;
-    });
+
+    if (searchObj.radioBtn === "Table")
+        compareDisplayByTable(propertyList,gameData1,gameData2); 
+    else 
+        compareDisplayByChart(propertyList,gameData1,gameData2); 
+}
+
+function compareDisplayByTable(propertyList,gameData1,gameData2) {
 
     const compareResultTable = buildElement(new BuildObj("table"));
     const compareResultTr = buildElement(new BuildObj("tr"));
@@ -306,6 +328,9 @@ function compareDisplayByTable(searchObj,gameData1,gameData2) {
     compareResult.appendChild(compareResultTable);
 }
 
+function compareDisplayByChart(propertyList,gameData1,gameData2) {
+
+}
 function filterData(criteria, dataSet) {
     const filteredData = Object.values(dataSet).filter((item) => {
       const releaseFrom = Date.parse(criteria.releaseFrom);
@@ -600,19 +625,19 @@ function displayDetial(name) {
     console.log(game);
     const detialPage = document.getElementById("detialPage");
 
-    const nameObj = Helper.buildObjHelper({tag:"input",classArr:["detialCol-200"],inputType:"text",value:game.name,readonly:"true",lableName:"Name:",colSpan:"4"});
+    const nameObj = Helper.buildObjHelper({tag:"input",classArr:["detialCol-1000"],inputType:"text",value:game.name,readonly:"true",lableName:"Name:",colSpan:"4"});
     const headerImageObj = Helper.buildObjHelper({tag:"img",classArr:["headerImage"],src:game["Header image"]});
     const noImageObj = Helper.buildObjHelper({tag:"input",classArr:["h1"],value:"No Image"});
     const releaseDateObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.release_date,readonly:"true",lableName:"Release Date:"});
     const ratingObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.rating,readonly:"true",lableName:"Rating:"});
-    const languagesObj = Helper.buildObjHelper({tag:"textarea",classArr:["detialCol-200"],inputType:"text",value:Helper.stringCut(game.supported_languages),readonly:"true",lableName:"Supported Languages:",colSpan:"4"});
+    const languagesObj = Helper.buildObjHelper({tag:"textarea",classArr:["detialCol-1000"],inputType:"text",value:Helper.stringCut(game.supported_languages),readonly:"true",lableName:"Supported Languages:",colSpan:"4"});
     const achievementsObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.achievements,readonly:"true",lableName:"Achievements:"});
-    const genresObj = Helper.buildObjHelper({tag:"textarea",classArr:["detialCol-200"],inputType:"text",value:Helper.stringCut(game.genres),readonly:"true",lableName:"Genres:",colSpan:"4"});
+    const genresObj = Helper.buildObjHelper({tag:"textarea",classArr:["detialCol-1000"],inputType:"text",value:Helper.stringCut(game.genres),readonly:"true",lableName:"Genres:",colSpan:"4"});
     const ownersObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.owners,readonly:"true",lableName:"Owners:"});
-    const tagsObj = Helper.buildObjHelper({tag:"textarea",classArr:["detialCol-200"],inputType:"text",value:Helper.stringCut(game.tags),readonly:"true",lableName:"Tags:",colSpan:"4"});
+    const tagsObj = Helper.buildObjHelper({tag:"textarea",classArr:["detialCol-1000"],inputType:"text",value:Helper.stringCut(game.tags),readonly:"true",lableName:"Tags:",colSpan:"4"});
     const platformsObj= Helper.buildObjHelper({tag:"input",inputType:"text",value:Helper.stringCut(game.platforms),readonly:"true",lableName:"Platforms:"});
     const priceObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.price,readonly:"true",lableName:"Price (USD):"});
-    const categoriesObj = Helper.buildObjHelper({tag:"textarea",classArr:["detialCol-200"],inputType:"text",value:Helper.stringCut(game.categories),readonly:"true",lableName:"Categories:",colSpan:"4"});
+    const categoriesObj = Helper.buildObjHelper({tag:"textarea",classArr:["detialCol-1000"],inputType:"text",value:Helper.stringCut(game.categories),readonly:"true",lableName:"Categories:",colSpan:"4"});
 
 
     const detailAddToCompareBtnObj = Helper.buildObjHelper({tag:"button",classArr:["detailBtn"],innerHTML:"Add To Compare"});
@@ -657,7 +682,29 @@ function displayDetial(name) {
     populateNavBtn(); 
     populateSearchPage(searchCriteriaCreateArr);
     populateComparePage(compareCriteriaCreateArr);
+    // test();
 });
 
 
+function buildChart(chartObj) {
+    const ctx = document.getElementById('myChart');
 
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+}
