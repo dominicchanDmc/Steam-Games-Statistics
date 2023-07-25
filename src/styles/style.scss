@@ -354,7 +354,7 @@ body {
         font-size: 18px;
       }
     
-      td {
+      td,th {
         text-align: left;
         border-bottom: 1px solid #ddd;
       }
@@ -380,7 +380,12 @@ body {
         font-weight: bold;
         padding-left: 20px;
       }
-    
+      .compareCol-500{
+        width: 500px;
+        border: none;
+        background-color: transparent;
+        color: yellow;
+      }
       .compareCriteriaBtn {
         background-color: #2a63ec;
         color: #fff;

@@ -74,9 +74,9 @@ const reviewScoreChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox
 const ratingChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"ratingChb",value:"rating",lableName:"Rating (C)", skipTd:false, attributes: {value: "ratingChbObj", id: "ratingChbObj"}});
 
 
-const compareCriteriaCreateArr = [[ownersChbObj,releaseDateChbObj,priceChbObj,supportedLanguagesChbObj]
-,[categoriesChbObj,reviewScoreChbObj,tagsChbObj,averageForeverChbObj]
-,[totalNegativeChbObj,totalPositiveChbObj,genresChbObj,ratingChbObj]
+const compareCriteriaCreateArr = [[releaseDateChbObj,ownersChbObj,ratingChbObj,priceChbObj]
+,[totalPositiveChbObj,totalNegativeChbObj,reviewScoreChbObj,averageForeverChbObj]
+,[supportedLanguagesChbObj,categoriesChbObj,tagsChbObj,genresChbObj]
 ,[[radioBtnTbObj,radioBtnChartObj],[compareBtnObj,compareBtnIconObj]]];
 
 const dataSet = await getData();
@@ -231,11 +231,9 @@ function searchData(dataSet) {
 }
 
 function compareData(dataSet) {
-    const gameCompare1 = document.getElementById('gameCompare1');
-    const gameCompare2 = document.getElementById('gameCompare2');
     const searchObj = Helper.searchObjArrHelper("compare");
 
-    if (!gameCompare1.value || !gameCompare2.value){
+    if (!searchObj.gameCompare1 || !gameCompare2){
         alert("Must select 2 games");
         return;
     }
@@ -244,11 +242,68 @@ function compareData(dataSet) {
         return;
     }
        
-    alert();
-    // const filteredData = filterData(searchObj,dataSet);
-    // console.log(filteredData);
-    // displaySeachResult(filteredData);
+    const gameData1 = dataSet[searchObj.gameCompare1];
+    const gameData2 = dataSet[searchObj.gameCompare2];
+
+    if (searchObj.radioBtn === "Table")
+        compareDisplayByTable(searchObj,gameData1,gameData2); 
+    else
+    {}
     
+}
+
+function compareDisplayByTable(searchObj,gameData1,gameData2) {
+    const compareResultP = document.getElementById("compareResultP");
+    const compareResult = document.getElementById("compareResult");
+    compareResultP.innerHTML = "";
+    compareResult.innerHTML = "";
+    const propertyList_temp = (searchObj.getCheckedPropertiesArray());
+    const propertyList = propertyList_temp.filter((item)=>{
+        if (item ==="gameCompare1" || item ==="gameCompare2"||item ==="radioBtn")
+            return false;
+        else
+        return true;
+    });
+
+    const compareResultTable = buildElement(new BuildObj("table"));
+    const compareResultTr = buildElement(new BuildObj("tr"));
+    const compareResultEmptyTh = buildElement(new BuildObj("th"));
+    const compareResultTh = buildElement(new BuildObj("th"));
+    const compareResultTh2 = buildElement(new BuildObj("th"));
+    const game1Th = buildElement(Helper.buildObjHelper({tag:"input",inputType:"text",value:gameData1.name,readonly:true}));
+    const game2Th = buildElement(Helper.buildObjHelper({tag:"input",inputType:"text",value:gameData2.name,readonly:true}));
+    
+    compareResultTh.appendChild(game1Th);
+    compareResultTh2.appendChild(game2Th);
+    compareResultTr.appendChild(compareResultEmptyTh);
+    compareResultTr.appendChild(compareResultTh);
+    compareResultTr.appendChild(compareResultTh2);
+
+    compareResultTable.appendChild(compareResultTr);
+
+    propertyList.forEach((property)=>{
+        const trObj = buildElement(new BuildObj("tr"));
+        let classArr = [];
+        let input = "input";
+        let gameData1Value = gameData1[property];
+        let gameData2Value = gameData2[property];
+        
+        if (property ==="categories" || property ==="tags"
+        || property ==="genres"|| property ==="supported_languages"){
+            classArr = ["compareCol-500"]
+            input = "textarea";
+            gameData1Value = Helper.stringCut(gameData1[property]);
+            gameData2Value = Helper.stringCut(gameData2[property]);
+        }
+        const labelObj = createTableTd(Helper.buildObjHelper({tag:"label",lableName:Helper.stringTran(property)}));
+        const game1Obj = createTableTd(Helper.buildObjHelper({tag:input,classArr:classArr,inputType:"text",value:gameData1Value,readonly:true}));
+        const game2Obj = createTableTd(Helper.buildObjHelper({tag:input,classArr:classArr,inputType:"text",value:gameData2Value,readonly:true}));
+        labelObj.forEach(obj => trObj.appendChild(obj));
+        game1Obj.forEach(obj => trObj.appendChild(obj));
+        game2Obj.forEach(obj => trObj.appendChild(obj));
+        compareResultTable.appendChild(trObj);
+    });
+    compareResult.appendChild(compareResultTable);
 }
 
 function filterData(criteria, dataSet) {

@@ -85,18 +85,18 @@ export function searchObjArrHelper(source) {
         else
             searchObj.radioBtn = radioBtnTb.value;
 
-        searchObj.ownersChb = ownersChb.checked ;
-        searchObj.releaseDateChb = releaseDateChb.checked;
-        searchObj.priceChb = priceChb.checked;
-        searchObj.supportedLanguagesChb = supportedLanguagesChb.checked;
-        searchObj.categoriesChb = categoriesChb.checked;
-        searchObj.genresChb = genresChb.checked;
-        searchObj.tagsChb = tagsChb.checked;
-        searchObj.averageForeverChb = averageForeverChb.checked;
-        searchObj.totalNegativeChb = totalNegativeChb.checked;
-        searchObj.totalPositiveChb = totalPositiveChb.checked;
-        searchObj.reviewScoreChb = reviewScoreChb.checked;
-        searchObj.ratingChb = ratingChb.checked;
+        searchObj.release_date = releaseDateChb.checked;
+        searchObj.owners = ownersChb.checked ;
+        searchObj.rating = ratingChb.checked;
+        searchObj.price = priceChb.checked;
+        searchObj.total_positive = totalPositiveChb.checked;
+        searchObj.total_negative = totalNegativeChb.checked;
+        searchObj.review_score = reviewScoreChb.checked;
+        searchObj.average_forever = averageForeverChb.checked;
+        searchObj.supported_languages = supportedLanguagesChb.checked;
+        searchObj.categories = categoriesChb.checked;
+        searchObj.tags = tagsChb.checked;
+        searchObj.genres = genresChb.checked;
     }
 
     return searchObj;
@@ -104,4 +104,25 @@ export function searchObjArrHelper(source) {
 
 export function stringCut(string) {
     return string.replace(/\[|\]|'/g, "")
+}
+
+export function stringTran(string) {
+    switch (string) {
+        case "average_forever":
+            return "User Average Forever :";    
+        case "release_date":
+            return "Release Date :";    
+        case "review_score":
+            return "Review Score :";    
+        case "supported_languages":
+            return "Supported Languages :"; 
+        case "total_negative":
+            return "Total Negative :"; 
+        case "total_positive":
+            return "Total Positive :";    
+        case "price":
+            return "Price (USD) :"
+        default:
+           return string.charAt(0).toUpperCase() + string.slice(1) + " :";
+    }
 }

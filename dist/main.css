@@ -381,7 +381,7 @@ body .comparePage table {
   color: white;
   font-size: 18px;
 }
-body .comparePage td {
+body .comparePage td, body .comparePage th {
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
@@ -402,6 +402,12 @@ body .comparePage input {
   font-size: 18px;
   font-weight: bold;
   padding-left: 20px;
+}
+body .comparePage .compareCol-500 {
+  width: 500px;
+  border: none;
+  background-color: transparent;
+  color: yellow;
 }
 body .comparePage .compareCriteriaBtn {
   background-color: #2a63ec;
