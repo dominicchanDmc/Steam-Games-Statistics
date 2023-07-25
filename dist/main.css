@@ -340,7 +340,7 @@ body .detialPage .detialCol-200 {
   color: yellow;
 }
 body .detialPage .headerImage {
-  position: relative; /* Add this to make the container relative */
+  position: relative;
 }
 body .detialPage .detailBtn {
   position: absolute;
@@ -369,4 +369,50 @@ body .comparePage {
   margin-top: 80px;
   margin-bottom: 80px;
   padding-left: 100px;
+}
+body .comparePage table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  color: white;
+  font-size: 18px;
+}
+body .comparePage td {
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+body .comparePage tr:nth-child(even) {
+  background-color: #3f3f3f;
+}
+body .comparePage tr:last-child {
+  border-bottom: none;
+}
+body .comparePage label {
+  color: white;
+}
+body .comparePage input {
+  border: none;
+  background-color: transparent;
+  color: yellow;
+  font-size: 18px;
+  font-weight: bold;
+  padding-left: 20px;
+}
+body .comparePage .compareCriteriaBtn {
+  background-color: #2a63ec;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  align-items: center;
+  width: 300px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .comparePage .compareCriteriaBtn i {
+  padding: 10px;
 }

@@ -54,20 +54,30 @@ const headerTrAddToCompareBtnObj = Helper.buildObjHelper({tag:"button",classArr:
 
 const headerTrCreateArr = [headerTrNameObj,headerTrRatingObj,headerTrReleaseDateObj,headerTrLanguagesObj,headerTrCategoriesObj];
 //compareCriteria
-const compareNameObj = Helper.buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],lableName:"Game 1:",readonly:"true"});
-const compareName2Obj = Helper.buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],lableName:"Game 2",readonly:"true"});
+const compareNameObj = Helper.buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],lableName:"Game 1:",readonly:"true",colSpan:2});
+const compareName2Obj = Helper.buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],lableName:"Game 2",readonly:"true",colSpan:2});
 const radioBtnTbObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"tb",value:"Table", attributes: { name: "displayBy", value: "Table", id: "tb" ,checked:"checked"}});
 const radioBtnChartObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"ch",value:"Chart", attributes: { name: "displayBy", value: "ch", id: "ch" }});
 const compareBtnObj = Helper.buildObjHelper({tag:"button",classArr:["compareCriteriaBtn"], id:"compareBtn",innerHTML:"compare"});
 const compareBtnIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-table"]});
 const ownersChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"ownersChb",value:"owners",lableName:"Owners",skipTd:false, attributes: {value: "owners", id: "ownersChb" }});
 const releaseDateChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"releaseDateChb",value:"releaseDate",lableName:"Release Date", skipTd:false, attributes: {value: "releaseDate", id: "releaseDateChb"}});
-const chbHeadrtTdObj = Helper.buildObjHelper({tag:"label",value:"Compare With:"});
 const priceChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"priceChb",value:"price",lableName:"Price",skipTd:false, attributes: {value: "price", id: "priceChb" }});
 const supportedLanguagesChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"supportedLanguagesChb",value:"supportedLanguages",lableName:"Supported Languages", skipTd:false, attributes: {value: "supportedLanguages", id: "supportedLanguages"}});
+const categoriesChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"categoriesChb",value:"categories",lableName:"Categories",skipTd:false, attributes: {value: "categories", id: "categoriesChb" }});
+const genresChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"genresChb",value:"genres",lableName:"Genres", skipTd:false, attributes: {value: "genres", id: "genres"}});
+const tagsChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"tagsChb",value:"tags",lableName:"Tags", skipTd:false, attributes: {value: "tags", id: "tags"}});
+const averageForeverChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"averageForeverChbObjChb",value:"averageForeverChbObj",lableName:"User Average Forever", skipTd:false, attributes: {value: "averageForeverChbObj", id: "averageForeverChbObj"}});
+const totalNegativeChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"totalNegativeChb",value:"totalNegative",lableName:"Total Negative",skipTd:false, attributes: {value: "totalNegative", id: "totalNegativeChb" }});
+const totalPositiveChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"totalPositiveChb",value:"totalPositive",lableName:"Total Positive", skipTd:false, attributes: {value: "totalPositive", id: "totalPositive"}});
+const reviewScoreChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"reviewScoreChb",value:"reviewScore",lableName:"Review Score", skipTd:false, attributes: {value: "reviewScore", id: "reviewScore"}});
+const ratingChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"ratingChbObjChb",value:"ratingChbObj",lableName:"Rating", skipTd:false, attributes: {value: "ratingChbObj", id: "ratingChbObj"}});
 
 
-const compareCriteriaCreateArr = [[compareNameObj,compareName2Obj],[ownersChbObj,releaseDateChbObj,priceChbObj,supportedLanguagesChbObj],[[radioBtnTbObj,radioBtnChartObj],compareBtnObj,compareBtnIconObj]];
+const compareCriteriaCreateArr = [[compareNameObj,compareName2Obj],[ownersChbObj,releaseDateChbObj,priceChbObj,supportedLanguagesChbObj]
+,[categoriesChbObj,reviewScoreChbObj,tagsChbObj,averageForeverChbObj]
+,[totalNegativeChbObj,totalPositiveChbObj,genresChbObj,ratingChbObj]
+,[[radioBtnTbObj,radioBtnChartObj],[compareBtnObj,compareBtnIconObj]]];
 
 const dataSet = await getData();
 const navBtn = document.getElementById("navBtn");
@@ -364,13 +374,24 @@ function createTableTr(trCreateObjArr) {
                 newTd.appendChild(searchBtn);
                 masterTr.appendChild(newTd);
             }
+            else if (tdCreateObj[0].id === "compareBtn"){
+                // for compareBtn 
+                let compareBtn = buildElement(tdCreateObj[0]);
+                let compareBtnIcon = createTableTd(tdCreateObj[1]);
+                compareBtn.appendChild(compareBtnIcon[0]);
+                let newTd =  buildElement(new BuildObj("td"));
+                newTd.colSpan = "6";
+                newTd.appendChild(compareBtn);
+                masterTr.appendChild(newTd);
+            }
             else if (tdCreateObj[0].id === "tb"){
                 //for compareRadio
                 let newTd =  buildElement(new BuildObj("td"));
                 let labelObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Display By:"}));
                 let labelTbObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Table",lableName:"tb"}));
                 let labelChObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Chart",lableName:"ch"}));
-                newTd.appendChild(labelObj);      
+                newTd.appendChild(labelObj);    
+                newTd.colSpan = 2;  
                 let radioBtn = buildElement(tdCreateObj[0]);
                 let radioBtn2 = buildElement(tdCreateObj[1]);
                 newTd.appendChild(labelTbObj);
@@ -485,9 +506,8 @@ function displayDetial(name) {
     }
 
     let imageAndBtnContainer = document.createElement("div");
-    imageAndBtnContainer.style.display = "flex"; // Use flexbox for the container
+    imageAndBtnContainer.style.display = "flex"; 
   
-    // Append the detailAddToCompareBtn to the container
     let detailAddToCompareBtn = buildElement(detailAddToCompareBtnObj);
     detailAddToCompareBtn.onclick = function () {
       alert(name);
@@ -496,16 +516,7 @@ function displayDetial(name) {
     detailAddToCompareBtn.appendChild(detailAddToCompareBtnIcon);
     imageAndBtnContainer.appendChild(detailAddToCompareBtn);
   
-    // Append the container to the detialPage
     detialPage.appendChild(imageAndBtnContainer);
-
-    // let detailAddToCompareBtn = buildElement(detailAddToCompareBtnObj);
-    // detailAddToCompareBtn.onclick = function () {
-    //     alert(name);
-    // }
-    // let detailAddToCompareBtnIcon = buildElement(detailAddToCompareBtnIconObj);
-    // detailAddToCompareBtn.appendChild(detailAddToCompareBtnIcon);
-    // detialPage.append(detailAddToCompareBtn);
     
     const detialTable =  buildElement(new BuildObj("table"));
     detialCreateArr.forEach((row) =>{

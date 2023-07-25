@@ -309,7 +309,7 @@ body {
         color: yellow;
       }
       .headerImage {
-        position: relative; /* Add this to make the container relative */
+        position: relative; 
       }
       .detailBtn {
         position: absolute;
@@ -332,15 +332,72 @@ body {
         }
       }
     }
-    .comparePage{
+    
+    .comparePage {
       width: 100%;
       min-height: 595px;
       width: 1243px;
-  
       background-color: #3f3f3f;
       margin-top: 80px;
       margin-bottom: 80px;
       padding-left: 100px;
+    
+      // display: grid;
+      // grid-template-columns: auto 1fr;
+      // gap: 20px;
+    
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 30px;
+        color: white;
+        font-size: 18px;
+      }
+    
+      td {
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+    
+      tr:nth-child(even) {
+        background-color: #3f3f3f;
+      }
+    
+      tr:last-child {
+        border-bottom: none;
+      }
+    
+      label {
+        color: white;
+      }
+    
+      input {
+        border: none;
+        background-color: transparent;
+        color: yellow;
+        font-size: 18px;
+        font-weight: bold;
+        padding-left: 20px;
+      }
+    
+      .compareCriteriaBtn {
+        background-color: #2a63ec;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 20px;
+        cursor: pointer;
+        border-radius: 4px;
+        align-items: center;
+        width: 300px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        i {
+          padding: 10px;
+        }
+      }
     }
-
+    
 }
