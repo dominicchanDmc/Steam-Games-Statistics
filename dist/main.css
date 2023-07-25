@@ -200,60 +200,48 @@ body #navBtn .text {
   opacity: 0;
   transition: opacity 0.25s ease;
 }
-body .searchPage {
-  width: 100%;
-  min-height: 595px;
-  width: 1243px;
-  background-color: #3f3f3f;
-  margin-top: 80px;
-  margin-bottom: 80px;
-  padding-left: 100px;
-}
-body .searchPage #search-searchArea {
-  padding-top: 50px;
-}
-body .searchPage .user-input-table {
+body .user-input-table {
   border-collapse: collapse;
   width: 80%;
   align-items: center;
   border-bottom: 1px solid #ddd;
 }
-body .searchPage .user-input-table tr {
+body .user-input-table tr {
   border-bottom: 1px solid #ddd;
 }
-body .searchPage .user-input-table td {
+body .user-input-table td {
   padding: 8px;
 }
-body .searchPage .user-input-table label {
+body .user-input-table label {
   font-weight: bold;
   display: block;
   margin-bottom: 4px;
 }
-body .searchPage .user-input-table input {
+body .user-input-table input {
   width: 100%;
   padding: 4px 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
 }
-body .searchPage .user-input-table select {
+body .user-input-table select {
   width: 150;
   padding: 4px 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
 }
-body .searchPage .user-input-table input[type=text] {
+body .user-input-table input[type=text] {
   width: 200px;
 }
-body .searchPage .user-input-table input[type=month] {
+body .user-input-table input[type=month] {
   width: 140px;
 }
-body .searchPage .user-input-table input[type=number] {
+body .user-input-table input[type=number] {
   width: 100px;
   text-align: right;
 }
-body .searchPage .user-input-table .searchCriteriaBtn {
+body .user-input-table .searchCriteriaBtn {
   background-color: #2a63ec;
   color: #fff;
   border: none;
@@ -268,11 +256,23 @@ body .searchPage .user-input-table .searchCriteriaBtn {
   justify-content: center;
   align-items: center;
 }
-body .searchPage .user-input-table .searchCriteriaBtn i {
+body .user-input-table .searchCriteriaBtn i {
   padding: 10px;
 }
-body .searchPage .user-input-table .searchCriteriaBtn:hover {
+body .user-input-table .searchCriteriaBtn:hover {
   background-color: #1e449c;
+}
+body .searchPage {
+  width: 100%;
+  min-height: 595px;
+  width: 1243px;
+  background-color: #3f3f3f;
+  margin-top: 80px;
+  margin-bottom: 80px;
+  padding-left: 100px;
+}
+body .searchPage #search-searchArea {
+  padding-top: 50px;
 }
 body .searchPage #searchResultP {
   color: white;
@@ -296,6 +296,9 @@ body .searchPage .searchResultBtn {
   margin-left: 10px;
 }
 body .detialPage {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   margin-top: 80px;
   margin-bottom: 80px;
   margin-left: 100px;
@@ -336,7 +339,11 @@ body .detialPage .detialCol-200 {
   background-color: transparent;
   color: yellow;
 }
+body .detialPage .headerImage {
+  position: relative; /* Add this to make the container relative */
+}
 body .detialPage .detailBtn {
+  position: absolute;
   background-color: #2a63ec;
   color: #fff;
   border: none;
@@ -353,4 +360,13 @@ body .detialPage .detailBtn {
 }
 body .detialPage .detailBtn i {
   padding: 10px;
+}
+body .comparePage {
+  width: 100%;
+  min-height: 595px;
+  width: 1243px;
+  background-color: #3f3f3f;
+  margin-top: 80px;
+  margin-bottom: 80px;
+  padding-left: 100px;
 }

@@ -151,6 +151,76 @@ body {
         }
 
     }
+    .user-input-table {
+      border-collapse: collapse;
+      width: 80%;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+
+      tr {
+        border-bottom: 1px solid #ddd;
+
+      }
+      td {
+          padding: 8px;
+        }
+
+      label {
+          font-weight: bold;
+          display: block;
+          margin-bottom: 4px;
+        }
+      input{
+          width: 100%;
+          padding: 4px 8px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+        }
+      select{
+          width: 150;
+          padding: 4px 8px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+        }
+      
+      input[type="text"] {
+          width: 200px;
+        }
+      
+      input[type="month"] {
+          width: 140px;
+        }
+      
+        input[type="number"] {
+          width: 100px;
+          text-align: right;
+        }
+        .searchCriteriaBtn {
+          background-color: #2a63ec;
+          color: #fff;
+          border: none;
+          padding: 10px 20px;
+          font-size: 20px;
+          cursor: pointer;
+          border-radius: 4px;
+          align-items: center;
+          width: 300px;
+          height: 40px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          i {
+            padding: 10px;
+          }
+      }
+        
+      .searchCriteriaBtn:hover {
+          background-color: #1e449c;
+      }
+  }
+
     .searchPage{
         width: 100%;
         min-height: 595px;
@@ -163,75 +233,6 @@ body {
 
         #search-searchArea{
           padding-top: 50px
-        }
-        .user-input-table {
-            border-collapse: collapse;
-            width: 80%;
-            align-items: center;
-            border-bottom: 1px solid #ddd;
-
-            tr {
-              border-bottom: 1px solid #ddd;
-
-            }
-            td {
-                padding: 8px;
-              }
-
-            label {
-                font-weight: bold;
-                display: block;
-                margin-bottom: 4px;
-              }
-            input{
-                width: 100%;
-                padding: 4px 8px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                box-sizing: border-box;
-              }
-            select{
-                width: 150;
-                padding: 4px 8px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                box-sizing: border-box;
-              }
-            
-            input[type="text"] {
-                width: 200px;
-              }
-            
-            input[type="month"] {
-                width: 140px;
-              }
-            
-              input[type="number"] {
-                width: 100px;
-                text-align: right;
-              }
-              .searchCriteriaBtn {
-                background-color: #2a63ec;
-                color: #fff;
-                border: none;
-                padding: 10px 20px;
-                font-size: 20px;
-                cursor: pointer;
-                border-radius: 4px;
-                align-items: center;
-                width: 300px;
-                height: 40px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                i {
-                  padding: 10px;
-                }
-            }
-              
-            .searchCriteriaBtn:hover {
-                background-color: #1e449c;
-            }
         }
 
         #searchResultP {   
@@ -260,6 +261,9 @@ body {
         
     }
     .detialPage {
+        display: flex; 
+        flex-direction: column; 
+        align-items: flex-start; 
         margin-top: 80px;
         margin-bottom: 80px;
         margin-left: 100px;
@@ -304,8 +308,12 @@ body {
         background-color: transparent;
         color: yellow;
       }
-      
+      .headerImage {
+        position: relative; /* Add this to make the container relative */
+      }
       .detailBtn {
+        position: absolute;
+
         background-color: #2a63ec;
         color: #fff;
         border: none;
@@ -322,8 +330,17 @@ body {
         i {
           padding: 10px;
         }
+      }
     }
-  }
-    
+    .comparePage{
+      width: 100%;
+      min-height: 595px;
+      width: 1243px;
+  
+      background-color: #3f3f3f;
+      margin-top: 80px;
+      margin-bottom: 80px;
+      padding-left: 100px;
+    }
 
 }

@@ -1,7 +1,7 @@
 class BuildObj{
     constructor(tag,classArr, name,id,innerHTML
         ,inputType,lableName,value,attribute,options,readonly
-        ,onClick,src,rowSpan,colSpan) {
+        ,onClick,src,rowSpan,colSpan,skipTd) {
         this.tag = tag;
         this.classArr = classArr;
         this.name = name;
@@ -15,6 +15,7 @@ class BuildObj{
         this.readonly = readonly;
         this.onClick = onClick;
         this.src = src;
+        this.skipTd = skipTd
         // this.rowSpan = rowSpan
         this.colSpan = colSpan
     }

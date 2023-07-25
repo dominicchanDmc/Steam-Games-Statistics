@@ -53,7 +53,21 @@ const headerTrSelectBtnObj = Helper.buildObjHelper({tag:"button",classArr:["sear
 const headerTrAddToCompareBtnObj = Helper.buildObjHelper({tag:"button",classArr:["searchResultBtn"],innerHTML:"Compare"});
 
 const headerTrCreateArr = [headerTrNameObj,headerTrRatingObj,headerTrReleaseDateObj,headerTrLanguagesObj,headerTrCategoriesObj];
+//compareCriteria
+const compareNameObj = Helper.buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],lableName:"Game 1:",readonly:"true"});
+const compareName2Obj = Helper.buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],lableName:"Game 2",readonly:"true"});
+const radioBtnTbObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"tb",value:"Table", attributes: { name: "displayBy", value: "Table", id: "tb" ,checked:"checked"}});
+const radioBtnChartObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"ch",value:"Chart", attributes: { name: "displayBy", value: "ch", id: "ch" }});
+const compareBtnObj = Helper.buildObjHelper({tag:"button",classArr:["compareCriteriaBtn"], id:"compareBtn",innerHTML:"compare"});
+const compareBtnIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-table"]});
+const ownersChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"ownersChb",value:"owners",lableName:"Owners",skipTd:false, attributes: {value: "owners", id: "ownersChb" }});
+const releaseDateChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"releaseDateChb",value:"releaseDate",lableName:"Release Date", skipTd:false, attributes: {value: "releaseDate", id: "releaseDateChb"}});
+const chbHeadrtTdObj = Helper.buildObjHelper({tag:"label",value:"Compare With:"});
+const priceChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"priceChb",value:"price",lableName:"Price",skipTd:false, attributes: {value: "price", id: "priceChb" }});
+const supportedLanguagesChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"supportedLanguagesChb",value:"supportedLanguages",lableName:"Supported Languages", skipTd:false, attributes: {value: "supportedLanguages", id: "supportedLanguages"}});
 
+
+const compareCriteriaCreateArr = [[compareNameObj,compareName2Obj],[ownersChbObj,releaseDateChbObj,priceChbObj,supportedLanguagesChbObj],[[radioBtnTbObj,radioBtnChartObj],compareBtnObj,compareBtnIconObj]];
 
 const dataSet = await getData();
 const navBtn = document.getElementById("navBtn");
@@ -144,7 +158,24 @@ const searchSearchArea = document.querySelector("#search-searchArea");
         headerTrCreateArr_new.push(headerTrAddToCompareBtnObj_new);
         return headerTrCreateArr_new;
     }
+    
+    function populateComparePage(createStr) {
+        const compareSearchArea = document.getElementById("compare-searchArea");
+        const tableSearchArea =  buildElement(new BuildObj("table"));
 
+        // const tableSearchArea =  buildElement(new BuildObj("table",["user-input-table"]));
+        createStr.forEach((row) =>{
+             let tr = createTableTr(row);
+             tableSearchArea.appendChild(tr);
+        });
+        compareSearchArea.appendChild(tableSearchArea);
+
+        let searchBtn = document.querySelector(".searchCriteriaBtn")
+        searchBtn.addEventListener("click",(e)=>{
+            e.preventDefault();
+            searchData(dataSet);
+         })
+    }
     
 function searchData(dataSet) {
     const searchObj = Helper.searchObjArrHelper();
@@ -265,6 +296,11 @@ function buildElement(buildObj){
     else if (buildObj.tag === "input"){
         if (buildObj.inputType!="text")
             newElement.type = buildObj.inputType;
+        if (buildObj.inputType === "radio" && buildObj.attributes){
+            for (const [key, value] of Object.entries(buildObj.attributes)) {
+                newElement.setAttribute(key, value);
+            }    
+        }
     }
     else if (buildObj.tag === 'label' && buildObj.lableName) 
         newElement.setAttribute('for', buildObj.lableName);
@@ -328,6 +364,33 @@ function createTableTr(trCreateObjArr) {
                 newTd.appendChild(searchBtn);
                 masterTr.appendChild(newTd);
             }
+            else if (tdCreateObj[0].id === "tb"){
+                //for compareRadio
+                let newTd =  buildElement(new BuildObj("td"));
+                let labelObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Display By:"}));
+                let labelTbObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Table",lableName:"tb"}));
+                let labelChObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Chart",lableName:"ch"}));
+                newTd.appendChild(labelObj);      
+                let radioBtn = buildElement(tdCreateObj[0]);
+                let radioBtn2 = buildElement(tdCreateObj[1]);
+                newTd.appendChild(labelTbObj);
+                newTd.appendChild(radioBtn);
+                newTd.appendChild(labelChObj);
+                newTd.appendChild(radioBtn2);
+
+                masterTr.appendChild(newTd);
+            }
+            else{
+                let innerTd = createTableTd(tdCreateObj);
+
+                if (Array.isArray(innerTd)) {
+                    innerTd.forEach((td)=>{
+                        masterTr.appendChild(td);
+                    });
+                }
+                else
+                    masterTr.appendChild(innerTd);
+            }
         }else{
             let innerTd = createTableTd(tdCreateObj);
 
@@ -359,20 +422,30 @@ function createTableTd(tdCreateObjArr) {
 function createTableTdInner(tdCreateObj) {
     let returnArr = [];
     let labelmasterTd =  buildElement(new BuildObj("td"));
-    if (tdCreateObj.colSpan)
-        labelmasterTd.colSpan = tdCreateObj.colSpan;
-    if (tdCreateObj.lableName){
-        let labelObj = new BuildObj("label",null,null,null,tdCreateObj.lableName,tdCreateObj.id);
-        let labelTd =  buildElement(labelObj);
-        labelmasterTd.appendChild(labelTd);
-    }
-    
-    let innterTd = buildElement(tdCreateObj);
-    labelmasterTd.appendChild(innterTd);
-    // returnArr.push(innterTd);
-    returnArr.push(labelmasterTd);
-    return returnArr;
+    // if (tdCreateObj.inputType === "checkbox"){
 
+    // }else{
+        if (tdCreateObj.colSpan)
+            labelmasterTd.colSpan = tdCreateObj.colSpan;
+        if (tdCreateObj.lableName){
+            let labelObj = new BuildObj("label",null,null,null,tdCreateObj.lableName,tdCreateObj.id);
+            let labelTd =  buildElement(labelObj);
+            if (tdCreateObj.skipTd)
+                returnArr.push(labelTd);
+            else
+                labelmasterTd.appendChild(labelTd);
+        }  
+            let innterTd = buildElement(tdCreateObj);
+            if (tdCreateObj.skipTd)
+                returnArr.push(innterTd);
+            else
+                labelmasterTd.appendChild(innterTd);
+        // }
+
+        if (!tdCreateObj.skipTd)
+             returnArr.push(labelmasterTd);
+
+        return returnArr;
 }
 
 function displayDetial(name) {
@@ -382,6 +455,7 @@ function displayDetial(name) {
 
     const nameObj = Helper.buildObjHelper({tag:"input",classArr:["detialCol-200"],inputType:"text",value:game.name,readonly:"true",lableName:"Name:",colSpan:"4"});
     const headerImageObj = Helper.buildObjHelper({tag:"img",classArr:["headerImage"],src:game["Header image"]});
+    const noImageObj = Helper.buildObjHelper({tag:"input",classArr:["h1"],value:"No Image"});
     const releaseDateObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.release_date,readonly:"true",lableName:"Release Date:"});
     const ratingObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.rating,readonly:"true",lableName:"Rating:"});
     const languagesObj = Helper.buildObjHelper({tag:"textarea",classArr:["detialCol-200"],inputType:"text",value:Helper.stringCut(game.supported_languages),readonly:"true",lableName:"Supported Languages:",colSpan:"4"});
@@ -391,11 +465,13 @@ function displayDetial(name) {
     const tagsObj = Helper.buildObjHelper({tag:"textarea",classArr:["detialCol-200"],inputType:"text",value:Helper.stringCut(game.tags),readonly:"true",lableName:"Tags:",colSpan:"4"});
     const platformsObj= Helper.buildObjHelper({tag:"input",inputType:"text",value:Helper.stringCut(game.platforms),readonly:"true",lableName:"Platforms:"});
     const priceObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.price,readonly:"true",lableName:"Price (USD):"});
+    const categoriesObj = Helper.buildObjHelper({tag:"textarea",classArr:["detialCol-200"],inputType:"text",value:Helper.stringCut(game.categories),readonly:"true",lableName:"Categories:",colSpan:"4"});
+
 
     const detailAddToCompareBtnObj = Helper.buildObjHelper({tag:"button",classArr:["detailBtn"],innerHTML:"Add To Compare"});
     const detailAddToCompareBtnIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-table"]});
     
-    const detialCreateArr = [[nameObj],[releaseDateObj,ratingObj],[ownersObj,priceObj],[languagesObj],[platformsObj,achievementsObj],[genresObj],[tagsObj]];
+    const detialCreateArr = [[nameObj],[releaseDateObj,ratingObj],[ownersObj,priceObj],[categoriesObj],[languagesObj],[platformsObj,achievementsObj],[genresObj],[tagsObj]];
     detialPage.innerHTML = "";
 
 
@@ -403,14 +479,33 @@ function displayDetial(name) {
     if (game["Header image"]){
         let headerImage = buildElement(headerImageObj);
         detialPage.append(headerImage);
+    }else{
+        let noImage = buildElement(noImageObj);
+        detialPage.append(noImage);
     }
+
+    let imageAndBtnContainer = document.createElement("div");
+    imageAndBtnContainer.style.display = "flex"; // Use flexbox for the container
+  
+    // Append the detailAddToCompareBtn to the container
     let detailAddToCompareBtn = buildElement(detailAddToCompareBtnObj);
     detailAddToCompareBtn.onclick = function () {
-        alert(name);
-    }
+      alert(name);
+    };
     let detailAddToCompareBtnIcon = buildElement(detailAddToCompareBtnIconObj);
     detailAddToCompareBtn.appendChild(detailAddToCompareBtnIcon);
-    detialPage.append(detailAddToCompareBtn);
+    imageAndBtnContainer.appendChild(detailAddToCompareBtn);
+  
+    // Append the container to the detialPage
+    detialPage.appendChild(imageAndBtnContainer);
+
+    // let detailAddToCompareBtn = buildElement(detailAddToCompareBtnObj);
+    // detailAddToCompareBtn.onclick = function () {
+    //     alert(name);
+    // }
+    // let detailAddToCompareBtnIcon = buildElement(detailAddToCompareBtnIconObj);
+    // detailAddToCompareBtn.appendChild(detailAddToCompareBtnIcon);
+    // detialPage.append(detailAddToCompareBtn);
     
     const detialTable =  buildElement(new BuildObj("table"));
     detialCreateArr.forEach((row) =>{
@@ -424,6 +519,7 @@ function displayDetial(name) {
     populateFrontPageBtn();
     populateNavBtn(); 
     populateSearchPage(searchCriteriaCreateArr);
+    populateComparePage(compareCriteriaCreateArr);
 });
 
 
