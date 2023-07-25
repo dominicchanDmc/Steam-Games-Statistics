@@ -55,10 +55,10 @@ const headerTrAddToCompareBtnObj = Helper.buildObjHelper({tag:"button",classArr:
 const headerTrCreateArr = [headerTrNameObj,headerTrRatingObj,headerTrReleaseDateObj,headerTrLanguagesObj,headerTrCategoriesObj];
 //compareCriteria
 const compareNameObj = Helper.buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],lableName:"Game 1:",readonly:"true",colSpan:2});
-const compareName2Obj = Helper.buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],lableName:"Game 2",readonly:"true",colSpan:2});
+const compareName2Obj = Helper.buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],lableName:"Game 2:",readonly:"true",colSpan:2});
 const radioBtnTbObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"tb",value:"Table", attributes: { name: "displayBy", value: "Table", id: "tb" ,checked:"checked"}});
 const radioBtnChartObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"ch",value:"Chart", attributes: { name: "displayBy", value: "ch", id: "ch" }});
-const compareBtnObj = Helper.buildObjHelper({tag:"button",classArr:["compareCriteriaBtn"], id:"compareBtn",innerHTML:"compare"});
+const compareBtnObj = Helper.buildObjHelper({tag:"button",classArr:["compareCriteriaBtn"], id:"compareBtn",innerHTML:"Compare"});
 const compareBtnIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-table"]});
 const ownersChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"ownersChb",value:"owners",lableName:"Owners",skipTd:false, attributes: {value: "owners", id: "ownersChb" }});
 const releaseDateChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"releaseDateChb",value:"releaseDate",lableName:"Release Date", skipTd:false, attributes: {value: "releaseDate", id: "releaseDateChb"}});
@@ -67,11 +67,11 @@ const supportedLanguagesChbObj = Helper.buildObjHelper({tag:"input",inputType:"c
 const categoriesChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"categoriesChb",value:"categories",lableName:"Categories",skipTd:false, attributes: {value: "categories", id: "categoriesChb" }});
 const genresChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"genresChb",value:"genres",lableName:"Genres", skipTd:false, attributes: {value: "genres", id: "genres"}});
 const tagsChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"tagsChb",value:"tags",lableName:"Tags", skipTd:false, attributes: {value: "tags", id: "tags"}});
-const averageForeverChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"averageForeverChbObjChb",value:"averageForeverChbObj",lableName:"User Average Forever", skipTd:false, attributes: {value: "averageForeverChbObj", id: "averageForeverChbObj"}});
-const totalNegativeChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"totalNegativeChb",value:"totalNegative",lableName:"Total Negative",skipTd:false, attributes: {value: "totalNegative", id: "totalNegativeChb" }});
-const totalPositiveChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"totalPositiveChb",value:"totalPositive",lableName:"Total Positive", skipTd:false, attributes: {value: "totalPositive", id: "totalPositive"}});
-const reviewScoreChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"reviewScoreChb",value:"reviewScore",lableName:"Review Score", skipTd:false, attributes: {value: "reviewScore", id: "reviewScore"}});
-const ratingChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"ratingChbObjChb",value:"ratingChbObj",lableName:"Rating", skipTd:false, attributes: {value: "ratingChbObj", id: "ratingChbObj"}});
+const averageForeverChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"averageForeverChbObjChb",value:"averageForeverChbObj",lableName:"User Average Forever (C)", skipTd:false, attributes: {value: "averageForeverChbObj", id: "averageForeverChbObj"}});
+const totalNegativeChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"totalNegativeChb",value:"totalNegative",lableName:"Total Negative (C)",skipTd:false, attributes: {value: "totalNegative", id: "totalNegativeChb" }});
+const totalPositiveChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"totalPositiveChb",value:"totalPositive",lableName:"Total Positive (C)", skipTd:false, attributes: {value: "totalPositive", id: "totalPositive"}});
+const reviewScoreChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"reviewScoreChb",value:"reviewScore",lableName:"Review Score (C)", skipTd:false, attributes: {value: "reviewScore", id: "reviewScore"}});
+const ratingChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"ratingChbObjChb",value:"ratingChbObj",lableName:"Rating (C)", skipTd:false, attributes: {value: "ratingChbObj", id: "ratingChbObj"}});
 
 
 const compareCriteriaCreateArr = [[compareNameObj,compareName2Obj],[ownersChbObj,releaseDateChbObj,priceChbObj,supportedLanguagesChbObj]

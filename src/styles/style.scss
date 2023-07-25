@@ -326,6 +326,7 @@ body {
         height: 40px;
         display: flex;
         justify-content: center;
+        right:250px;
         align-items: center;
         i {
           padding: 10px;
@@ -341,11 +342,7 @@ body {
       margin-top: 80px;
       margin-bottom: 80px;
       padding-left: 100px;
-    
-      // display: grid;
-      // grid-template-columns: auto 1fr;
-      // gap: 20px;
-    
+
       table {
         width: 100%;
         border-collapse: collapse;
@@ -369,6 +366,7 @@ body {
     
       label {
         color: white;
+        padding: 10px
       }
     
       input {
@@ -397,6 +395,13 @@ body {
         i {
           padding: 10px;
         }
+      }
+      #compareResultP {   
+        color: white;   
+        font-size: 30px;
+        text-align: center;
+        margin: 10px auto 0;
+        padding-right: 160px;
       }
     }
     

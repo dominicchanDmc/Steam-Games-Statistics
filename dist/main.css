@@ -356,6 +356,7 @@ body .detialPage .detailBtn {
   height: 40px;
   display: flex;
   justify-content: center;
+  right: 250px;
   align-items: center;
 }
 body .detialPage .detailBtn i {
@@ -389,6 +390,7 @@ body .comparePage tr:last-child {
 }
 body .comparePage label {
   color: white;
+  padding: 10px;
 }
 body .comparePage input {
   border: none;
@@ -415,4 +417,11 @@ body .comparePage .compareCriteriaBtn {
 }
 body .comparePage .compareCriteriaBtn i {
   padding: 10px;
+}
+body .comparePage #compareResultP {
+  color: white;
+  font-size: 30px;
+  text-align: center;
+  margin: 10px auto 0;
+  padding-right: 160px;
 }
