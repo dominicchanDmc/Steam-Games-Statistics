@@ -1,6 +1,7 @@
 import OptionObj from "./optionObj.js"
 import BuildObj from "./buildObj.js"
 import SearchObj from "./searchObj.js"
+import ChartObj from "./chartObj.js"
 
 export function optionObjHashHelper(operatorHash,type) {
     let optionObjList = [];
@@ -102,6 +103,14 @@ export function searchObjArrHelper(source) {
     return searchObj;
 }
 
+export function chartObjHelper(createHash) {
+    let chartObj = new ChartObj();
+
+    for (const key in createHash) {
+        chartObj[key] = createHash[key];
+    }
+    return chartObj;
+}
 export function stringCut(string) {
     return string.replace(/\[|\]|'/g, "")
 }

@@ -237,6 +237,17 @@ const searchSearchArea = document.querySelector("#search-searchArea");
             e.preventDefault();
             compareData(dataSet);
          })
+
+         const masterCheckbox = document.getElementById('masterChb');
+        //  const checkboxes = document.querySelectorAll('.checkbox');
+       
+         masterCheckbox.addEventListener('change', () => {
+           if (masterCheckbox.checked) {
+             checkAllCheckboxes();
+           } else {
+             uncheckAllCheckboxes();
+           }
+         });
     }
     
 function searchData(dataSet) {
@@ -329,6 +340,19 @@ function compareDisplayByTable(propertyList,gameData1,gameData2) {
 }
 
 function compareDisplayByChart(propertyList,gameData1,gameData2) {
+    appendCanvas(propertyList);
+    let i=0;
+    
+    propertyList.forEach((property)=>{
+        const ctx = document.getElementById(`canvas${i}`); 
+        const createHash = {ctx:ctx,type:"bar",compareCol:property
+        ,displayLable:property,game1Data:gameData1,game2Data:gameData2
+    ,beginAtZero:false};
+        const chartObj = Helper.chartObjHelper(createHash);
+        
+        buildCompareChart(chartObj);
+        i++;
+    });
 
 }
 function filterData(criteria, dataSet) {
@@ -601,7 +625,10 @@ function createTableTdInner(tdCreateObj) {
         if (tdCreateObj.colSpan)
             labelmasterTd.colSpan = tdCreateObj.colSpan;
         if (tdCreateObj.lableName){
-            let labelObj = new BuildObj("label",null,null,null,tdCreateObj.lableName,tdCreateObj.id);
+            let labelObjClass=[];
+            if (tdCreateObj.lableClass)
+                labelObjClass = tdCreateObj.lableClass;
+            let labelObj = new BuildObj("label",labelObjClass,null,null,tdCreateObj.lableName,tdCreateObj.id);
             let labelTd =  buildElement(labelObj);
             if (tdCreateObj.skipTd)
                 returnArr.push(labelTd);
@@ -635,15 +662,22 @@ function displayDetial(name) {
     const genresObj = Helper.buildObjHelper({tag:"textarea",classArr:["detialCol-1000"],inputType:"text",value:Helper.stringCut(game.genres),readonly:"true",lableName:"Genres:",colSpan:"4"});
     const ownersObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.owners,readonly:"true",lableName:"Owners:"});
     const tagsObj = Helper.buildObjHelper({tag:"textarea",classArr:["detialCol-1000"],inputType:"text",value:Helper.stringCut(game.tags),readonly:"true",lableName:"Tags:",colSpan:"4"});
-    const platformsObj= Helper.buildObjHelper({tag:"input",inputType:"text",value:Helper.stringCut(game.platforms),readonly:"true",lableName:"Platforms:"});
+    const platformsObj= Helper.buildObjHelper({tag:"input",inputType:"text",value:Helper.stringCut(game.platforms),readonly:"true",lableName:"Platforms:",colSpan:"4"});
     const priceObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.price,readonly:"true",lableName:"Price (USD):"});
     const categoriesObj = Helper.buildObjHelper({tag:"textarea",classArr:["detialCol-1000"],inputType:"text",value:Helper.stringCut(game.categories),readonly:"true",lableName:"Categories:",colSpan:"4"});
-
+    const totalNegativeObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.total_negative,lableName:"Total Negative:",readonly:"true"});
+    const totalPositiveObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.total_positive,lableName:"Total Positive:",readonly:"true"});
+    const reviewScoreObj = Helper.buildObjHelper({tag:"input",inputType:"text",value:game.review_score,lableName:"Review Score:",readonly:"true"});
+    
 
     const detailAddToCompareBtnObj = Helper.buildObjHelper({tag:"button",classArr:["detailBtn"],innerHTML:"Add To Compare"});
     const detailAddToCompareBtnIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-table"]});
     
-    const detialCreateArr = [[nameObj],[releaseDateObj,ratingObj],[ownersObj,priceObj],[categoriesObj],[languagesObj],[platformsObj,achievementsObj],[genresObj],[tagsObj]];
+    const detialCreateArr = [[nameObj],[releaseDateObj,ownersObj],
+    [ratingObj,priceObj],[platformsObj],[categoriesObj],
+    [totalPositiveObj,totalNegativeObj],[languagesObj],[reviewScoreObj,
+        achievementsObj],[genresObj],[tagsObj]];
+
     detialPage.innerHTML = "";
 
 
@@ -677,6 +711,19 @@ function displayDetial(name) {
     detialPage.appendChild(detialTable);
     detialPage.scrollIntoView();
 }
+
+function appendCanvas(propertyList) {
+    const ctx = document.getElementById('chartArea'); 
+    ctx.innerHTML = "";
+    for(let i=0;i<propertyList.length;i++){
+        let canvasId = "canvas" + i;
+        const canvas = buildElement(
+        Helper.buildObjHelper({tag:"canvas",id:canvasId}));
+        ctx.appendChild(canvas);
+    }
+}
+
+
     
     populateFrontPageBtn();
     populateNavBtn(); 
@@ -684,25 +731,23 @@ function displayDetial(name) {
     populateComparePage(compareCriteriaCreateArr);
     // test();
 });
+  function buildCompareChart(chartObj) {
 
-
-function buildChart(chartObj) {
-    const ctx = document.getElementById('myChart');
-
-    new Chart(ctx, {
-      type: 'bar',
+    new Chart(chartObj.ctx, {
+      type: chartObj.type,
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: [chartObj.game1Data.name,chartObj.game2Data.name],
         datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
+          label: Helper.stringTran(chartObj.compareCol),
+          data: [chartObj.game1Data[chartObj.compareCol],
+          chartObj.game2Data[chartObj.compareCol]],
           borderWidth: 1
         }]
       },
       options: {
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: chartObj.beginAtZero
           }
         }
       }
