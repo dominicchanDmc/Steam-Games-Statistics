@@ -36,7 +36,8 @@ export function buildObjHelper(createHash) {
     return buildObj;
 }
 
-export function searchObjArrHelper() {
+export function searchObjArrHelper(source) {
+    //source
     let gameName = document.getElementById("gameName");
     let releaseFrom = document.getElementById("releaseFrom");
     let releaseTo = document.getElementById("releaseTo");
@@ -46,16 +47,57 @@ export function searchObjArrHelper() {
     let categories = document.getElementById("categories");
     let orderBy = document.getElementById("orderBy");
 
+    //compare
+    const gameCompare1 = document.getElementById('gameCompare1');
+    const gameCompare2 = document.getElementById('gameCompare2');
+    const radioBtnTb = document.getElementById('tb');
+    const radioBtnChart = document.getElementById('ch');
+    const ownersChb = document.getElementById('ownersChb');
+    const releaseDateChb = document.getElementById('releaseDateChb');
+    const priceChb = document.getElementById('priceChb');
+    const supportedLanguagesChb = document.getElementById('supportedLanguagesChb');
+    const categoriesChb = document.getElementById('categoriesChb');
+    const genresChb = document.getElementById('genresChb');
+    const tagsChb = document.getElementById('tagsChb');
+    const averageForeverChb = document.getElementById('averageForeverChb');
+    const totalNegativeChb = document.getElementById('totalNegativeChb');    
+    const totalPositiveChb = document.getElementById('totalPositiveChb');
+    const reviewScoreChb = document.getElementById('reviewScoreChb');
+    const ratingChb = document.getElementById('ratingChb');
+
     let searchObj = new SearchObj();
 
-    searchObj.gameName = gameName.value;
-    searchObj.releaseFrom = releaseFrom.value;
-    searchObj.releaseTo = releaseTo.value;
-    searchObj.operator = operator.value;
-    searchObj.rating = rating.value;
-    searchObj.languages = languages.value;
-    searchObj.categories = categories.value;
-    searchObj.orderBy = orderBy.value;
+    if (source === "search"){
+        searchObj.gameName = gameName.value;
+        searchObj.releaseFrom = releaseFrom.value;
+        searchObj.releaseTo = releaseTo.value;
+        searchObj.operator = operator.value;
+        searchObj.rating = rating.value;
+        searchObj.languages = languages.value;
+        searchObj.categories = categories.value;
+        searchObj.orderBy = orderBy.value;
+    }
+    else if (source === "compare"){
+        searchObj.gameCompare1 = gameCompare1.value;
+        searchObj.gameCompare2 = gameCompare2.value;
+        if (radioBtnChart.checked)
+            searchObj.radioBtn = radioBtnChart.value;
+        else
+            searchObj.radioBtn = radioBtnTb.value;
+
+        searchObj.ownersChb = ownersChb.checked ;
+        searchObj.releaseDateChb = releaseDateChb.checked;
+        searchObj.priceChb = priceChb.checked;
+        searchObj.supportedLanguagesChb = supportedLanguagesChb.checked;
+        searchObj.categoriesChb = categoriesChb.checked;
+        searchObj.genresChb = genresChb.checked;
+        searchObj.tagsChb = tagsChb.checked;
+        searchObj.averageForeverChb = averageForeverChb.checked;
+        searchObj.totalNegativeChb = totalNegativeChb.checked;
+        searchObj.totalPositiveChb = totalPositiveChb.checked;
+        searchObj.reviewScoreChb = reviewScoreChb.checked;
+        searchObj.ratingChb = ratingChb.checked;
+    }
 
     return searchObj;
 }

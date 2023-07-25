@@ -67,11 +67,11 @@ const supportedLanguagesChbObj = Helper.buildObjHelper({tag:"input",inputType:"c
 const categoriesChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"categoriesChb",value:"categories",lableName:"Categories",skipTd:false, attributes: {value: "categories", id: "categoriesChb" }});
 const genresChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"genresChb",value:"genres",lableName:"Genres", skipTd:false, attributes: {value: "genres", id: "genres"}});
 const tagsChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"tagsChb",value:"tags",lableName:"Tags", skipTd:false, attributes: {value: "tags", id: "tags"}});
-const averageForeverChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"averageForeverChbObjChb",value:"averageForeverChbObj",lableName:"User Average Forever (C)", skipTd:false, attributes: {value: "averageForeverChbObj", id: "averageForeverChbObj"}});
+const averageForeverChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"averageForeverChb",value:"averageForever",lableName:"User Average Forever (C)", skipTd:false, attributes: {value: "averageForeverChbObj", id: "averageForeverChbObj"}});
 const totalNegativeChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"totalNegativeChb",value:"totalNegative",lableName:"Total Negative (C)",skipTd:false, attributes: {value: "totalNegative", id: "totalNegativeChb" }});
 const totalPositiveChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"totalPositiveChb",value:"totalPositive",lableName:"Total Positive (C)", skipTd:false, attributes: {value: "totalPositive", id: "totalPositive"}});
 const reviewScoreChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"reviewScoreChb",value:"reviewScore",lableName:"Review Score (C)", skipTd:false, attributes: {value: "reviewScore", id: "reviewScore"}});
-const ratingChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"ratingChbObjChb",value:"ratingChbObj",lableName:"Rating (C)", skipTd:false, attributes: {value: "ratingChbObj", id: "ratingChbObj"}});
+const ratingChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"ratingChb",value:"rating",lableName:"Rating (C)", skipTd:false, attributes: {value: "ratingChbObj", id: "ratingChbObj"}});
 
 
 const compareCriteriaCreateArr = [[ownersChbObj,releaseDateChbObj,priceChbObj,supportedLanguagesChbObj]
@@ -211,15 +211,16 @@ const searchSearchArea = document.querySelector("#search-searchArea");
         let compareBtn = document.querySelector(".compareCriteriaBtn")
         compareBtn.addEventListener("click",(e)=>{
             e.preventDefault();
-            alert(1);
-            // searchData(dataSet);
+            compareData(dataSet);
          })
     }
     
 function searchData(dataSet) {
-    const searchObj = Helper.searchObjArrHelper();
-    if (searchObj.checkOnlyOneCriteria(0))
+    const searchObj = Helper.searchObjArrHelper("search");
+    if (searchObj.checkOnlyOneCriteria("search",0)){
+        alert("At least choose one Criteria");
         return;
+    }
     if (!searchVaildation(searchObj))
         return;
     else{
@@ -227,6 +228,27 @@ function searchData(dataSet) {
         console.log(filteredData);
         displaySeachResult(filteredData);
     }
+}
+
+function compareData(dataSet) {
+    const gameCompare1 = document.getElementById('gameCompare1');
+    const gameCompare2 = document.getElementById('gameCompare2');
+    const searchObj = Helper.searchObjArrHelper("compare");
+
+    if (!gameCompare1.value || !gameCompare2.value){
+        alert("Must select 2 games");
+        return;
+    }
+    if (searchObj.checkOnlyOneCriteria("compare",0)){
+        alert("At least choose one Criteria");
+        return;
+    }
+       
+    alert();
+    // const filteredData = filterData(searchObj,dataSet);
+    // console.log(filteredData);
+    // displaySeachResult(filteredData);
+    
 }
 
 function filterData(criteria, dataSet) {
