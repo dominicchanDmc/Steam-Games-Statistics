@@ -58,8 +58,6 @@ class SearchObj{
         const checkedFields = this.getCheckedPropertiesArray();
         
         return checkedFields.every(field => requiredFields.includes(field)); 
-        // &&
-        //   checkedFields.length === requiredFields.length;
       }
 }
 

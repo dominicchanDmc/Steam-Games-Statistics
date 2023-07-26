@@ -1,30 +1,7 @@
 import './index.scss';
 import BuildObj from "./scripts/buildObj.js"
 import * as Helper from "./scripts/helper.js"
-  
-  function test() {
-  const ctx = document.getElementById('myChart');
-
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-  }
-
+import * as Builder from "./scripts/builder.js"
 
 async function getData (){
     const request = await fetch("/data/steamData-after2019.json")
@@ -79,7 +56,7 @@ const headerTrAddToCompareBtnObj = Helper.buildObjHelper({tag:"button",classArr:
 const headerTrCreateArr = [headerTrNameObj,headerTrRatingObj,headerTrReleaseDateObj,headerTrLanguagesObj,headerTrCategoriesObj];
 //compareCriteria
 const compareNameObj = Helper.buildObjHelper({tag:"input",id:"gameCompare1",inputType:"text",classArr:["CompareCol-300"],lableName:"Game 1:",readonly:"true",colSpan:2});
-const compareName2Obj = Helper.buildObjHelper({tag:"input",id:"gameCompare2",inputType:"text",classArr:["searchListCol-150"],lableName:"Game 2:",readonly:"true",colSpan:2});
+const compareName2Obj = Helper.buildObjHelper({tag:"input",id:"gameCompare2",inputType:"text",classArr:["CompareCol-300"],lableName:"Game 2:",readonly:"true",colSpan:2});
 const radioBtnTbObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"tb",value:"Table", attributes: { name: "displayBy", value: "Table", id: "tb" ,checked:"checked"}});
 const radioBtnChartObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"ch",value:"Chart", attributes: { name: "displayBy", value: "ch", id: "ch" }});
 const compareBtnObj = Helper.buildObjHelper({tag:"button",classArr:["compareCriteriaBtn"], id:"compareBtn",innerHTML:"Compare"});
@@ -97,11 +74,23 @@ const totalPositiveChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkb
 const reviewScoreChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"reviewScoreChb",value:"reviewScore",lableName:"Review Score (C)", skipTd:false, attributes: {value: "reviewScore", id: "reviewScore"}});
 const ratingChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"ratingChb",value:"rating",lableName:"Rating (C)", skipTd:false, attributes: {value: "ratingChbObj", id: "ratingChbObj"}});
 
-
 const compareCriteriaCreateArr = [[releaseDateChbObj,ownersChbObj,ratingChbObj,priceChbObj]
 ,[totalPositiveChbObj,totalNegativeChbObj,reviewScoreChbObj,averageForeverChbObj]
 ,[supportedLanguagesChbObj,categoriesChbObj,tagsChbObj,genresChbObj]
 ,[[radioBtnTbObj,radioBtnChartObj],[compareBtnObj,compareBtnIconObj]]];
+//statistCriteria
+const filterEmptyObj = Helper.buildObjHelper({tag:"label",lableClass:["filterLabel"],readonly:"true"});
+const filterTitleObj = Helper.buildObjHelper({tag:"label",lableClass:["filterLabel"],lableName:"Data Filter",readonly:"true",colSpan:2});
+const filterReleaseFromObj = Helper.buildObjHelper({tag:"input",id:"filterReleaseFrom",inputType:"month",lableName:"Release From:"});
+const filterReleaseToObj = Helper.buildObjHelper({tag:"input",id:"filterReleaseTo",inputType:"month",lableName:"Release To:"});
+const filterRatingObj = Helper.buildObjHelper({tag:"select",id:"filterOperator",options:operatorList});
+const filterNumberObj = Helper.buildObjHelper({tag:"input",name:"rating", id:"filterRating",inputType:"number",attribute:"0.01",lableName:"Rating:"});
+const criteriaTitleObj = Helper.buildObjHelper({tag:"label",lableClass:["filterLabel"],lableName:"Data Criteria",readonly:"true",colSpan:2});
+
+
+const statistCriteriaCreateArr = [[filterEmptyObj,filterTitleObj]
+,[[filterRatingObj,filterNumberObj],filterReleaseFromObj,filterReleaseToObj]
+,[filterEmptyObj,criteriaTitleObj]];
 
 const dataSet = await getData();
 const navBtn = document.getElementById("navBtn");
@@ -109,11 +98,11 @@ const frontPageBtn = document.querySelector(".frontPageBtn");
 const searchSearchArea = document.querySelector("#search-searchArea");
 
     function populateFrontPageBtnArea(buildObj){
-        const divBtnArea = buildElement(new BuildObj("div","btnArea"));
-        const spanBtnArea = buildElement(new BuildObj("span",["icon", "icon-circle"]));
-        const iBtnArea = buildElement(new BuildObj("i",["icon-1", "icon-1b"].concat(buildObj.classArr)));
-        const pBtnArea = buildElement(new BuildObj("p","text-6",null,null,buildObj.innerHTML));
-        const h6BtnArea = buildElement(new BuildObj("h6",null,buildObj.name));
+        const divBtnArea = Builder.buildElement(new BuildObj("div","btnArea"));
+        const spanBtnArea = Builder.buildElement(new BuildObj("span",["icon", "icon-circle"]));
+        const iBtnArea = Builder.buildElement(new BuildObj("i",["icon-1", "icon-1b"].concat(buildObj.classArr)));
+        const pBtnArea = Builder.buildElement(new BuildObj("p","text-6",null,null,buildObj.innerHTML));
+        const h6BtnArea = Builder.buildElement(new BuildObj("h6",null,buildObj.name));
 
         divBtnArea.addEventListener("click", () => {
             document.getElementById(buildObj.id).scrollIntoView();
@@ -133,9 +122,9 @@ const searchSearchArea = document.querySelector("#search-searchArea");
     }
 
     function populateNavSubBtn(buildObj) {
-        const buttonNavSub =  buildElement(new BuildObj("button","navSubBtn"));
-        const spanNavSub =  buildElement(new BuildObj("span","text",buildObj.name));
-        const iNavSub =  buildElement(new BuildObj("i",buildObj.classArr));
+        const buttonNavSub =  Builder.buildElement(new BuildObj("button","navSubBtn"));
+        const spanNavSub =  Builder.buildElement(new BuildObj("span","text",buildObj.name));
+        const iNavSub =  Builder.buildElement(new BuildObj("i",buildObj.classArr));
         
         buttonNavSub.addEventListener("click", () => {
             document.getElementById(buildObj.id).scrollIntoView();
@@ -153,9 +142,9 @@ const searchSearchArea = document.querySelector("#search-searchArea");
     }
 
     function populateSearchPage(createStr) {
-        const tableSearchArea =  buildElement(new BuildObj("table","user-input-table"));
+        const tableSearchArea =  Builder.buildElement(new BuildObj("table","user-input-table"));
         createStr.forEach((row) =>{
-             let tr = createTableTr(row);
+             let tr = Builder.createTableTr(row);
              tableSearchArea.appendChild(tr);
         });
         searchSearchArea.appendChild(tableSearchArea);
@@ -195,16 +184,16 @@ const searchSearchArea = document.querySelector("#search-searchArea");
     
     function populateComparePage(createStr) {
         const compareCriteriaArea = document.getElementById("compare-searchArea");
-        const tableCompareArea =  buildElement(new BuildObj("table"));
-        const compareCriteriaTr =  buildElement(new BuildObj("tr"));
-        const compareCriteriaTd =  buildElement(new BuildObj("td"));
-        const compareCriteriaTd2 =  buildElement(new BuildObj("td"));
-        const labelG1Obj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Game1",lableName:"gameCompare1"}));
-        const labelG2Obj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Game2",lableName:"gameCompare2"}));
-        const compareBtnObj = buildElement(Helper.buildObjHelper({tag:"button",id:"clearBtn",innerHTML:"Clear"}));
-        const compareBtn2Obj = buildElement(Helper.buildObjHelper({tag:"button",id:"clearBtn2",innerHTML:"Clear"}));
-        const compareNameInput = buildElement(compareNameObj);
-        const compareNameInput2 = buildElement(compareName2Obj);
+        const tableCompareArea =  Builder.buildElement(new BuildObj("table"));
+        const compareCriteriaTr =  Builder.buildElement(new BuildObj("tr"));
+        const compareCriteriaTd =  Builder.buildElement(new BuildObj("td"));
+        const compareCriteriaTd2 =  Builder.buildElement(new BuildObj("td"));
+        const labelG1Obj = Builder.buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Game1",lableName:"gameCompare1"}));
+        const labelG2Obj = Builder.buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Game2",lableName:"gameCompare2"}));
+        const compareBtnObj = Builder.buildElement(Helper.buildObjHelper({tag:"button",id:"clearBtn",innerHTML:"Clear"}));
+        const compareBtn2Obj = Builder.buildElement(Helper.buildObjHelper({tag:"button",id:"clearBtn2",innerHTML:"Clear"}));
+        const compareNameInput = Builder.buildElement(compareNameObj);
+        const compareNameInput2 = Builder.buildElement(compareName2Obj);
 
         compareBtnObj.onclick = function () {
             compareNameInput.value = "";
@@ -227,7 +216,7 @@ const searchSearchArea = document.querySelector("#search-searchArea");
         tableCompareArea.appendChild(compareCriteriaTr);
 
         createStr.forEach((row) =>{
-             let tr = createTableTr(row);
+             let tr = Builder.createTableTr(row);
              tableCompareArea.appendChild(tr);
         });
         compareCriteriaArea.appendChild(tableCompareArea);
@@ -241,6 +230,17 @@ const searchSearchArea = document.querySelector("#search-searchArea");
 
     }
     
+function populateStatistPage(createStr) {
+    const statistCriteriaArea = document.getElementById("statist-searchArea");
+    const tableStatistArea =  Builder.buildElement(new BuildObj("table"));
+        
+    createStr.forEach((row) =>{
+        let tr = Builder.createTableTr(row);
+        tableStatistArea.appendChild(tr);
+   });
+   statistCriteriaArea.appendChild(tableStatistArea);
+}
+
 function searchData(dataSet) {
     const searchObj = Helper.searchObjArrHelper("search");
     if (searchObj.checkOnlyOneCriteria("search",0)){
@@ -292,13 +292,13 @@ function compareData(dataSet) {
 
 function compareDisplayByTable(propertyList,gameData1,gameData2) {
 
-    const compareResultTable = buildElement(new BuildObj("table"));
-    const compareResultTr = buildElement(new BuildObj("tr"));
-    const compareResultEmptyTh = buildElement(new BuildObj("th"));
-    const compareResultTh = buildElement(new BuildObj("th"));
-    const compareResultTh2 = buildElement(new BuildObj("th"));
-    const game1Th = buildElement(Helper.buildObjHelper({tag:"input",inputType:"text",value:gameData1.name,readonly:true}));
-    const game2Th = buildElement(Helper.buildObjHelper({tag:"input",inputType:"text",value:gameData2.name,readonly:true}));
+    const compareResultTable = Builder.buildElement(new BuildObj("table"));
+    const compareResultTr = Builder.buildElement(new BuildObj("tr"));
+    const compareResultEmptyTh = Builder.buildElement(new BuildObj("th"));
+    const compareResultTh = Builder.buildElement(new BuildObj("th"));
+    const compareResultTh2 = Builder.buildElement(new BuildObj("th"));
+    const game1Th = Builder.buildElement(Helper.buildObjHelper({tag:"input",inputType:"text",value:gameData1.name,readonly:true}));
+    const game2Th = Builder.buildElement(Helper.buildObjHelper({tag:"input",inputType:"text",value:gameData2.name,readonly:true}));
     
     compareResultTh.appendChild(game1Th);
     compareResultTh2.appendChild(game2Th);
@@ -309,7 +309,7 @@ function compareDisplayByTable(propertyList,gameData1,gameData2) {
     compareResultTable.appendChild(compareResultTr);
 
     propertyList.forEach((property)=>{
-        const trObj = buildElement(new BuildObj("tr"));
+        const trObj = Builder.buildElement(new BuildObj("tr"));
         let classArr = [];
         let input = "input";
         let gameData1Value = gameData1[property];
@@ -322,9 +322,9 @@ function compareDisplayByTable(propertyList,gameData1,gameData2) {
             gameData1Value = Helper.stringCut(gameData1[property]);
             gameData2Value = Helper.stringCut(gameData2[property]);
         }
-        const labelObj = createTableTd(Helper.buildObjHelper({tag:"label",lableName:Helper.stringTran(property)}));
-        const game1Obj = createTableTd(Helper.buildObjHelper({tag:input,classArr:classArr,inputType:"text",value:gameData1Value,readonly:true}));
-        const game2Obj = createTableTd(Helper.buildObjHelper({tag:input,classArr:classArr,inputType:"text",value:gameData2Value,readonly:true}));
+        const labelObj = Builder.createTableTd(Helper.buildObjHelper({tag:"label",lableName:Helper.stringTran(property)}));
+        const game1Obj = Builder.createTableTd(Helper.buildObjHelper({tag:input,classArr:classArr,inputType:"text",value:gameData1Value,readonly:true}));
+        const game2Obj = Builder.createTableTd(Helper.buildObjHelper({tag:input,classArr:classArr,inputType:"text",value:gameData2Value,readonly:true}));
         labelObj.forEach(obj => trObj.appendChild(obj));
         game1Obj.forEach(obj => trObj.appendChild(obj));
         game2Obj.forEach(obj => trObj.appendChild(obj));
@@ -424,13 +424,13 @@ function displaySeachResult(filteredData) {
         searchResultP.innerHTML = "No result";
     else{
         searchResultP.innerHTML = "";
-        const tableSearchResult = buildElement(new BuildObj("table"));
-        const headerTrSearchResult = createTableTr(headerTrCreateArr);
+        const tableSearchResult = Builder.buildElement(new BuildObj("table"));
+        const headerTrSearchResult = Builder.createTableTr(headerTrCreateArr);
         tableSearchResult.appendChild(headerTrSearchResult);
 
         filteredData.forEach((data)=>{
             let headerTrCreateArrWithData = addDataForCreateSearchResultArr(headerTrCreateArr,data)
-            const trSearchResult = createTableTr(headerTrCreateArrWithData);
+            const trSearchResult = Builder.createTableTr(headerTrCreateArrWithData);
             tableSearchResult.appendChild(trSearchResult);
         });       
         searchResultList.appendChild(tableSearchResult);
@@ -462,183 +462,6 @@ function addToCompare(name) {
     }
     else
         alert("Only can compare between 2 game ");
-}
-
-function buildElement(buildObj){
-    let newElement = document.createElement(buildObj.tag);
-
-    if (buildObj.tag === "select"){
-        buildObj.options.forEach((options)=>{
-            let optionElement = document.createElement("option");
-            optionElement.value = options.value;
-            optionElement.innerHTML = options.displayText;
-            newElement.appendChild(optionElement);
-        });
-    }
-    else if (buildObj.tag === "input"){
-        if (buildObj.inputType!="text")
-            newElement.type = buildObj.inputType;
-        if (buildObj.inputType === "radio" && buildObj.attributes){
-            for (const [key, value] of Object.entries(buildObj.attributes)) {
-                newElement.setAttribute(key, value);
-            }    
-        }
-    }
-    else if (buildObj.tag === 'label' && buildObj.lableName) 
-        newElement.setAttribute('for', buildObj.lableName);
-    else if (buildObj.tag === 'button'&& buildObj.attribute){
-        newElement.setAttribute(`data-name`,buildObj.attribute) 
-    }
-    else if (buildObj.tag === 'img'&& buildObj.src){
-        newElement.src = buildObj.src;
-    }
-
-    if (Array.isArray(buildObj.classArr)) {
-        buildObj.classArr.forEach((c) =>{
-            newElement.classList.add(c);
-        });
-    }
-    else if (buildObj.classArr)
-        newElement.classList.add(buildObj.classArr);
-
-    if (buildObj.value)
-        newElement.value  = buildObj.value;
-
-        if (buildObj.name)
-            newElement.innerHTML = buildObj.name;
-        else if (buildObj.innerHTML)
-            newElement.innerHTML = buildObj.innerHTML;
-
-    if (buildObj.id)
-        newElement.id = buildObj.id;
-    
-    if (buildObj.readonly)
-        newElement.readOnly = true;
-
-    if (buildObj.onClick) {
-        newElement.onclick = buildObj.onClick;
-    }
-
-    return newElement;
-}
-
-function createTableTr(trCreateObjArr) {
-    let masterTr =  buildElement(new BuildObj("tr"));
-    trCreateObjArr.forEach((tdCreateObj)=>{
-        if (Array.isArray(tdCreateObj)) {
-            //for rating only
-            if (tdCreateObj[0].id === "operator"){
-                let rating = createTableTd(tdCreateObj[0]);
-                let numberInputObjArr = createTableTd(tdCreateObj[1]);
-                let ratingSelect = rating[0].children[0];
-                let numberInputTd = numberInputObjArr[0];
- 
-                numberInputTd.insertBefore(ratingSelect, numberInputTd.lastElementChild);
-                masterTr.appendChild(numberInputObjArr[0]);
-            }
-            else if (tdCreateObj[0].id === "searchBtn"){
-                // for searchBtn 
-                let searchBtn = buildElement(tdCreateObj[0]);
-                let searchBtnIcon = createTableTd(tdCreateObj[1]);
-                searchBtn.appendChild(searchBtnIcon[0]);
-                let newTd =  buildElement(new BuildObj("td"));
-                newTd.colSpan = "6";
-                newTd.appendChild(searchBtn);
-                masterTr.appendChild(newTd);
-            }
-            else if (tdCreateObj[0].id === "compareBtn"){
-                // for compareBtn 
-                let compareBtn = buildElement(tdCreateObj[0]);
-                let compareBtnIcon = createTableTd(tdCreateObj[1]);
-                compareBtn.appendChild(compareBtnIcon[0]);
-                let newTd =  buildElement(new BuildObj("td"));
-                newTd.colSpan = "6";
-                newTd.appendChild(compareBtn);
-                masterTr.appendChild(newTd);
-            }
-            else if (tdCreateObj[0].id === "tb"){
-                //for compareRadio
-                let newTd =  buildElement(new BuildObj("td"));
-                let labelObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Display By:"}));
-                let labelTbObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Table",lableName:"tb"}));
-                let labelChObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Chart",lableName:"ch"}));
-                newTd.appendChild(labelObj);    
-                newTd.colSpan = 2;  
-                let radioBtn = buildElement(tdCreateObj[0]);
-                let radioBtn2 = buildElement(tdCreateObj[1]);
-                newTd.appendChild(labelTbObj);
-                newTd.appendChild(radioBtn);
-                newTd.appendChild(labelChObj);
-                newTd.appendChild(radioBtn2);
-
-                masterTr.appendChild(newTd);
-            }
-            else{
-                let innerTd = createTableTd(tdCreateObj);
-
-                if (Array.isArray(innerTd)) {
-                    innerTd.forEach((td)=>{
-                        masterTr.appendChild(td);
-                    });
-                }
-                else
-                    masterTr.appendChild(innerTd);
-            }
-        }else{
-            let innerTd = createTableTd(tdCreateObj);
-
-            if (Array.isArray(innerTd)) {
-                innerTd.forEach((td)=>{
-                    masterTr.appendChild(td);
-                });
-            }
-            else
-                masterTr.appendChild(innerTd);
-         }
-
-    });
-    return masterTr;
-}
-
-function createTableTd(tdCreateObjArr) {
-    let returnArr = [];
-    if (Array.isArray(tdCreateObjArr)) {
-        tdCreateObjArr.forEach((tdCreateObj)=>{
-            returnArr = returnArr.concat(createTableTdInner(tdCreateObj));
-        });
-    }
-    else
-        returnArr = createTableTdInner(tdCreateObjArr);
-    return returnArr;
-}
-
-function createTableTdInner(tdCreateObj) {
-    let returnArr = [];
-    let labelmasterTd =  buildElement(new BuildObj("td"));
-
-        if (tdCreateObj.colSpan)
-            labelmasterTd.colSpan = tdCreateObj.colSpan;
-        if (tdCreateObj.lableName){
-            let labelObjClass=[];
-            if (tdCreateObj.lableClass)
-                labelObjClass = tdCreateObj.lableClass;
-            let labelObj = new BuildObj("label",labelObjClass,null,null,tdCreateObj.lableName,tdCreateObj.id);
-            let labelTd =  buildElement(labelObj);
-            if (tdCreateObj.skipTd)
-                returnArr.push(labelTd);
-            else
-                labelmasterTd.appendChild(labelTd);
-        }  
-            let innterTd = buildElement(tdCreateObj);
-            if (tdCreateObj.skipTd)
-                returnArr.push(innterTd);
-            else
-                labelmasterTd.appendChild(innterTd);
-
-        if (!tdCreateObj.skipTd)
-             returnArr.push(labelmasterTd);
-
-        return returnArr;
 }
 
 function displayDetial(name) {
@@ -677,29 +500,29 @@ function displayDetial(name) {
 
     
     if (game["Header image"]){
-        let headerImage = buildElement(headerImageObj);
+        let headerImage = Builder.buildElement(headerImageObj);
         detialPage.append(headerImage);
     }else{
-        let noImage = buildElement(noImageObj);
+        let noImage = Builder.buildElement(noImageObj);
         detialPage.append(noImage);
     }
 
     let imageAndBtnContainer = document.createElement("div");
     imageAndBtnContainer.style.display = "flex"; 
   
-    let detailAddToCompareBtn = buildElement(detailAddToCompareBtnObj);
+    let detailAddToCompareBtn = Builder.buildElement(detailAddToCompareBtnObj);
     detailAddToCompareBtn.onclick = function () {
         addToCompare(name);
     };
-    let detailAddToCompareBtnIcon = buildElement(detailAddToCompareBtnIconObj);
+    let detailAddToCompareBtnIcon = Builder.buildElement(detailAddToCompareBtnIconObj);
     detailAddToCompareBtn.appendChild(detailAddToCompareBtnIcon);
     imageAndBtnContainer.appendChild(detailAddToCompareBtn);
   
     detialPage.appendChild(imageAndBtnContainer);
     
-    const detialTable =  buildElement(new BuildObj("table"));
+    const detialTable =  Builder.buildElement(new BuildObj("table"));
     detialCreateArr.forEach((row) =>{
-            let tr = createTableTr(row);
+            let tr = Builder.createTableTr(row);
             detialTable.appendChild(tr);
     });
     detialPage.appendChild(detialTable);
@@ -711,7 +534,7 @@ function appendCanvas(propertyList) {
     ctx.innerHTML = "";
     for(let i=0;i<propertyList.length;i++){
         let canvasId = "canvas" + i;
-        const canvas = buildElement(
+        const canvas = Builder.buildElement(
         Helper.buildObjHelper({tag:"canvas",id:canvasId}));
         ctx.appendChild(canvas);
     }
@@ -723,9 +546,11 @@ function appendCanvas(propertyList) {
     populateNavBtn(); 
     populateSearchPage(searchCriteriaCreateArr);
     populateComparePage(compareCriteriaCreateArr);
+    populateStatistPage(statistCriteriaCreateArr);
 });
+
   function buildCompareChart(chartObj,i) {
-const colorList = ["skyblue","lavenderblush","wheat","powderblue","silver"];
+    const colorList = ["skyblue","lavenderblush","wheat","powderblue","silver"];
     new Chart(chartObj.ctx, {
       type: chartObj.type,
       data: {
