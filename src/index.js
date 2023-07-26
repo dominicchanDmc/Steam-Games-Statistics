@@ -362,10 +362,11 @@ function compareDisplayByChart(propertyList,gameData1,gameData2) {
 }
 function filterData(criteria, dataSet) {
     const filteredData = Object.values(dataSet).filter((item) => {
-      const releaseFrom = Date.parse(criteria.releaseFrom);
-      const releaseTo = Date.parse(criteria.releaseTo);
-      const gameReleaseDate = Date.parse(item.release_date);
-  
+    const releaseFrom = Date.parse(criteria.releaseFrom);
+    const releaseTo = Date.parse(criteria.releaseTo);
+    const gameReleaseDate = Date.parse(item.release_date);
+    const languagesHash = Helper.hashHelper(languagesKey,languagesValue);
+    const categoriesHash = Helper.hashHelper(categoriesKey,categoriesValue);
       if (
         (!criteria.gameName || item.name.toLowerCase().includes(criteria.gameName.toLowerCase())) &&
         (!criteria.releaseFrom || gameReleaseDate >= releaseFrom) &&
@@ -376,9 +377,11 @@ function filterData(criteria, dataSet) {
           (criteria.operator === "smaller" && item.rating < criteria.rating)
         ) && 
         // (item.type==='game') &&
-        (!criteria.languages || criteria.languages.length === 0 || criteria.languages.includes(item.supported_languages)) &&
-        (!criteria.categories || criteria.categories.length === 0 || criteria.categories.some(category => item.categories.includes(category)))
-      ) {
+        (!criteria.languages || criteria.languages.length === 0 || 
+            languagesHash[criteria.languages].includes(Helper.stringCut(item.supported_languages)) && item.supported_languages) &&
+        (!criteria.categories || criteria.categories.length === 0 || 
+            categoriesHash[criteria.categories].includes(Helper.stringCut(item.categories)) && item.categories))
+       {
         return true;
       }
       return false;

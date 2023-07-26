@@ -226,7 +226,6 @@ body .user-input-table input {
 }
 body .user-input-table select {
   width: 150;
-  padding: 4px 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
@@ -245,7 +244,6 @@ body .user-input-table .searchCriteriaBtn {
   background-color: #2a63ec;
   color: #fff;
   border: none;
-  padding: 10px 20px;
   font-size: 20px;
   cursor: pointer;
   border-radius: 4px;
@@ -503,4 +501,15 @@ body .statistPage .statistCriteriaBtn {
 }
 body .statistPage .statistCriteriaBtn i {
   padding: 10px;
+}
+body .statistPage #statistResultP {
+  color: white;
+  font-size: 30px;
+  text-align: center;
+  margin: 10px auto 0;
+  padding-right: 160px;
+}
+body .statistPage #statist-chartArea {
+  height: 50%;
+  width: 80%;
 }

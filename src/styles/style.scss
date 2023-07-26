@@ -179,7 +179,7 @@ body {
         }
       select{
           width: 150;
-          padding: 4px 8px;
+          // padding: 4px 8px;
           border: 1px solid #ccc;
           border-radius: 4px;
           box-sizing: border-box;
@@ -201,7 +201,7 @@ body {
           background-color: #2a63ec;
           color: #fff;
           border: none;
-          padding: 10px 20px;
+          // padding: 10px 20px;
           font-size: 20px;
           cursor: pointer;
           border-radius: 4px;
@@ -431,8 +431,6 @@ body {
         box-sizing: border-box;
       }
       input{
-        // width: 100%;
-        // padding: 4px 8px;
         margin-right: 0px;
         margin-left: 0px;
         border: 1px solid #ccc;
@@ -488,6 +486,17 @@ body {
         i {
           padding: 10px;
         }
+      }
+      #statistResultP {   
+        color: white;   
+        font-size: 30px;
+        text-align: center;
+        margin: 10px auto 0;
+        padding-right: 160px;
+      }
+      #statist-chartArea{
+        height: 50%;
+        width: 80%;
       }
     }
   }

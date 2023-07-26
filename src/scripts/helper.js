@@ -103,6 +103,15 @@ export function searchObjArrHelper(source) {
     return searchObj;
 }
 
+export function hashHelper(keyList,valueList) {
+    let hash = {};
+
+    for(let i=0;i<keyList.length;i++){
+        hash[keyList[i]] = valueList[i]; 
+    }
+    return hash;
+}
+
 export function chartObjHelper(createHash) {
     let chartObj = new ChartObj();
 
