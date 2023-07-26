@@ -2,6 +2,7 @@ import './index.scss';
 import BuildObj from "./scripts/buildObj.js"
 import * as Helper from "./scripts/helper.js"
 import * as Builder from "./scripts/builder.js"
+import * as Chart from "./scripts/chart.js"
 
 async function getData (){
     const request = await fetch("/data/steamData-after2019.json")
@@ -345,7 +346,7 @@ function compareDisplayByChart(propertyList,gameData1,gameData2) {
     ,beginAtZero:false};
         const chartObj = Helper.chartObjHelper(createHash);
         
-        buildCompareChart(chartObj,i);
+        Chart.buildCompareChart(chartObj,i);
         i++;
     });
 
@@ -399,8 +400,6 @@ function filterData(criteria, dataSet) {
     return limitedData;
     // return filteredData;
   }
-
-
 
 function displaySeachResult(filteredData) {
    const searchResultP = document.getElementById("searchResultP");
@@ -548,67 +547,4 @@ function appendCanvas(propertyList) {
     }
 }
 
-  function buildCompareChart(chartObj,i) {
-    const colorList = ["skyblue","lavenderblush","wheat","powderblue","silver"];
-    new Chart(chartObj.ctx, {
-      type: chartObj.type,
-      data: {
-        labels: [chartObj.game1Data.name,chartObj.game2Data.name],
-        datasets: [{
-          label: Helper.stringTran(chartObj.compareCol),
-          data: [chartObj.game1Data[chartObj.compareCol],
-          chartObj.game2Data[chartObj.compareCol]],
-          borderWidth: 1,
-          backgroundColor: colorList[i]
-        }]
-      },
-      options: {
-        plugins: {
-            legend: {
-              labels: {
-                font: {
-                  size: 18           
-                },
-                color: 'yellow'
-              }
-            }
-          },
-        scales: {
-          y: {
-            beginAtZero: chartObj.beginAtZero,
-            grid: {
-                zeroLineColor: "yellow",
-                color: "white"
-            },
-            border: {
-                color: "yellow"
-            },
-            ticks: {
-                color: "yellow",
-                font: {
-                    size: 18
-                }
-            }
-          },
-          x: {
-            drawTicks: true,
-            beginAtZero: true,
-            grid: {
-                zeroLineColor: "yellow",
-                color: "white"
-            },
-            border: {
-                color: "yellow"
-            },
-            ticks: {
-                color: "yellow",
-                font: {
-                    size: 18
-                }
-            },
-            mirror: true
-        }
-        }
-      }
-    });
-}
+ 
