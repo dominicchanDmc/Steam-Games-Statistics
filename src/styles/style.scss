@@ -431,8 +431,10 @@ body {
         box-sizing: border-box;
       }
       input{
-        width: 100%;
-        padding: 4px 8px;
+        // width: 100%;
+        // padding: 4px 8px;
+        margin-right: 0px;
+        margin-left: 0px;
         border: 1px solid #ccc;
         border-radius: 4px;
         box-sizing: border-box;
@@ -441,7 +443,7 @@ body {
         width: 200px;
       }
     
-    input[type="month"] {
+      input[type="month"] {
         width: 140px;
       }
     
@@ -467,6 +469,25 @@ body {
         border-bottom: 1px solid #ddd;
         padding-bottom: 11px;
         padding-top: 10px;
+      }
+
+      .statistCriteriaBtn {
+        background-color: #2a63ec;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 20px;
+        cursor: pointer;
+        border-radius: 4px;
+        align-items: center;
+        width: 300px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        i {
+          padding: 10px;
+        }
       }
     }
   }

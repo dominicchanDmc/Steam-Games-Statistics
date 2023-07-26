@@ -24,7 +24,6 @@ const categoriesKey = ["Coo","FCS","LCoo","MMO","Mp","OCoo","OPvP","PCS","PvP","
 const categoriesList = Helper.optionObjArrHelper(categoriesValue,categoriesKey);
 const orderList = Helper.optionObjHashHelper({ratingDesc:"Rating Descending",ratingAsc:"Rating Ascending",nameDesc:"Name Descending",nameAsc:"Name Ascending",releaseDateDesc:"Release Date Descending",releaseDateAsc:"Release Date Ascending",},"orderBy");
 
-
 //frontPage
 const searchBtnStrBuildObj = new BuildObj("",["fa-solid", "fa-magnifying-glass"],"Search","searchPage","Search and display detail information by different criteria");
 const compareBtnStrBuildObj = new BuildObj("",["fa-solid", "fa-table"],"Compare","comparePage","Compare item between 2 games with table or chart");
@@ -79,19 +78,29 @@ const compareCriteriaCreateArr = [[releaseDateChbObj,ownersChbObj,ratingChbObj,p
 ,[totalPositiveChbObj,totalNegativeChbObj,reviewScoreChbObj,averageForeverChbObj]
 ,[supportedLanguagesChbObj,categoriesChbObj,tagsChbObj,genresChbObj]
 ,[[radioBtnTbObj,radioBtnChartObj],[compareBtnObj,compareBtnIconObj]]];
-//statistCriteria
+//statistFilter
 const filterEmptyObj = Helper.buildObjHelper({tag:"label",lableClass:["filterLabel"],readonly:"true"});
 const filterTitleObj = Helper.buildObjHelper({tag:"label",lableClass:["filterLabel"],lableName:"Data Filter",readonly:"true",colSpan:2});
 const filterReleaseFromObj = Helper.buildObjHelper({tag:"input",id:"filterReleaseFrom",inputType:"month",lableName:"Release From:"});
 const filterReleaseToObj = Helper.buildObjHelper({tag:"input",id:"filterReleaseTo",inputType:"month",lableName:"Release To:"});
 const filterRatingObj = Helper.buildObjHelper({tag:"select",id:"filterOperator",options:operatorList});
 const filterNumberObj = Helper.buildObjHelper({tag:"input",name:"rating", id:"filterRating",inputType:"number",attribute:"0.01",lableName:"Rating:"});
-const criteriaTitleObj = Helper.buildObjHelper({tag:"label",lableClass:["filterLabel"],lableName:"Data Criteria",readonly:"true",colSpan:2});
+const criteriaTitleObj = Helper.buildObjHelper({tag:"label",lableClass:["filterLabel"],lableName:"Statistics Criteria",readonly:"true",colSpan:2});
+//statistCriteria
+const statistSupportedLanguagesChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"statistSupportedLanguagesChb",value:"supportedLanguages",lableName:"Supported Languages", skipTd:false, attributes: {value: "supportedLanguages", id: "supportedLanguages"}});
+const statistCategoriesChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"statistCategoriesChb",value:"categories",lableName:"Categories",skipTd:false, attributes: {value: "categories", id: "categoriesChb" }});
+const statistGenresChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"statistGenresChb",value:"genres",lableName:"Genres", skipTd:false, attributes: {value: "genres", id: "genres"}});
+const statistTagsChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"statistTagsChb",value:"tags",lableName:"Tags", skipTd:false, attributes: {value: "tags", id: "tags"}});
+const statistObj = Helper.buildObjHelper({tag:"button",classArr:["statistCriteriaBtn"], id:"statistBtn",innerHTML:"Statistics"});
+const statistIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-chart-simple"]});
 
 
-const statistCriteriaCreateArr = [[filterEmptyObj,filterTitleObj]
-,[[filterRatingObj,filterNumberObj],filterReleaseFromObj,filterReleaseToObj]
-,[filterEmptyObj,criteriaTitleObj]];
+const statistCriteriaCreateArr = [[filterEmptyObj,filterEmptyObj,filterTitleObj]
+ ,[[filterRatingObj,filterNumberObj],filterReleaseFromObj,filterReleaseToObj]
+ ,[filterEmptyObj,filterEmptyObj,criteriaTitleObj]
+,[[statistSupportedLanguagesChbObj,statistCategoriesChbObj
+,statistGenresChbObj,statistTagsChbObj]],[filterEmptyObj,[statistObj,statistIconObj]]];
+
 
 const dataSet = await getData();
 const navBtn = document.getElementById("navBtn");

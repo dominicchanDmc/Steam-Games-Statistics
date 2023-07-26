@@ -69,17 +69,22 @@ export function createTableTr(trCreateObjArr) {
                 let numberInputObjArr = createTableTd(tdCreateObj[1]);
                 let ratingSelect = rating[0].children[0];
                 let numberInputTd = numberInputObjArr[0];
- 
+                if (tdCreateObj[0].id === "filterOperator") 
+                    numberInputTd.colSpan = 2;
                 numberInputTd.insertBefore(ratingSelect, numberInputTd.lastElementChild);
                 masterTr.appendChild(numberInputObjArr[0]);
             }
-            else if (tdCreateObj[0].id === "searchBtn" || tdCreateObj[0].id === "compareBtn"){
+            else if (tdCreateObj[0].id === "searchBtn" ||
+             tdCreateObj[0].id === "compareBtn" ||
+             tdCreateObj[0].id === "statistBtn"){
                 // for searchBtn 
                 let searchBtn = buildElement(tdCreateObj[0]);
                 let searchBtnIcon = createTableTd(tdCreateObj[1]);
                 searchBtn.appendChild(searchBtnIcon[0]);
                 let newTd =  buildElement(new BuildObj("td"));
                 newTd.colSpan = "6";
+                if (tdCreateObj[0].id === "statistBtn")
+                    newTd.classList.add("statistBtnTd");
                 newTd.appendChild(searchBtn);
                 masterTr.appendChild(newTd);
             }
@@ -131,7 +136,7 @@ export function createTableTd(tdCreateObjArr) {
     let returnArr = [];
     if (Array.isArray(tdCreateObjArr)) {
         tdCreateObjArr.forEach((tdCreateObj)=>{
-            returnArr = returnArr.concat(Builder.createTableTdInner(tdCreateObj));
+            returnArr = returnArr.concat(createTableTdInner(tdCreateObj));
         });
     }
     else
