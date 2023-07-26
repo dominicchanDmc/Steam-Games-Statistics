@@ -409,7 +409,7 @@ function compareDisplayByChart(propertyList,gameData1,gameData2) {
     let i=0;
     
     propertyList.forEach((property)=>{
-        const ctx = document.getElementById(`canvas${i}`); 
+        const ctx = document.getElementById(`compare-canvas${i}`); 
         const createHash = {ctx:ctx,type:"bar",compareCol:property
         ,displayLable:property,game1Data:gameData1,game2Data:gameData2
     ,beginAtZero:false};
@@ -616,7 +616,7 @@ function appendCanvas(propertyList,type) {
         ctx = document.getElementById('statist-chartArea'); 
     ctx.innerHTML = "";
     for(let i=0;i<propertyList.length;i++){
-        let canvasId = "statist-canvas" + i;
+        let canvasId = `${type}-canvas${i}`;
         const canvas = Builder.buildElement(
         Helper.buildObjHelper({tag:"canvas",id:canvasId}));
         ctx.appendChild(canvas);
