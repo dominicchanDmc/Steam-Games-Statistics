@@ -291,6 +291,7 @@ function compareData(dataSet) {
 }
 
 function compareDisplayByTable(propertyList,gameData1,gameData2) {
+    const compareResult = document.getElementById("compareResult");
 
     const compareResultTable = Builder.buildElement(new BuildObj("table"));
     const compareResultTr = Builder.buildElement(new BuildObj("tr"));
@@ -399,21 +400,7 @@ function filterData(criteria, dataSet) {
     // return filteredData;
   }
 
-function searchVaildation(searchObj){
-    if (searchObj.releaseFrom && searchObj.releaseTo){
-        if (searchObj.releaseTo < searchObj.releaseFrom){
-            alert('Release To must later than Release From')
-            return false;
-        }
-    }
 
-    if ((searchObj.operator && !searchObj.rating)||
-     (!searchObj.operator && searchObj.rating)){
-        alert('Missing Operator or Rating')
-            return false;
-     }
-    return true;
-}
 
 function displaySeachResult(filteredData) {
    const searchResultP = document.getElementById("searchResultP");
@@ -439,29 +426,6 @@ function displaySeachResult(filteredData) {
             displayDetial(filteredData[0].name);
         }
     }
-}
-
-function addToCompare(name) {
-    const gameCompare1 = document.getElementById("gameCompare1");
-    const gameCompare2 = document.getElementById("gameCompare2");
-    const comparePage = document.getElementById("comparePage");
-    if (!gameCompare1.value){
-        gameCompare1.value = name;
-        alert("add success, you can add 1 more game for compare");
-    }
-    else if (!gameCompare2.value){
-        if (gameCompare1.value === name){
-            alert("This game alreadly added");
-            return;
-        }
-
-        gameCompare2.value = name;
-        const answer = window.confirm("add success, do you compare now?");
-        if (answer)
-            comparePage.scrollIntoView();
-    }
-    else
-        alert("Only can compare between 2 game ");
 }
 
 function displayDetial(name) {
@@ -496,9 +460,7 @@ function displayDetial(name) {
         achievementsObj],[genresObj],[tagsObj]];
 
     detialPage.innerHTML = "";
-
-
-    
+ 
     if (game["Header image"]){
         let headerImage = Builder.buildElement(headerImageObj);
         detialPage.append(headerImage);
@@ -528,6 +490,52 @@ function displayDetial(name) {
     detialPage.appendChild(detialTable);
     detialPage.scrollIntoView();
 }
+ 
+    populateFrontPageBtn();
+    populateNavBtn(); 
+    populateSearchPage(searchCriteriaCreateArr);
+    populateComparePage(compareCriteriaCreateArr);
+    populateStatistPage(statistCriteriaCreateArr);
+});
+
+function searchVaildation(searchObj){
+    if (searchObj.releaseFrom && searchObj.releaseTo){
+        if (searchObj.releaseTo < searchObj.releaseFrom){
+            alert('Release To must later than Release From')
+            return false;
+        }
+    }
+
+    if ((searchObj.operator && !searchObj.rating)||
+     (!searchObj.operator && searchObj.rating)){
+        alert('Missing Operator or Rating')
+            return false;
+     }
+    return true;
+}
+
+function addToCompare(name) {
+    const gameCompare1 = document.getElementById("gameCompare1");
+    const gameCompare2 = document.getElementById("gameCompare2");
+    const comparePage = document.getElementById("comparePage");
+    if (!gameCompare1.value){
+        gameCompare1.value = name;
+        alert("add success, you can add 1 more game for compare");
+    }
+    else if (!gameCompare2.value){
+        if (gameCompare1.value === name){
+            alert("This game alreadly added");
+            return;
+        }
+
+        gameCompare2.value = name;
+        const answer = window.confirm("add success, do you compare now?");
+        if (answer)
+            comparePage.scrollIntoView();
+    }
+    else
+        alert("Only can compare between 2 game ");
+}
 
 function appendCanvas(propertyList) {
     const ctx = document.getElementById('chartArea'); 
@@ -539,15 +547,6 @@ function appendCanvas(propertyList) {
         ctx.appendChild(canvas);
     }
 }
-
-
-    
-    populateFrontPageBtn();
-    populateNavBtn(); 
-    populateSearchPage(searchCriteriaCreateArr);
-    populateComparePage(compareCriteriaCreateArr);
-    populateStatistPage(statistCriteriaCreateArr);
-});
 
   function buildCompareChart(chartObj,i) {
     const colorList = ["skyblue","lavenderblush","wheat","powderblue","silver"];
