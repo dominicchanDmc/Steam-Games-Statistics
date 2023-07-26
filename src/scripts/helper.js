@@ -71,13 +71,14 @@ export function searchObjArrHelper(source) {
     const filterReleaseTo = document.getElementById("filterReleaseTo");
     const filterOperator = document.getElementById("filterOperator");
     const filterRating = document.getElementById("filterRating");
-    const statistSupportedLanguagesChb = document.getElementById('statistSupportedLanguagesChb');
-    const statistCategoriesChb = document.getElementById('statistCategoriesChb');
-    const statistGenresChb = document.getElementById('statistGenresChb');
-    const statistTagsChb = document.getElementById('statistTagsChb');
+    const statistSupportedLanguagesRad = document.getElementById('statistSupportedLanguagesRad');
+    const statistCategoriesRad = document.getElementById('statistCategoriesRad');
+    const statistGenresRad = document.getElementById('statistGenresRad');
+    const statistTagsRad = document.getElementById('statistTagsRad');
 
 
     let searchObj = new SearchObj();
+    searchObj.source = source;
 
     if (source === "search"){
         searchObj.gameName = gameName.value;
@@ -88,6 +89,8 @@ export function searchObjArrHelper(source) {
         searchObj.languages = languages.value;
         searchObj.categories = categories.value;
         searchObj.orderBy = orderBy.value;
+        // searchObj.source = source;
+
     }
     else if (source === "compare"){
         searchObj.gameCompare1 = gameCompare1.value;
@@ -115,12 +118,21 @@ export function searchObjArrHelper(source) {
         searchObj.filterReleaseTo = filterReleaseTo.value ;
         searchObj.filterOperator = filterOperator.value;
         searchObj.filterRating = filterRating.value;
-
-        searchObj.statistSupportedLanguagesChb = statistSupportedLanguagesChb.checked;
-        searchObj.statistCategoriesChb = statistCategoriesChb.checked;
-        searchObj.statistTagsChb = statistTagsChb.checked;
-        searchObj.statistGenresChb = statistGenresChb.checked;
+    
+        if (statistSupportedLanguagesRad.checked)
+            searchObj.radioBtn = statistSupportedLanguagesRad.value;
+        else if (statistCategoriesRad.checked)
+            searchObj.radioBtn = statistCategoriesRad.value;
+        else if (statistGenresRad.checked)
+            searchObj.radioBtn = statistGenresRad.value;
+        else if (statistTagsRad.checked)
+            searchObj.radioBtn = statistTagsRad.value;
+        // searchObj.statistSupportedLanguagesChb = statistSupportedLanguagesChb.checked;
+        // searchObj.statistCategoriesChb = statistCategoriesChb.checked;
+        // searchObj.statistTagsChb = statistTagsChb.checked;
+        // searchObj.statistGenresChb = statistGenresChb.checked;
     }
+
     return searchObj;
 }
 
@@ -168,13 +180,13 @@ export function stringTran(string) {
 
 export function stringCriteriaTran(string) {
     switch (string) {
-        case "statistSupportedLanguagesChb":
+        case "supportedLanguages":
             return "supported_languages";    
-        case "statistCategoriesChb":
+        case "categories":
             return "categories";    
-        case "statistTagsChb":
+        case "tags":
             return "tags";    
-        case "statistGenresChb":
+        case "genres":
             return "genres"; 
      }
 }
@@ -194,3 +206,17 @@ export function rebuildHash(originalHash) {
   
     return rebuiltHash;
   }
+
+
+export function dataTranArray(dataString) {
+  let finalArr = [];
+  let dataStringCut = stringCut(dataString);
+    if (dataStringCut){
+        let stringSpilt = dataStringCut.split(',');
+        if (Array.isArray(stringSpilt))
+            return stringSpilt       
+        else
+            finalArr.push(stringSpilt); 
+    }
+    return finalArr;
+}

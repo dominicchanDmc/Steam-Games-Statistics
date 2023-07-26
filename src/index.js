@@ -88,10 +88,10 @@ const filterRatingObj = Helper.buildObjHelper({tag:"select",id:"filterOperator",
 const filterNumberObj = Helper.buildObjHelper({tag:"input",name:"rating", id:"filterRating",inputType:"number",attribute:"0.01",lableName:"Rating:"});
 const criteriaTitleObj = Helper.buildObjHelper({tag:"label",lableClass:["filterLabel"],lableName:"Statistics Criteria",readonly:"true",colSpan:2});
 //statistCriteria
-const statistSupportedLanguagesChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"statistSupportedLanguagesChb",value:"supportedLanguages",lableName:"Supported Languages", skipTd:false, attributes: {value: "supportedLanguages", id: "supportedLanguages"}});
-const statistCategoriesChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"statistCategoriesChb",value:"categories",lableName:"Categories",skipTd:false, attributes: {value: "categories", id: "categoriesChb" }});
-const statistGenresChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"statistGenresChb",value:"genres",lableName:"Genres", skipTd:false, attributes: {value: "genres", id: "genres"}});
-const statistTagsChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"statistTagsChb",value:"tags",lableName:"Tags", skipTd:false, attributes: {value: "tags", id: "tags"}});
+const statistSupportedLanguagesRadObj = Helper.buildObjHelper({tag:"input",inputType:"radio",name:"statistRad",id:"statistSupportedLanguagesRad",value:"supportedLanguages",lableName:"Supported Languages", skipTd:false, attributes: {value: "supportedLanguages", id: "supportedLanguages",name:"statistRad"}});
+const statistCategoriesRadObj = Helper.buildObjHelper({tag:"input",inputType:"radio",name:"statistRad",id:"statistCategoriesRad",value:"categories",lableName:"Categories",skipTd:false, attributes: {value: "categories", id: "categoriesRad",name:"statistRad" }});
+const statistGenresRadObj = Helper.buildObjHelper({tag:"input",inputType:"radio",name:"statistRad",id:"statistGenresRad",value:"genres",lableName:"Genres", skipTd:false, attributes: {value: "genres", id: "genres",name:"statistRad"}});
+const statistTagsRadObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"statistTagsRad",value:"tags",lableName:"Tags", skipTd:false, attributes: {value: "tags", id: "tags",name:"statistRad"}});
 const statistObj = Helper.buildObjHelper({tag:"button",classArr:["statistCriteriaBtn"], id:"statistBtn",innerHTML:"Statistics"});
 const statistIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-chart-simple"]});
 
@@ -99,8 +99,8 @@ const statistIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-
 const statistCriteriaCreateArr = [[filterEmptyObj,filterEmptyObj,filterTitleObj]
  ,[[filterRatingObj,filterNumberObj],filterReleaseFromObj,filterReleaseToObj]
  ,[filterEmptyObj,filterEmptyObj,criteriaTitleObj]
-,[[statistSupportedLanguagesChbObj,statistCategoriesChbObj
-,statistGenresChbObj,statistTagsChbObj]],[filterEmptyObj,[statistObj,statistIconObj]]];
+,[[statistSupportedLanguagesRadObj,statistCategoriesRadObj
+,statistGenresRadObj,statistTagsRadObj]],[filterEmptyObj,[statistObj,statistIconObj]]];
 
 
 const dataSet = await getData();
@@ -268,7 +268,7 @@ function searchData(dataSet) {
         return;
     else{
         const filteredData = filterData(searchObj,dataSet);
-        console.log(filteredData);
+        // console.log(filteredData);
         displaySeachResult(filteredData);
     }
 }
@@ -309,53 +309,45 @@ function compareData(dataSet) {
 function statistData(dataSet) {
     const searchObj = Helper.searchObjArrHelper("statist");
 
+    if (!searchVaildation(searchObj))
+        return;
     if (searchObj.checkOnlyOneCriteria("statist",0)){
         alert("At least choose one Criteria");
         return;
     }
-    const propertyList = searchObj.getCheckedPropertiesArray("statist");
+
+    // const propertyList = searchObj.getCheckedPropertiesArray("statist");
+    const criteria = searchObj.getSelectedRadio();
     const statistResultP = document.getElementById("statistResultP");
     const chartArea = document.getElementById("statist-chartArea");
 
     statistResultP.innerHTML = "";
     chartArea.innerHTML = "";
-    appendCanvas(propertyList,"statist");
-    let i=0;
-    propertyList.forEach((property)=>{
-        const ctx = document.getElementById(`statist-canvas${i}`); 
-        const filteredData = filterData(searchObj,dataSet);
-        const criteriaDataHash= Helper.rebuildHash(getCriteriaDataHash(filteredData,property));
-        console.log(criteriaDataHash);
-        const createHash = {ctx:ctx,type:"doughnut",compareCol:property
-        ,displayLable:property,dataHash:criteriaDataHash};
-        const chartObj = Helper.chartObjHelper(createHash);
-        
-        Chart.buildStatistChart(chartObj,i);
-        i++;
+    appendCanvas([criteria],"statist");
+    const ctx = document.getElementById('statist-canvas0'); 
 
-    });
+    const filteredData = filterData(searchObj,dataSet);
+    const criteriaDataHash= Helper.rebuildHash(getCriteriaDataHash(filteredData,criteria));
+    // console.log(criteriaDataHash);
+    const createHash = {ctx:ctx,type:"doughnut",compareCol:criteria
+    ,displayLable:criteria,dataHash:criteriaDataHash};
+    const chartObj = Helper.chartObjHelper(createHash);
+    
+    Chart.buildStatistChart(chartObj);
+
 }
 
 function getCriteriaDataHash(filteredData,property) {
     const criteriaDataHash = {};
 
     filteredData.forEach((data)=>{
-        const criteriaData = Helper.stringCut(data[Helper.stringCriteriaTran(property)]);
-
+        const criteriaData = Helper.dataTranArray(data[property]);
         if (criteriaData){
-            const criteriaDataSpilt = criteriaData.split(',');
-            if (Array.isArray(criteriaDataSpilt)){
-                criteriaDataSpilt.forEach((el)=>{
-                    if (!criteriaDataHash[el])
-                        criteriaDataHash[el] = 0;
-                    criteriaDataHash[el] +=1;
-                });
-            }
-            else{
-                if (!criteriaDataHash[criteriaDataSpilt])
-                        criteriaDataHash[criteriaDataSpilt] = 0;
-                    criteriaDataHash[criteriaDataSpilt] +=1;
-            }
+            criteriaData.forEach((el)=>{
+                if (!criteriaDataHash[el])
+                    criteriaDataHash[el] = 0;
+                criteriaDataHash[el] +=1;
+            });
         }
     });
     return criteriaDataHash;
@@ -421,26 +413,39 @@ function compareDisplayByChart(propertyList,gameData1,gameData2) {
 
 }
 function filterData(criteria, dataSet) {
+    let releaseFrom,releaseTo,operator,rating;
     const filteredData = Object.values(dataSet).filter((item) => {
-    const releaseFrom = Date.parse(criteria.releaseFrom);
-    const releaseTo = Date.parse(criteria.releaseTo);
+        if (criteria.source === "search"){
+            releaseFrom = Date.parse(criteria.releaseFrom);
+            releaseTo = Date.parse(criteria.releaseTo);
+            operator = criteria.operator;
+            rating = criteria.rating;
+        }
+        else if (criteria.source === "statist"){
+            releaseFrom = Date.parse(criteria.filterReleaseFrom);
+            releaseTo = Date.parse(criteria.filterReleaseTo);
+            operator = criteria.filterOperator;
+            rating = criteria.filterRating;
+        }
+
     const gameReleaseDate = Date.parse(item.release_date);
+
     const languagesHash = Helper.hashHelper(languagesKey,languagesValue);
     const categoriesHash = Helper.hashHelper(categoriesKey,categoriesValue);
       if (
         (!criteria.gameName || item.name.toLowerCase().includes(criteria.gameName.toLowerCase())) &&
-        (!criteria.releaseFrom || gameReleaseDate >= releaseFrom) &&
-        (!criteria.releaseTo || gameReleaseDate <= releaseTo) &&
-        (!criteria.operator || (
-          criteria.operator === "greaterEqual" && item.rating >= criteria.rating) ||
-          (criteria.operator === "greater" && item.rating > criteria.rating) ||
-          (criteria.operator === "smaller" && item.rating < criteria.rating)
+        (!releaseFrom || gameReleaseDate >= releaseFrom) &&
+        (!releaseTo || gameReleaseDate <= releaseTo) &&
+        (!operator || (
+          operator === "greaterEqual" && item.rating >= rating) ||
+          (operator === "greater" && item.rating > rating) ||
+          (operator === "smaller" && item.rating < rating)
         ) && 
         // (item.type==='game') &&
         (!criteria.languages || criteria.languages.length === 0 || 
-            languagesHash[criteria.languages].includes(Helper.stringCut(item.supported_languages)) && item.supported_languages) &&
+            Helper.dataTranArray(item.supported_languages).some(sub=> languagesHash[criteria.languages].includes(sub)) && item.supported_languages) &&
         (!criteria.categories || criteria.categories.length === 0 || 
-            categoriesHash[criteria.categories].includes(Helper.stringCut(item.categories)) && item.categories))
+            Helper.dataTranArray(item.categories).some(sub =>categoriesHash[criteria.categories].includes(sub)) && item.categories))
        {
         return true;
       }
@@ -467,10 +472,12 @@ function filterData(criteria, dataSet) {
             filteredData.sort((a, b) => Date.parse(a.release_date) - Date.parse(b.release_date));
             break;
     }
-
-    const limitedData = filteredData.slice(0, 50);
-    return limitedData;
-    // return filteredData;
+    if (criteria.source === "search"){
+        const limitedData = filteredData.slice(0, 100);
+        return limitedData;
+    }
+    else
+        return filteredData;
   }
 
 function displaySeachResult(filteredData) {
@@ -501,7 +508,7 @@ function displaySeachResult(filteredData) {
 
 function displayDetial(name) {
     let game = dataSet[name];
-    console.log(game);
+    // console.log(game);
     const detialPage = document.getElementById("detialPage");
 
     const nameObj = Helper.buildObjHelper({tag:"input",classArr:["detialCol-1000"],inputType:"text",value:game.name,readonly:"true",lableName:"Name:",colSpan:"4"});
@@ -570,18 +577,33 @@ function displayDetial(name) {
 });
 
 function searchVaildation(searchObj){
-    if (searchObj.releaseFrom && searchObj.releaseTo){
-        if (searchObj.releaseTo < searchObj.releaseFrom){
+    let releaseFrom,releaseTo,operator,rating;
+    if (searchObj.source === "search"){
+        releaseFrom = Date.parse(searchObj.releaseFrom);
+        releaseTo = Date.parse(searchObj.releaseTo);
+        operator = searchObj.operator;
+        rating = searchObj.rating;
+    }
+    else if (searchObj.source === "statist"){
+        releaseFrom = Date.parse(searchObj.filterReleaseFrom);
+        releaseTo = Date.parse(searchObj.filterReleaseTo);
+        operator = searchObj.filterOperator;
+        rating = searchObj.filterRating;
+    }
+
+    if (releaseFrom && releaseTo){
+        if (releaseTo < releaseFrom){
             alert('Release To must later than Release From')
             return false;
         }
     }
 
-    if ((searchObj.operator && !searchObj.rating)||
-     (!searchObj.operator && searchObj.rating)){
+    if ((operator && !rating)||
+     (!operator && rating)){
         alert('Missing Operator or Rating')
             return false;
      }
+
     return true;
 }
 

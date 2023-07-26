@@ -1,3 +1,5 @@
+import * as Helper from "./helper.js"
+
 class SearchObj{
     constructor(gameName,releaseFrom,releaseTo,operator,rating,languages
         ,categories,orderBy) {
@@ -36,10 +38,11 @@ class SearchObj{
             if (this.rating) count++;
         }    
         else if (source === "statist"){
-            if (this.statistSupportedLanguagesChb) count++;
-            if (this.statistCategoriesChb) count++;
-            if (this.statistGenresChb) count++;
-            if (this.statistTagsChb) count++;
+            if (this.radioBtn)count++;
+            // if (this.statistSupportedLanguagesChb) count++;
+            // if (this.statistCategoriesChb) count++;
+            // if (this.statistGenresChb) count++;
+            // if (this.statistTagsChb) count++;
         }  
         return count === num;
     }
@@ -53,25 +56,37 @@ class SearchObj{
         let filter_checkedProperties;
         if (source === "compare"){
              filter_checkedProperties = checkedProperties.filter((item)=>{
-                if (item ==="gameCompare1" || item ==="gameCompare2"||item ==="radioBtn")
+                if (item ==="gameCompare1" || item ==="gameCompare2"
+                ||item ==="radioBtn" || item ==="source")
                     return false;
                 else
                     return true;
             });
         }
-        else if (source === "statist"){
-            filter_checkedProperties = checkedProperties.filter((item)=>{
-                if (item ==="statistSupportedLanguagesChb" 
-                || item ==="statistCategoriesChb"||item ==="statistTagsChb"
-                ||item ==="statistGenresChb"
-                )
-                    return true;
-                else
-                    return false;
-            });        
-        }
+        // else if (source === "statist"){
+        //     filter_checkedProperties = checkedProperties.filter((item)=>{
+        //         if (item ==="statistSupportedLanguagesChb" 
+        //         || item ==="statistCategoriesChb"||item ==="statistTagsChb"
+        //         ||item ==="statistGenresChb"
+        //         )
+        //             return true;
+        //         else
+        //             return false;
+        //     });        
+        // }
 
         return filter_checkedProperties;
+    }
+    getSelectedRadio() {
+       return Helper.stringCriteriaTran(this.radioBtn);
+        // if (this.radioBtn === "statistSupportedLanguagesRad")
+        //     return "supported_languages"; 
+        // else if (this.radioBtn ==="statistCategoriesRad")
+        //     return "categories";
+        // else if (this.radioBtn === "statistGenresRad")
+        //     return "tags"; 
+        // else if (this.radioBtn === "statistTagsRad")
+        //     return "genres"; 
     }
 
     areOnlyFiveFieldsChecked() {

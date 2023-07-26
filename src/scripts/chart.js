@@ -65,7 +65,7 @@ export function buildCompareChart(chartObj,i) {
     });
 }
 
-export function buildStatistChart(chartObj,i) {
+export function buildStatistChart(chartObj) {
     let keyList = [];
     let valueList = [];
     Object.keys(chartObj.dataHash).forEach((key) => {
