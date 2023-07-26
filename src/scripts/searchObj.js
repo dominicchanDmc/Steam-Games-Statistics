@@ -35,6 +35,12 @@ class SearchObj{
             if (this.review_score) count++;
             if (this.rating) count++;
         }    
+        else if (source === "compare"){
+            if (this.supported_languages) count++;
+            if (this.categories) count++;
+            if (this.genres) count++;
+            if (this.tags) count++;
+        }  
         return count === num;
     }
     getCheckedPropertiesArray() {

@@ -249,6 +249,13 @@ function populateStatistPage(createStr) {
         tableStatistArea.appendChild(tr);
    });
    statistCriteriaArea.appendChild(tableStatistArea);
+
+   let statistBtn = document.querySelector(".statistCriteriaBtn")
+   statistBtn.addEventListener("click",(e)=>{
+       e.preventDefault();
+       alert();
+        statistData(dataSet);
+    })
 }
 
 function searchData(dataSet) {
@@ -299,6 +306,24 @@ function compareData(dataSet) {
     else 
         compareDisplayByChart(propertyList,gameData1,gameData2); 
 }
+function statistData(dataSet) {
+    const searchObj = Helper.searchObjArrHelper("statist");
+
+    if (searchObj.checkOnlyOneCriteria("statist",0)){
+        alert("At least choose one Criteria");
+        return;
+    }
+    const propertyList = searchObj.getCheckedPropertiesArray();
+    const statistResultP = document.getElementById("statistResultP");
+    const chartArea = document.getElementById("statist-chartArea");
+
+    statistResultP.innerHTML = "";
+    chartArea.innerHTML = "";
+    appendCanvas(propertyList,"statist");
+    propertyList.forEach((property)=>{
+        
+    });
+}
 
 function compareDisplayByTable(propertyList,gameData1,gameData2) {
     const compareResult = document.getElementById("compareResult");
@@ -345,7 +370,7 @@ function compareDisplayByTable(propertyList,gameData1,gameData2) {
 }
 
 function compareDisplayByChart(propertyList,gameData1,gameData2) {
-    appendCanvas(propertyList);
+    appendCanvas(propertyList,"compare");
     let i=0;
     
     propertyList.forEach((property)=>{
@@ -548,8 +573,12 @@ function addToCompare(name) {
         alert("Only can compare between 2 game ");
 }
 
-function appendCanvas(propertyList) {
-    const ctx = document.getElementById('chartArea'); 
+function appendCanvas(propertyList,type) {
+    let ctx;
+    if (type ==="compare")
+        ctx = document.getElementById('chartArea'); 
+    else if (type === "statist")
+        ctx = document.getElementById('statist-chartArea'); 
     ctx.innerHTML = "";
     for(let i=0;i<propertyList.length;i++){
         let canvasId = "canvas" + i;

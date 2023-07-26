@@ -66,6 +66,17 @@ export function searchObjArrHelper(source) {
     const reviewScoreChb = document.getElementById('reviewScoreChb');
     const ratingChb = document.getElementById('ratingChb');
 
+    //statist
+    const filterReleaseFrom = document.getElementById("filterReleaseFrom");
+    const filterReleaseTo = document.getElementById("filterReleaseTo");
+    const filterOperator = document.getElementById("filterOperator");
+    const filterRating = document.getElementById("filterRating");
+    const statistSupportedLanguagesChb = document.getElementById('statistSupportedLanguagesChb');
+    const statistCategoriesChb = document.getElementById('statistCategoriesChb');
+    const statistGenresChb = document.getElementById('statistGenresChb');
+    const statistTagsChb = document.getElementById('statistTagsChb');
+
+
     let searchObj = new SearchObj();
 
     if (source === "search"){
@@ -99,7 +110,17 @@ export function searchObjArrHelper(source) {
         searchObj.tags = tagsChb.checked;
         searchObj.genres = genresChb.checked;
     }
+    else if (source === "Statist"){
+        searchObj.filterReleaseFrom = filterReleaseFrom.value;
+        searchObj.filterReleaseTo = filterReleaseTo.value ;
+        searchObj.filterOperator = filterOperator.value;
+        searchObj.filterRating = filterRating.value;
 
+        searchObj.statistSupportedLanguagesChb = statistSupportedLanguagesChb.checked;
+        searchObj.statistCategoriesChb = statistCategoriesChb.checked;
+        searchObj.statistTagsChb = statistTagsChb.checked;
+        searchObj.statistGenresChb = statistGenresChb.checked;
+    }
     return searchObj;
 }
 
