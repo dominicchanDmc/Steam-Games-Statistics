@@ -64,3 +64,44 @@ export function buildCompareChart(chartObj,i) {
       }
     });
 }
+
+export function buildStatistChart(chartObj,i) {
+    let keyList = [];
+    let valueList = [];
+    Object.keys(chartObj.dataHash).forEach((key) => {
+        keyList.push(key);
+    });
+    Object.values(chartObj.dataHash).forEach((values) => {
+        valueList.push(values);
+    });
+
+    const data = {
+        labels: keyList,
+        datasets: [{
+          label: chartObj.property,
+          data: valueList,
+        //   backgroundColor: [
+        //     'rgb(255, 99, 132)',
+        //     'rgb(54, 162, 235)',
+        //     'rgb(255, 205, 86)'
+        //   ],
+          hoverOffset: 4
+        }]
+      };
+      const config = {
+        type: chartObj.type,
+        data: data,
+        options: {
+          responsive: true, 
+          maintainAspectRatio: false,
+        //   scales: {
+        //     yAxes: [{
+        //       ticks: {
+        //         beginAtZero:true
+        //               }
+        //         }]
+        //   }
+        }
+      };
+      new Chart(chartObj.ctx, config);
+}

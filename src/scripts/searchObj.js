@@ -35,33 +35,48 @@ class SearchObj{
             if (this.review_score) count++;
             if (this.rating) count++;
         }    
-        else if (source === "compare"){
-            if (this.supported_languages) count++;
-            if (this.categories) count++;
-            if (this.genres) count++;
-            if (this.tags) count++;
+        else if (source === "statist"){
+            if (this.statistSupportedLanguagesChb) count++;
+            if (this.statistCategoriesChb) count++;
+            if (this.statistGenresChb) count++;
+            if (this.statistTagsChb) count++;
         }  
         return count === num;
     }
-    getCheckedPropertiesArray() {
+    getCheckedPropertiesArray(source) {
         const checkedProperties = [];
         for (const property in this) {
             if (this[property]) {
                 checkedProperties.push(property);
             }
         }
-        const filter_checkedProperties = checkedProperties.filter((item)=>{
-            if (item ==="gameCompare1" || item ==="gameCompare2"||item ==="radioBtn")
-                return false;
-            else
-                return true;
-        });
+        let filter_checkedProperties;
+        if (source === "compare"){
+             filter_checkedProperties = checkedProperties.filter((item)=>{
+                if (item ==="gameCompare1" || item ==="gameCompare2"||item ==="radioBtn")
+                    return false;
+                else
+                    return true;
+            });
+        }
+        else if (source === "statist"){
+            filter_checkedProperties = checkedProperties.filter((item)=>{
+                if (item ==="statistSupportedLanguagesChb" 
+                || item ==="statistCategoriesChb"||item ==="statistTagsChb"
+                ||item ==="statistGenresChb"
+                )
+                    return true;
+                else
+                    return false;
+            });        
+        }
+
         return filter_checkedProperties;
     }
 
     areOnlyFiveFieldsChecked() {
         const requiredFields = ["rating", "total_negative", "total_positive", "review_score", "average_forever"];
-        const checkedFields = this.getCheckedPropertiesArray();
+        const checkedFields = this.getCheckedPropertiesArray("compare");
         
         return checkedFields.every(field => requiredFields.includes(field)); 
       }

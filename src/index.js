@@ -1,5 +1,6 @@
 import './index.scss';
 import BuildObj from "./scripts/buildObj.js"
+import SearchObj from "./scripts/searchObj.js"
 import * as Helper from "./scripts/helper.js"
 import * as Builder from "./scripts/builder.js"
 import * as Chart from "./scripts/chart.js"
@@ -253,7 +254,6 @@ function populateStatistPage(createStr) {
    let statistBtn = document.querySelector(".statistCriteriaBtn")
    statistBtn.addEventListener("click",(e)=>{
        e.preventDefault();
-       alert();
         statistData(dataSet);
     })
 }
@@ -292,7 +292,7 @@ function compareData(dataSet) {
        
     const gameData1 = dataSet[searchObj.gameCompare1];
     const gameData2 = dataSet[searchObj.gameCompare2];
-    const propertyList = searchObj.getCheckedPropertiesArray();
+    const propertyList = searchObj.getCheckedPropertiesArray("compare");
     const compareResultP = document.getElementById("compareResultP");
     const compareResult = document.getElementById("compareResult");
     const chartArea = document.getElementById("chartArea");
@@ -313,18 +313,53 @@ function statistData(dataSet) {
         alert("At least choose one Criteria");
         return;
     }
-    const propertyList = searchObj.getCheckedPropertiesArray();
+    const propertyList = searchObj.getCheckedPropertiesArray("statist");
     const statistResultP = document.getElementById("statistResultP");
     const chartArea = document.getElementById("statist-chartArea");
 
     statistResultP.innerHTML = "";
     chartArea.innerHTML = "";
     appendCanvas(propertyList,"statist");
+    let i=0;
     propertyList.forEach((property)=>{
+        const ctx = document.getElementById(`statist-canvas${i}`); 
+        const filteredData = filterData(searchObj,dataSet);
+        const criteriaDataHash= Helper.rebuildHash(getCriteriaDataHash(filteredData,property));
+        console.log(criteriaDataHash);
+        const createHash = {ctx:ctx,type:"doughnut",compareCol:property
+        ,displayLable:property,dataHash:criteriaDataHash};
+        const chartObj = Helper.chartObjHelper(createHash);
         
+        Chart.buildStatistChart(chartObj,i);
+        i++;
+
     });
 }
 
+function getCriteriaDataHash(filteredData,property) {
+    const criteriaDataHash = {};
+
+    filteredData.forEach((data)=>{
+        const criteriaData = Helper.stringCut(data[Helper.stringCriteriaTran(property)]);
+
+        if (criteriaData){
+            const criteriaDataSpilt = criteriaData.split(',');
+            if (Array.isArray(criteriaDataSpilt)){
+                criteriaDataSpilt.forEach((el)=>{
+                    if (!criteriaDataHash[el])
+                        criteriaDataHash[el] = 0;
+                    criteriaDataHash[el] +=1;
+                });
+            }
+            else{
+                if (!criteriaDataHash[criteriaDataSpilt])
+                        criteriaDataHash[criteriaDataSpilt] = 0;
+                    criteriaDataHash[criteriaDataSpilt] +=1;
+            }
+        }
+    });
+    return criteriaDataHash;
+}
 function compareDisplayByTable(propertyList,gameData1,gameData2) {
     const compareResult = document.getElementById("compareResult");
 
@@ -581,7 +616,7 @@ function appendCanvas(propertyList,type) {
         ctx = document.getElementById('statist-chartArea'); 
     ctx.innerHTML = "";
     for(let i=0;i<propertyList.length;i++){
-        let canvasId = "canvas" + i;
+        let canvasId = "statist-canvas" + i;
         const canvas = Builder.buildElement(
         Helper.buildObjHelper({tag:"canvas",id:canvasId}));
         ctx.appendChild(canvas);

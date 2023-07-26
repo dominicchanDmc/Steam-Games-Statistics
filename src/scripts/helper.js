@@ -110,7 +110,7 @@ export function searchObjArrHelper(source) {
         searchObj.tags = tagsChb.checked;
         searchObj.genres = genresChb.checked;
     }
-    else if (source === "Statist"){
+    else if (source === "statist"){
         searchObj.filterReleaseFrom = filterReleaseFrom.value;
         searchObj.filterReleaseTo = filterReleaseTo.value ;
         searchObj.filterOperator = filterOperator.value;
@@ -165,3 +165,32 @@ export function stringTran(string) {
            return string.charAt(0).toUpperCase() + string.slice(1) + " :";
     }
 }
+
+export function stringCriteriaTran(string) {
+    switch (string) {
+        case "statistSupportedLanguagesChb":
+            return "supported_languages";    
+        case "statistCategoriesChb":
+            return "categories";    
+        case "statistTagsChb":
+            return "tags";    
+        case "statistGenresChb":
+            return "genres"; 
+     }
+}
+
+export function rebuildHash(originalHash) {
+    const rebuiltHash = {};
+  
+    Object.keys(originalHash).forEach((key) => {
+      const cleanedKeyTemp = key.trim().toLowerCase().replace(/"/g, '');
+      const cleanedKey = cleanedKeyTemp.charAt(0).toUpperCase() + cleanedKeyTemp.slice(1);
+      if (rebuiltHash[cleanedKey]) {
+        rebuiltHash[cleanedKey] += originalHash[key];
+      } else {
+        rebuiltHash[cleanedKey] = originalHash[key];
+      }
+    });
+  
+    return rebuiltHash;
+  }
