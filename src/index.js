@@ -6,8 +6,8 @@ import * as Builder from "./scripts/builder.js"
 import * as Chart from "./scripts/chart.js"
 
 async function getData (){
-    // const request = await fetch("/data/steamData-after2019.json")
-    const request = await fetch("/data/test2Record.json")
+    const request = await fetch("/data/steamData-after2019.json")
+    // const request = await fetch("/data/test2Record.json")
     const respone = await request.json();
     const array = Object.values(respone);
     const newObj = array.reduce((obj,item)=>Object.assign(obj,{[item.name]: item}),{})
