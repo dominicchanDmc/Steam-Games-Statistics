@@ -346,6 +346,7 @@ body .detialPage input {
   font-size: 18px;
   font-weight: bold;
   padding-left: 20px;
+  font-family: "Font Awesome 6 Free";
 }
 body .detialPage .detialCol-1000 {
   width: 1000px;
@@ -418,6 +419,7 @@ body .comparePage input {
   font-size: 18px;
   font-weight: bold;
   padding-left: 20px;
+  font-family: "Font Awesome 6 Free";
 }
 body .comparePage .CompareCol-300 {
   width: 300px;
