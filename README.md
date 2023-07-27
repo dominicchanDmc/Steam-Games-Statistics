@@ -1,64 +1,184 @@
 # Steam-Games-Statistics
-Javascript project for Steam-Games-Statistics
-
 <h2>Background</h2>
-Steam is the world's most popular PC Gaming hub, with over 7,000 games and a community of millions of gamers. It includes everything from big companies to individual, great data statistics tools can help companies to find out the market needs. 
+Steam is the world's most popular PC Gaming hub, with over 7,000 games and a community of millions of gamers. It includes everything from big companies to individual, great data statistics tools can help companies to find out the market needs.
 
-In this project, using the Stream games dataset from <a href='https://www.kaggle.com/datasets/mikekzan/steam-games-dlcs?select=steam.csv'>kaggle</a> to make a website to make a data statistics of all data.
+The website likely fetches data from <a href='https://www.kaggle.com/datasets/mikekzan/steam-games-dlcs?select=steam.csv'>kaggle</a> related to video games, such as their names, release dates, ratings, supported languages, categories, and tags. Users can search for specific games, compare two games, or perform statistical analysis on game data. The app offers options for filtering, sorting, and displaying the data in both tabular and chart formats.
+<h2>Live version</h2>
+Live version can be seen on <a href='https://dominicchandmc.github.io/Steam-Games-Statistics/'>this link</a>
+<h2>Instructions</h2>
+Navigate through the slides to search, compare and statistics. Click on the "home" button to navigate back to the beggining.
+Recommend do the searching first, that select 2 game to compare.
 
-<h2>Functionality</h2>
-In Steam Games Statistics, users will be able to:
-<ol>
-  <li>
-    <b>Basic search</b>
-    <ul>
-      <li>display detail information by different criteria</li>
-    </ul>
-  </li>
-  <li>
-    <b>Compare</b>
-    <ul>
-      <li>can select the compare item between 2 - 3 games with table or chart</li>
-    </ul>
-  </li>
-  <li>
-    <b>Data statistics</b>
-    <ul>
-      <li>make data statistics for the period, 
-      for example:  from 2022 to 2023, how many present of Action game or RPG.</li>
-    </ul>
-  </li>
-</ol>
-<h2>Wireframes</h2>
-  <img
-  src="/assets/wireframe.png"
-  title="Wireframes"
-  style="display: inline-block; margin: 0 auto; max-width: 300px">
-  
+<h2>Technologies</h2>
+In this website,I have use 2 Libraries:
 <ul>
-  <li>Nav bar have a link to each function pages</li>
-  <li>Nav links include links to this project's Github repo, my LinkedIn</li>
-  <li>Search criteria session for user input</li>
-  <li>Result area for display the result table or chart</li>
-</ul>
-<h2>Technologies, Libraries</h2>
-This project will be implemented with the following technologies:
-<ul>
-  <li><b>D3.js:</b> Build the chart </li>
-   <li><b>Font Awesome:</b> Some comment icon 
+  <li><b>Chat.js:</b>Rendering charts and graphs on the web page. </li>
+   <li><b>Font Awesome:</b>The commom and easy to understand icon
 </li>
 </ul>
-<h2>Implementation Timeline</h2>
+<h2>Technical Features</h2>
+Dynamically generate HTML elements with appropriate attributes and content. These helper functions abstract away the complexities of element creation and make the code more maintainable and organized. By passing the necessary parameters, the functions construct the desired HTML components, which are then appended to the DOM.
+
+```JavaScript
+const compareName2Obj = Helper.buildObjHelper({tag:"input",id:"gameCompare2",inputType:"text",classArr:["CompareCol-300"],lableName:"Game 2:",readonly:"true",colSpan:2});
+const ratingInputObj = Helper.buildObjHelper({tag:"select",id:"operator",options:operatorList});
+const compareBtnObj = Helper.buildObjHelper({tag:"button",classArr:["compareCriteriaBtn"], id:"compareBtn",innerHTML:"Compare"});
+
+const tdCreateObjArr = [[compareName2Obj,ratingInputObj,compareBtnObj]];
+
+export function createTableTd(tdCreateObjArr) {
+    let returnArr = [];
+    if (Array.isArray(tdCreateObjArr)) {
+        tdCreateObjArr.forEach((tdCreateObj)=>{
+            returnArr = returnArr.concat(createTableTdInner(tdCreateObj));
+        });
+    }
+    else
+        returnArr = createTableTdInner(tdCreateObjArr);
+    return returnArr;
+}
+
+export function createTableTdInner(tdCreateObj) {
+    let returnArr = [];
+    let labelmasterTd =  buildElement(new BuildObj("td"));
+
+    if (tdCreateObj.tdClass)
+        labelmasterTd.classList.add(tdCreateObj.tdClass);
+
+    if (tdCreateObj.colSpan)
+        labelmasterTd.colSpan = tdCreateObj.colSpan;
+    if (tdCreateObj.lableName){
+        let labelObjClass=[];
+        if (tdCreateObj.lableClass)
+            labelObjClass = tdCreateObj.lableClass;
+        let labelObj = new BuildObj("label",labelObjClass,null,null,tdCreateObj.lableName,tdCreateObj.id);
+        let labelTd =  buildElement(labelObj);
+        if (tdCreateObj.skipTd)
+            returnArr.push(labelTd);
+        else
+            labelmasterTd.appendChild(labelTd);
+    }  
+        let innterTd = buildElement(tdCreateObj);
+        if (tdCreateObj.skipTd)
+            returnArr.push(innterTd);
+        else
+            labelmasterTd.appendChild(innterTd);
+
+    if (!tdCreateObj.skipTd)
+            returnArr.push(labelmasterTd);
+    return returnArr;
+}
+
+export function buildElement(buildObj){
+    let newElement = document.createElement(buildObj.tag);
+    if (buildObj.tag === "select"){
+        buildObj.options.forEach((options)=>{
+            let optionElement = document.createElement("option");
+            optionElement.value = options.value;
+            optionElement.innerHTML = options.displayText;
+            newElement.appendChild(optionElement);
+        });
+    }
+    else if (buildObj.tag === "input"){
+        if (buildObj.inputType!="text")
+            newElement.type = buildObj.inputType;
+        if (buildObj.inputType === "radio" && buildObj.attributes){
+            for (const [key, value] of Object.entries(buildObj.attributes)) {
+                newElement.setAttribute(key, value);
+            }    
+        }
+    }
+    else if (buildObj.tag === 'label' && buildObj.lableName) 
+        newElement.setAttribute('for', buildObj.lableName);
+    else if (buildObj.tag === 'button'&& buildObj.attribute){
+        newElement.setAttribute(`data-name`,buildObj.attribute) 
+    }
+    if (Array.isArray(buildObj.classArr)) {
+        buildObj.classArr.forEach((c) =>{
+            newElement.classList.add(c);
+        });
+    }
+    else if (buildObj.classArr)
+        newElement.classList.add(buildObj.classArr);
+    return newElement;
+}
+```
+Takes user inputs for search criteria (e.g., game name, release date, rating, categories, etc.) and returns a structured search object (SearchObj). This object is then used to perform searches on the game data, filtering out irrelevant entries and displaying the matching results.
+```JavaScript
+export function searchObjArrHelper(source) {
+    //source
+    let gameName = document.getElementById("gameName");
+    let releaseFrom = document.getElementById("releaseFrom");;
+    let categories = document.getElementById("categories");
+    let orderBy = document.getElementById("orderBy");
+
+    let searchObj = new SearchObj();
+    searchObj.source = source;
+    searchObj.gameName = gameName.value;
+    searchObj.releaseFrom = releaseFrom.value;
+    searchObj.releaseTo = releaseTo.value;
+    searchObj.operator = operator.value;
+    searchObj.rating = rating.value;
+    searchObj.languages = languages.value;
+    searchObj.categories = categories.value;
+    searchObj.orderBy = orderBy.value;    
+    return searchObj;
+}
+
+class SearchObj{
+    checkOnlyOneCriteria(source,num) {
+        let count = 0;
+    
+        if (source === "search"){
+            if (this.gameName) count++;
+            if (this.releaseFrom) count++;
+            if (this.releaseTo) count++;
+            if (this.operator || this.rating) count++;
+            if (this.languages) count++;
+            if (this.categories) count++;
+        }
+        return count === num;
+    }
+    getCheckedPropertiesArray(source) {
+        const checkedProperties = [];
+        for (const property in this) {
+            if (this[property]) {
+                checkedProperties.push(property);
+            }
+        }
+        let filter_checkedProperties;
+        if (source === "compare"){
+             filter_checkedProperties = checkedProperties.filter((item)=>{
+                if (item ==="gameCompare1" || item ==="gameCompare2"
+                ||item ==="radioBtn" || item ==="source")
+                    return false;
+                else
+                    return true;
+            });
+        }
+        return filter_checkedProperties;
+    }
+    areOnlyFiveFieldsChecked() {
+        const requiredFields = ["rating", "total_negative", "total_positive", "review_score", "average_forever"];
+        const checkedFields = this.getCheckedPropertiesArray("compare");
+        
+        return checkedFields.every(field => requiredFields.includes(field)); 
+      }
+}
+
+```
+<h2>Screenshots</h2>
+<img
+  src="/assets/Screenshot1.png"
+  title="Screenshot1"
+  style="display: inline-block; margin: 0 auto; max-width: 300px">
+<img
+  src="/assets/Screenshot2.png"
+  title="Screenshot2"
+  style="display: inline-block; margin: 0 auto; max-width: 300px">
+<h2>Future  Features</h2>
 <ul>
-  <li><b>Friday Afternoon & Weekend:</b> Finish Setup environment and convert the data source csv to the json file. Aim to     finish the search and display to detail page. Hope to have time to prepare for D3.js</li>
-  <li><b>Monday:</b> Learn the D3,expect can start compare function and make basic css</li>
-  <li><b>Tuesday:</b> Finish compare and start statistics </li>
-  <li><b>Wednesday:</b> Finish statistics, finish css and debug</li>
-  <li><b>Thursday Morning:</b> Final check everything.</li>
-</ul>
-<h2>Bonus Features</h2>
-<ul>
-  <li><b>Enhance user experience:</b> Enhance the layout to make paging for search result (now limit 10 record)
+  <li><b>Enhance user experience:</b> Enhance the layout to make paging for search result (now limit 100 record)
 </li>
   <li><b>Export the statistics result:</b> Export to file
 </li>
