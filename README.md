@@ -1,23 +1,28 @@
 # Steam-Games-Statistics
-<h2>Background</h2>
+## Background 
 Steam is the world's most popular PC Gaming hub, with over 7,000 games and a community of millions of gamers. It includes everything from big companies to individual, great data statistics tools can help companies to find out the market needs.
 
 The website likely fetches data from <a href='https://www.kaggle.com/datasets/mikekzan/steam-games-dlcs?select=steam.csv'>kaggle</a> related to video games, such as their names, release dates, ratings, supported languages, categories, and tags. Users can search for specific games, compare two games, or perform statistical analysis on game data. The app offers options for filtering, sorting, and displaying the data in both tabular and chart formats.
-<h2>Live version</h2>
+## Live version 
 Live version can be seen on <a href='https://dominicchandmc.github.io/Steam-Games-Statistics/'>this link</a>
 <h2>Instructions</h2>
 Navigate through the slides to search, compare and statistics. Click on the "home" button to navigate back to the beggining.
 Recommend do the searching first, that select 2 game to compare.
 
-<h2>Technologies</h2>
+## Technologies
 In this website,I have use 2 Libraries:
-<ul>
-  <li><b>Chat.js:</b>Rendering charts and graphs on the web page. </li>
-   <li><b>Font Awesome:</b>The commom and easy to understand icon
-</li>
-</ul>
-<h2>Technical Features</h2>
-Dynamically generate HTML elements with appropriate attributes and content. These helper functions abstract away the complexities of element creation and make the code more maintainable and organized. By passing the necessary parameters, the functions construct the desired HTML components, which are then appended to the DOM.
+
+- **Chat.js**: Rendering charts and graphs on the web page.
+- **Font Awesome**: The commom and easy to understand icon
+
+## Technical Features 
+Dynamic Building of HTML Elements
+
+Writing HTML elements manually can lead to a lot of boilerplate code, especially when dealing with large datasets, so dynamically generate HTML elements with appropriate attributes and content is important.
+
+These helper functions abstract away the complexities of element creation and make the code more maintainable and organized. By passing the necessary parameters, the functions construct the desired HTML components, which are then appended to the DOM.
+
+Example is define 4 const to build a 1 row 3 col table. I just want to change the value of the obj to control the table.
 
 ```JavaScript
 const compareName2Obj = Helper.buildObjHelper({tag:"input",id:"gameCompare2",inputType:"text",classArr:["CompareCol-300"],lableName:"Game 2:",readonly:"true",colSpan:2});
@@ -103,6 +108,8 @@ export function buildElement(buildObj){
     return newElement;
 }
 ```
+
+
 <h2>Screenshots</h2>
 <img
   src="/assets/Screenshot1.png"
