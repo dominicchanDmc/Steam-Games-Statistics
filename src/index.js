@@ -279,7 +279,11 @@ function compareData(dataSet) {
     const searchObj = Helper.searchObjArrHelper("compare");
 
     if (!searchObj.gameCompare1 || !gameCompare2){
-        alert("Must select 2 games");
+       const answer =  window.confirm(("Must select 2 games, go select now?"));
+       if (answer){
+        const searchPage = document.getElementById("searchPage");
+        searchPage.scrollIntoView();
+       }
         return;
     }
     if (searchObj.checkOnlyOneCriteria("compare",0)){
