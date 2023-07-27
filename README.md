@@ -108,6 +108,54 @@ export function buildElement(buildObj){
     return newElement;
 }
 ```
+### Transforming and manipulating data
+When doing data statistics or analysis, sometimes the data can have diffenert formmat in the some field or have some space in the work.
+For example:  
+<img
+  src="/assets/ScreenshotP.png"
+  title="Screenshot1"
+  style="display: inline-block; margin: 0 auto; max-width: 300px"> <br>
+  I get a "languages" field in data, and return **"English: 1"** and **English: 11**, because of the **space** and the **""**, they not count the same<br>
+
+I write two function to solve this problem
+#### dataTranArray 
+  Use the stringCut function to remove any square brackets and single quotes from the input string. Then, use the split method with a comma as the delimiter to split the string into an array of values. Also need to handle scenarios where the input string is empty or does not contain any commas.
+```JavaScript
+export function stringCut(string) {
+    return string.replace(/\[|\]|'/g, "")
+}
+export function dataTranArray(dataString) {
+  let finalArr = [];
+  let dataStringCut = stringCut(dataString);
+    if (dataStringCut){
+        let stringSpilt = dataStringCut.split(',');
+        if (Array.isArray(stringSpilt))
+            return stringSpilt       
+        else
+            finalArr.push(stringSpilt); 
+    }
+    return finalArr;
+}
+```
+#### rebuildHash 
+Use the Object.keys method to iterate through the keys of the original hash. For each key, we clean and normalize it by converting it to lowercase, removing any special characters or quotes, and capitalizing the first letter. Then use the cleaned key as the key for the rebuiltHash object and sum up the corresponding values. If a key already exists in the rebuiltHash, add its value to the existing value; otherwise, create a new entry with the cleaned key and its value.
+```JavaScript
+export function rebuildHash(originalHash) {
+    const rebuiltHash = {};
+  
+    Object.keys(originalHash).forEach((key) => {
+      const cleanedKeyTemp = key.trim().toLowerCase().replace(/"/g, '');
+      const cleanedKey = cleanedKeyTemp.charAt(0).toUpperCase() + cleanedKeyTemp.slice(1);
+      if (rebuiltHash[cleanedKey]) {
+        rebuiltHash[cleanedKey] += originalHash[key];
+      } else {
+        rebuiltHash[cleanedKey] = originalHash[key];
+      }
+    });
+  
+    return rebuiltHash;
+  }
+```
 
 
 ## Screenshots
