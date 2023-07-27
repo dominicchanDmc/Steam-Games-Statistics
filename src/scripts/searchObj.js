@@ -39,10 +39,6 @@ class SearchObj{
         }    
         else if (source === "statist"){
             if (this.radioBtn)count++;
-            // if (this.statistSupportedLanguagesChb) count++;
-            // if (this.statistCategoriesChb) count++;
-            // if (this.statistGenresChb) count++;
-            // if (this.statistTagsChb) count++;
         }  
         return count === num;
     }
@@ -63,30 +59,11 @@ class SearchObj{
                     return true;
             });
         }
-        // else if (source === "statist"){
-        //     filter_checkedProperties = checkedProperties.filter((item)=>{
-        //         if (item ==="statistSupportedLanguagesChb" 
-        //         || item ==="statistCategoriesChb"||item ==="statistTagsChb"
-        //         ||item ==="statistGenresChb"
-        //         )
-        //             return true;
-        //         else
-        //             return false;
-        //     });        
-        // }
 
         return filter_checkedProperties;
     }
     getSelectedRadio() {
        return Helper.stringCriteriaTran(this.radioBtn);
-        // if (this.radioBtn === "statistSupportedLanguagesRad")
-        //     return "supported_languages"; 
-        // else if (this.radioBtn ==="statistCategoriesRad")
-        //     return "categories";
-        // else if (this.radioBtn === "statistGenresRad")
-        //     return "tags"; 
-        // else if (this.radioBtn === "statistTagsRad")
-        //     return "genres"; 
     }
 
     areOnlyFiveFieldsChecked() {

@@ -89,8 +89,6 @@ export function searchObjArrHelper(source) {
         searchObj.languages = languages.value;
         searchObj.categories = categories.value;
         searchObj.orderBy = orderBy.value;
-        // searchObj.source = source;
-
     }
     else if (source === "compare"){
         searchObj.gameCompare1 = gameCompare1.value;
@@ -127,10 +125,6 @@ export function searchObjArrHelper(source) {
             searchObj.radioBtn = statistGenresRad.value;
         else if (statistTagsRad.checked)
             searchObj.radioBtn = statistTagsRad.value;
-        // searchObj.statistSupportedLanguagesChb = statistSupportedLanguagesChb.checked;
-        // searchObj.statistCategoriesChb = statistCategoriesChb.checked;
-        // searchObj.statistTagsChb = statistTagsChb.checked;
-        // searchObj.statistGenresChb = statistGenresChb.checked;
     }
 
     return searchObj;

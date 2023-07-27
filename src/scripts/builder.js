@@ -62,6 +62,11 @@ export function buildElement(buildObj){
 export function createTableTr(trCreateObjArr) {
     let masterTr =  buildElement(new BuildObj("tr"));
     trCreateObjArr.forEach((tdCreateObj)=>{
+        if (tdCreateObj.trClass){
+            if(tdCreateObj.trClass[0] === "filterTitle")
+            masterTr.classList.add(tdCreateObj.trClass);
+        }
+       
         if (Array.isArray(tdCreateObj)) {
             //for rating only
             if (tdCreateObj[0].id === "operator" || tdCreateObj[0].id === "filterOperator"){
@@ -77,7 +82,7 @@ export function createTableTr(trCreateObjArr) {
             else if (tdCreateObj[0].id === "searchBtn" ||
              tdCreateObj[0].id === "compareBtn" ||
              tdCreateObj[0].id === "statistBtn"){
-                // for searchBtn 
+                // for searchBtn,compareBtn,statistBtn
                 let searchBtn = buildElement(tdCreateObj[0]);
                 let searchBtnIcon = createTableTd(tdCreateObj[1]);
                 searchBtn.appendChild(searchBtnIcon[0]);
@@ -147,6 +152,9 @@ export function createTableTd(tdCreateObjArr) {
 export function createTableTdInner(tdCreateObj) {
     let returnArr = [];
     let labelmasterTd =  buildElement(new BuildObj("td"));
+
+    if (tdCreateObj.tdClass)
+        labelmasterTd.classList.add(tdCreateObj.tdClass);
 
     if (tdCreateObj.colSpan)
         labelmasterTd.colSpan = tdCreateObj.colSpan;

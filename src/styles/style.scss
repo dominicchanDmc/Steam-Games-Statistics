@@ -34,6 +34,24 @@ body {
     .text-yellow{
         color: yellow; 
     }
+    .icons {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+    }
+    .icons p {
+        font-size: 32px;
+    }
+    .icons a {
+        color: var(--color-transparent-black);
+        margin-right: 30px;
+    }
+    .icons a:hover {
+        color: var(--color-grey);
+    }
+    textarea {
+      font-size: 18px; 
+    }
     #frontPage {
         flex: 1; 
       }
@@ -42,7 +60,7 @@ body {
         gap: 20px;
         align-items: baseline;
         justify-content: space-evenly;
-        margin-top: 80px; 
+        margin-top: 40px; 
         margin-bottom: 80px;
       }
       
@@ -67,10 +85,8 @@ body {
         .icon-circle {
             border-radius: 50%;
             background: #2a63ec;
-            // color: #ffffff;
             width: 30px;
             height:30px;
-            // font-size: 50px;
             background-image: none;
             margin: 0 0 0 auto;
             padding: 19px;
@@ -153,7 +169,7 @@ body {
     }
     .user-input-table {
       border-collapse: collapse;
-      width: 80%;
+      width: 100%;
       align-items: center;
       border-bottom: 1px solid #ddd;
 
@@ -179,7 +195,6 @@ body {
         }
       select{
           width: 150;
-          // padding: 4px 8px;
           border: 1px solid #ccc;
           border-radius: 4px;
           box-sizing: border-box;
@@ -201,7 +216,6 @@ body {
           background-color: #2a63ec;
           color: #fff;
           border: none;
-          // padding: 10px 20px;
           font-size: 20px;
           cursor: pointer;
           border-radius: 4px;
@@ -224,12 +238,8 @@ body {
     .searchPage{
         min-height: 595px;
         background-color: #3f3f3f;
-        margin-top: 80px;
+        margin-top: 40px;
         padding-left: 100px;
-
-        #search-searchArea{
-          padding-top: 50px
-        }
 
         #searchResultP {   
           color: white;   
@@ -247,7 +257,6 @@ body {
         .searchResultBtn{
           width: 80px;
           height: 20px;
-          // background-color: #2a63ec;
           border: none;
           font-size:15px;
           cursor: pointer;          
@@ -260,8 +269,6 @@ body {
         display: flex; 
         flex-direction: column; 
         align-items: flex-start; 
-        // margin-top: 80px;
-        // margin-bottom: 80px;
         margin-left: 100px;
 
         min-height: 595px;
@@ -423,6 +430,10 @@ body {
       margin-bottom: 80px;
       padding-left: 100px;
 
+      label {
+        color: white;
+        padding: 10px
+      }
       select{
         width: 150;
         padding: 4px 8px;
@@ -449,11 +460,6 @@ body {
         width: 100px;
         text-align: right;
       }
-      td .filterLabel{
-        color: yellow;
-        font-size: 20;
-        text-align: center;      
-      }
       table {
         width: 100%;
         border-collapse: collapse;
@@ -461,14 +467,24 @@ body {
         color: white;
         font-size: 18px;
       }
-    
       td,th {
         text-align: left;
         border-bottom: 1px solid #ddd;
         padding-bottom: 11px;
         padding-top: 10px;
+        width: 350px;
       }
-
+      .filterTitle > td,
+      .filterTitle > label{
+        padding-bottom: 0px;
+        padding-top: 0px; 
+      }
+      .filterLabel{
+        color: yellow;
+        font-size: 20;
+        display: flex;
+        justify-content: center; 
+      }
       .statistCriteriaBtn {
         background-color: #2a63ec;
         color: #fff;
@@ -480,9 +496,10 @@ body {
         align-items: center;
         width: 300px;
         height: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        margin: 0 auto; 
         i {
           padding: 10px;
         }
@@ -494,9 +511,10 @@ body {
         margin: 10px auto 0;
         padding-right: 160px;
       }
-      #statist-chartArea{
-        height: 50%;
-        width: 80%;
+
+      .canvasClass{
+        height: 600px;
+        width : 800px;
       }
     }
   }

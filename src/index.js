@@ -10,7 +10,6 @@ async function getData (){
     const respone = await request.json();
     const array = Object.values(respone);
     const newObj = array.reduce((obj,item)=>Object.assign(obj,{[item.name]: item}),{})
-    // console.log("string",newObj["Second Sight"]);
     return newObj;
 }
 document.addEventListener("DOMContentLoaded", async () => {
@@ -61,7 +60,7 @@ const compareName2Obj = Helper.buildObjHelper({tag:"input",id:"gameCompare2",inp
 const radioBtnTbObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"tb",value:"Table", attributes: { name: "displayBy", value: "Table", id: "tb" ,checked:"checked"}});
 const radioBtnChartObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"ch",value:"Chart", attributes: { name: "displayBy", value: "ch", id: "ch" }});
 const compareBtnObj = Helper.buildObjHelper({tag:"button",classArr:["compareCriteriaBtn"], id:"compareBtn",innerHTML:"Compare"});
-const compareBtnIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-table"]});
+const compareBtnIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-table"],skipTd:true});
 const ownersChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"ownersChb",value:"owners",lableName:"Owners",skipTd:false, attributes: {value: "owners", id: "ownersChb" }});
 const releaseDateChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"releaseDateChb",value:"releaseDate",lableName:"Release Date", skipTd:false, attributes: {value: "releaseDate", id: "releaseDateChb"}});
 const priceChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"priceChb",value:"price",lableName:"Price",skipTd:false, attributes: {value: "price", id: "priceChb" }});
@@ -80,27 +79,26 @@ const compareCriteriaCreateArr = [[releaseDateChbObj,ownersChbObj,ratingChbObj,p
 ,[supportedLanguagesChbObj,categoriesChbObj,tagsChbObj,genresChbObj]
 ,[[radioBtnTbObj,radioBtnChartObj],[compareBtnObj,compareBtnIconObj]]];
 //statistFilter
-const filterEmptyObj = Helper.buildObjHelper({tag:"label",lableClass:["filterLabel"],readonly:"true"});
-const filterTitleObj = Helper.buildObjHelper({tag:"label",lableClass:["filterLabel"],lableName:"Data Filter",readonly:"true",colSpan:2});
+const filterTitleObj = Helper.buildObjHelper({tag:"label",classArr:["filterLabel"],innerHTML:"Data Filter",readonly:"true",colSpan:4,trClass:["filterTitle"]});
 const filterReleaseFromObj = Helper.buildObjHelper({tag:"input",id:"filterReleaseFrom",inputType:"month",lableName:"Release From:"});
 const filterReleaseToObj = Helper.buildObjHelper({tag:"input",id:"filterReleaseTo",inputType:"month",lableName:"Release To:"});
 const filterRatingObj = Helper.buildObjHelper({tag:"select",id:"filterOperator",options:operatorList});
 const filterNumberObj = Helper.buildObjHelper({tag:"input",name:"rating", id:"filterRating",inputType:"number",attribute:"0.01",lableName:"Rating:"});
-const criteriaTitleObj = Helper.buildObjHelper({tag:"label",lableClass:["filterLabel"],lableName:"Statistics Criteria",readonly:"true",colSpan:2});
+const criteriaTitleObj = Helper.buildObjHelper({tag:"label",classArr:["filterLabel"],innerHTML:"Statistics Criteria",readonly:"true",colSpan:4,trClass:["filterTitle"]});
 //statistCriteria
 const statistSupportedLanguagesRadObj = Helper.buildObjHelper({tag:"input",inputType:"radio",name:"statistRad",id:"statistSupportedLanguagesRad",value:"supportedLanguages",lableName:"Supported Languages", skipTd:false, attributes: {value: "supportedLanguages", id: "supportedLanguages",name:"statistRad"}});
 const statistCategoriesRadObj = Helper.buildObjHelper({tag:"input",inputType:"radio",name:"statistRad",id:"statistCategoriesRad",value:"categories",lableName:"Categories",skipTd:false, attributes: {value: "categories", id: "categoriesRad",name:"statistRad" }});
 const statistGenresRadObj = Helper.buildObjHelper({tag:"input",inputType:"radio",name:"statistRad",id:"statistGenresRad",value:"genres",lableName:"Genres", skipTd:false, attributes: {value: "genres", id: "genres",name:"statistRad"}});
 const statistTagsRadObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"statistTagsRad",value:"tags",lableName:"Tags", skipTd:false, attributes: {value: "tags", id: "tags",name:"statistRad"}});
 const statistObj = Helper.buildObjHelper({tag:"button",classArr:["statistCriteriaBtn"], id:"statistBtn",innerHTML:"Statistics"});
-const statistIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-chart-simple"]});
+const statistIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-chart-simple"],skipTd:true});
 
 
-const statistCriteriaCreateArr = [[filterEmptyObj,filterEmptyObj,filterTitleObj]
+const statistCriteriaCreateArr = [[filterTitleObj]
  ,[[filterRatingObj,filterNumberObj],filterReleaseFromObj,filterReleaseToObj]
- ,[filterEmptyObj,filterEmptyObj,criteriaTitleObj]
+ ,[criteriaTitleObj]
 ,[[statistSupportedLanguagesRadObj,statistCategoriesRadObj
-,statistGenresRadObj,statistTagsRadObj]],[filterEmptyObj,[statistObj,statistIconObj]]];
+,statistGenresRadObj,statistTagsRadObj]],[[statistObj,statistIconObj]]];
 
 
 const dataSet = await getData();
@@ -316,7 +314,6 @@ function statistData(dataSet) {
         return;
     }
 
-    // const propertyList = searchObj.getCheckedPropertiesArray("statist");
     const criteria = searchObj.getSelectedRadio();
     const statistResultP = document.getElementById("statistResultP");
     const chartArea = document.getElementById("statist-chartArea");
@@ -328,9 +325,13 @@ function statistData(dataSet) {
 
     const filteredData = filterData(searchObj,dataSet);
     const criteriaDataHash= Helper.rebuildHash(getCriteriaDataHash(filteredData,criteria));
-    // console.log(criteriaDataHash);
-    const createHash = {ctx:ctx,type:"doughnut",compareCol:criteria
-    ,displayLable:criteria,dataHash:criteriaDataHash};
+    let chartType ="doughnut";
+    // if (criteria === "tags")
+    //     chartType = "bar";
+    const createHash = {ctx:ctx,type:chartType,compareCol:criteria
+    ,displayLable:criteria
+    ,dataHash:criteriaDataHash,backgroundColor:'white'
+    ,borderColor:'red'};
     const chartObj = Helper.chartObjHelper(createHash);
     
     Chart.buildStatistChart(chartObj);
@@ -606,23 +607,30 @@ function searchVaildation(searchObj){
 
     return true;
 }
-
+let compareCount = 0;
 function addToCompare(name) {
     const gameCompare1 = document.getElementById("gameCompare1");
     const gameCompare2 = document.getElementById("gameCompare2");
     const comparePage = document.getElementById("comparePage");
+    const answer = window.confirm("add success, do you compare now?");
+    if (gameCompare1.value === name || gameCompare2.value === name){
+        alert("This game alreadly added");
+        return;
+    }
+
     if (!gameCompare1.value){
-        gameCompare1.value = name;
-        alert("add success, you can add 1 more game for compare");
+        gameCompare1.value = name;      
+        compareCount +=1;
+        if (compareCount === 1)
+            alert("add success, you can add 1 more game for compare");
+        else if (compareCount === 2){
+            if (answer)
+            comparePage.scrollIntoView();
+        } 
     }
     else if (!gameCompare2.value){
-        if (gameCompare1.value === name){
-            alert("This game alreadly added");
-            return;
-        }
-
         gameCompare2.value = name;
-        const answer = window.confirm("add success, do you compare now?");
+        compareCount +=1;
         if (answer)
             comparePage.scrollIntoView();
     }
@@ -640,7 +648,7 @@ function appendCanvas(propertyList,type) {
     for(let i=0;i<propertyList.length;i++){
         let canvasId = `${type}-canvas${i}`;
         const canvas = Builder.buildElement(
-        Helper.buildObjHelper({tag:"canvas",id:canvasId}));
+        Helper.buildObjHelper({tag:"canvas",id:canvasId,classArr:["canvasClass"]}));
         ctx.appendChild(canvas);
     }
 }

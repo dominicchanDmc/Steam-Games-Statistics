@@ -70,38 +70,128 @@ export function buildStatistChart(chartObj) {
     let valueList = [];
     Object.keys(chartObj.dataHash).forEach((key) => {
         keyList.push(key);
+         valueList.push(chartObj.dataHash[key]);
     });
-    Object.values(chartObj.dataHash).forEach((values) => {
-        valueList.push(values);
+    const total = valueList.reduce((acc, curr) => acc + curr, 0);
+    const threshold = total * 0.001; 
+
+    let othersTotal = 0;
+    const filteredValueList = valueList.filter((value,index) => {
+        if (value < threshold) {
+            othersTotal += value;
+            keyList.splice(index, 1);
+            return false;
+        }
+        return true;
     });
+
+    if (othersTotal > 0) {
+        keyList.push("Others");
+        filteredValueList.push(othersTotal);
+    }
 
     const data = {
         labels: keyList,
         datasets: [{
-          label: chartObj.property,
-          data: valueList,
-        //   backgroundColor: [
-        //     'rgb(255, 99, 132)',
-        //     'rgb(54, 162, 235)',
-        //     'rgb(255, 205, 86)'
-        //   ],
-          hoverOffset: 4
+          label: chartObj.displayLable,
+          data: filteredValueList,
+          hoverOffset: 4,
+          // backgroundColor: chartObj.backgroundColor || 'rgba(75, 192, 192, 0.2)',
+          // borderColor: chartObj.borderColor || 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
         }]
       };
       const config = {
         type: chartObj.type,
         data: data,
         options: {
+          plugins: {
+            title: {
+              display: true,
+              text: showTittle(chartObj,filteredValueList.length),
+              font: {
+                size: 30,
+                weight: 'bold',
+              },
+              color: "white"
+            },
+            tooltip: {
+              callbacks: {
+                label: (context) => {
+                  const dataIndex = context.dataIndex;
+                  const dataset = context.dataset;
+                  const currentValue = dataset.data[dataIndex];
+                  const percentage = ((currentValue / total) * 100).toFixed(2);
+                  return `${currentValue} (${percentage}%)`;
+                }
+              }
+            },
+            legend: {
+              labels: {
+                font: {
+                  size: 15           
+                },
+                color: 'yellow'
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: chartObj.beginAtZero,
+                grid: {
+                  zeroLineColor: "yellow",
+                  color: "white"
+                },
+                border: {
+                  color: "yellow"
+                },
+                ticks: {
+                  color: "yellow",
+                  font: {
+                    size: 18
+                  }
+                }
+              },
+              x: {
+                drawTicks: true,
+                beginAtZero: true,
+                grid: {
+                  zeroLineColor: "yellow",
+                  color: "white"
+                },
+                border: {
+                  color: "yellow"
+                },
+                ticks: {
+                  color: "yellow",
+                  font: {
+                    size: 18
+                  }
+                },
+                mirror: true
+              }
+            }
+          },
           responsive: true, 
           maintainAspectRatio: false,
-        //   scales: {
-        //     yAxes: [{
-        //       ticks: {
-        //         beginAtZero:true
-        //               }
-        //         }]
-        //   }
         }
       };
       new Chart(chartObj.ctx, config);
+}
+function showTittle(chartObj,valueLength) {
+  if (valueLength === 0)
+    return "No result"
+  else
+    return charTittleTran(chartObj.displayLable);
+}
+function charTittleTran(string) {
+  switch (string) {
+    case "supported_languages":
+        return "Supported Languages";    
+    case "categories":
+        return "Categories";    
+    case "tags":
+        return "Tags";    
+    case "genres":
+        return "Genres"; 
+ }
 }

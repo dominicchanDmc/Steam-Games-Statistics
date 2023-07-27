@@ -91,6 +91,24 @@ body .text-6 {
 body .text-yellow {
   color: yellow;
 }
+body .icons {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+body .icons p {
+  font-size: 32px;
+}
+body .icons a {
+  color: var(--color-transparent-black);
+  margin-right: 30px;
+}
+body .icons a:hover {
+  color: var(--color-grey);
+}
+body textarea {
+  font-size: 18px;
+}
 body #frontPage {
   flex: 1;
 }
@@ -99,7 +117,7 @@ body .frontPageBtn {
   gap: 20px;
   align-items: baseline;
   justify-content: space-evenly;
-  margin-top: 80px;
+  margin-top: 40px;
   margin-bottom: 80px;
 }
 body .btnArea {
@@ -202,7 +220,7 @@ body #navBtn .text {
 }
 body .user-input-table {
   border-collapse: collapse;
-  width: 80%;
+  width: 100%;
   align-items: center;
   border-bottom: 1px solid #ddd;
 }
@@ -263,11 +281,8 @@ body .user-input-table .searchCriteriaBtn:hover {
 body .searchPage {
   min-height: 595px;
   background-color: #3f3f3f;
-  margin-top: 80px;
+  margin-top: 40px;
   padding-left: 100px;
-}
-body .searchPage #search-searchArea {
-  padding-top: 50px;
 }
 body .searchPage #searchResultP {
   color: white;
@@ -442,6 +457,10 @@ body .statistPage {
   margin-bottom: 80px;
   padding-left: 100px;
 }
+body .statistPage label {
+  color: white;
+  padding: 10px;
+}
 body .statistPage select {
   width: 150;
   padding: 4px 8px;
@@ -466,11 +485,6 @@ body .statistPage input[type=number] {
   width: 100px;
   text-align: right;
 }
-body .statistPage td .filterLabel {
-  color: yellow;
-  font-size: 20;
-  text-align: center;
-}
 body .statistPage table {
   width: 100%;
   border-collapse: collapse;
@@ -483,6 +497,18 @@ body .statistPage td, body .statistPage th {
   border-bottom: 1px solid #ddd;
   padding-bottom: 11px;
   padding-top: 10px;
+  width: 350px;
+}
+body .statistPage .filterTitle > td,
+body .statistPage .filterTitle > label {
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+body .statistPage .filterLabel {
+  color: yellow;
+  font-size: 20;
+  display: flex;
+  justify-content: center;
 }
 body .statistPage .statistCriteriaBtn {
   background-color: #2a63ec;
@@ -498,6 +524,7 @@ body .statistPage .statistCriteriaBtn {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
 }
 body .statistPage .statistCriteriaBtn i {
   padding: 10px;
@@ -509,7 +536,7 @@ body .statistPage #statistResultP {
   margin: 10px auto 0;
   padding-right: 160px;
 }
-body .statistPage #statist-chartArea {
-  height: 50%;
-  width: 80%;
+body .statistPage .canvasClass {
+  height: 600px;
+  width: 800px;
 }

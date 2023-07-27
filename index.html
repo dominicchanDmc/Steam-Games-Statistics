@@ -5,17 +5,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="./dist/main.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="./dist/main.js"></script>
-    <link href="/assets/favicon.ico" rel="icon" type="image/x-icon" />
     <script src="https://kit.fontawesome.com/9636f8ceb5.js" crossorigin="anonymous"></script>
+
+    <link href="/assets/favicon.ico" rel="icon" type="image/x-icon" />
+    <link rel="stylesheet" href="./dist/main.css" />
+
     <title>Steam Games Statistics</title>
   </head>
 
   <body>
     <nav id="navBtn"></nav>
     <section id="frontPage">
+      <div class="icons">
+        <p> 
+          <a href="https://github.com/dominicchanDmc/Steam-Games-Statistics" target="_blank"><i class="fa-brands fa-square-github"></i></a> 
+          <a href="https://www.linkedin.com/in/dominic-chan-0b4128255/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+        </p>
+      </div>
       <h2 class="align-center">Steam Games Statistics</h2>
       <p class="align-center text text-2">
         This website proive a data statistics for all games sell on Steam ,
@@ -51,8 +59,8 @@
     <section id="statistPage" class="statistPage">
       <div id="statist-searchArea"></div>
       <div id="statist-resultArea">
-        <p id="statistResultP">Select the criteria to statist<br> 
-
+        <p id="statistResultP">Select 1 <b class="text-yellow">Statistics Criteria </b> to statist<br> 
+          You can control the data scope by using <b class="text-yellow">Data Filter</b> 
         </p>
         <div id="statist-chartArea"></div> 
       </div>
