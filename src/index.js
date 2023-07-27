@@ -333,6 +333,8 @@ function statistData(dataSet) {
 
     const filteredData = filterData(searchObj,dataSet);
     const criteriaDataHash= Helper.rebuildHash(getCriteriaDataHash(filteredData,criteria));
+    // console.log(filteredData);
+
     let chartType ="doughnut";
     // if (criteria === "tags")
     //     chartType = "bar";
