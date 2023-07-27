@@ -6,8 +6,7 @@ import * as Builder from "./scripts/builder.js"
 import * as Chart from "./scripts/chart.js"
 
 async function getData (){
-    const request = await fetch("./data/steamData-after2019.json")
-    // const request = await fetch("/data/test2Record.json")
+    const request = await fetch("./data/steamData-after2019.json")    
     const respone = await request.json();
     const array = Object.values(respone);
     const newObj = array.reduce((obj,item)=>Object.assign(obj,{[item.name]: item}),{})
@@ -207,10 +206,14 @@ const searchSearchArea = document.querySelector("#search-searchArea");
 
         compareBtnObj.onclick = function () {
             compareNameInput.value = "";
+            if (compareCount >0)
+                compareCount-=1;
         }
 
         compareBtn2Obj.onclick = function () {
             compareNameInput2.value = "";
+            if (compareCount >0)
+                compareCount-=1;
         }
         compareCriteriaTd.colSpan = 2;
         compareCriteriaTd.appendChild(labelG1Obj);
@@ -613,7 +616,6 @@ function addToCompare(name) {
     const gameCompare1 = document.getElementById("gameCompare1");
     const gameCompare2 = document.getElementById("gameCompare2");
     const comparePage = document.getElementById("comparePage");
-    const answer = window.confirm("add success, do you compare now?");
     if (gameCompare1.value === name || gameCompare2.value === name){
         alert("This game alreadly added");
         return;
@@ -625,6 +627,7 @@ function addToCompare(name) {
         if (compareCount === 1)
             alert("add success, you can add 1 more game for compare");
         else if (compareCount === 2){
+            const answer = window.confirm("add success, do you compare now?");
             if (answer)
             comparePage.scrollIntoView();
         } 
@@ -632,6 +635,7 @@ function addToCompare(name) {
     else if (!gameCompare2.value){
         gameCompare2.value = name;
         compareCount +=1;
+        const answer = window.confirm("add success, do you compare now?");
         if (answer)
             comparePage.scrollIntoView();
     }
