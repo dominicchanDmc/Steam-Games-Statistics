@@ -1,6 +1,7 @@
 body {
-    background: black;
+    background: #3f3f3f;
     color: white;
+    font-family: cursive;
     h2 {
         padding-top: 40px;
         padding-bottom: 20px;
@@ -9,7 +10,9 @@ body {
     h5 {
         font-size: 40px;
       }
-
+    a{
+      color: #20BEFF;
+    }
     .align-center {
         text-align: center;
       }
@@ -69,7 +72,7 @@ body {
         width: 200px;
         padding: 20px;
         border: 1px solid #ccc;
-        background-color: #3f3f3f;
+        background-color: cadetblue;
         cursor: pointer;
         
         h6 {
@@ -164,6 +167,7 @@ body {
             left: 60px;
             opacity: 0; 
             transition: opacity 0.25s ease; 
+            font-family: cursive;
         }
 
     }
@@ -225,6 +229,7 @@ body {
           display: flex;
           justify-content: center;
           align-items: center;
+          font-family: cursive;
           i {
             padding: 10px;
           }
@@ -261,7 +266,7 @@ body {
           font-size:15px;
           cursor: pointer;          
           margin-left: 10px;
-
+          font-family: cursive;
         }
         
     }
@@ -331,6 +336,7 @@ body {
         justify-content: center;
         right:250px;
         align-items: center;
+        font-family: cursive;
         i {
           padding: 10px;
         }
@@ -351,7 +357,9 @@ body {
         color: white;
         font-size: 18px;
       }
-    
+      button{
+        font-family: cursive;
+      }
       td,th {
         text-align: left;
         border-bottom: 1px solid #ddd;
@@ -407,6 +415,7 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
+        font-family: cursive;
         i {
           padding: 10px;
         }
@@ -500,6 +509,7 @@ body {
         justify-content: center; 
         align-items: center; 
         margin: 0 auto; 
+        font-family: cursive;
         i {
           padding: 10px;
         }
