@@ -16,7 +16,7 @@ In this website,I have use 2 Libraries:
 - **Font Awesome**: The commom and easy to understand icon
 
 ## Technical Features 
-Dynamic Building of HTML Elements
+### Dynamic Building of HTML Elements
 
 Writing HTML elements manually can lead to a lot of boilerplate code, especially when dealing with large datasets, so dynamically generate HTML elements with appropriate attributes and content is important.
 
@@ -110,7 +110,7 @@ export function buildElement(buildObj){
 ```
 
 
-<h2>Screenshots</h2>
+## Screenshots
 <img
   src="/assets/Screenshot1.png"
   title="Screenshot1"
@@ -119,10 +119,6 @@ export function buildElement(buildObj){
   src="/assets/Screenshot2.png"
   title="Screenshot2"
   style="display: inline-block; margin: 0 auto; max-width: 300px">
-<h2>Future  Features</h2>
-<ul>
-  <li><b>Enhance user experience:</b> Enhance the layout to make paging for search result (now limit 100 record)
-</li>
-  <li><b>Export the statistics result:</b> Export to file
-</li>
-</ul>
+## Future  Features
+-  **Enhance user experience**:  Enhance the layout to make paging for search result (now limit 100 record)
+-  **Export the statistics result**:  Export to file
