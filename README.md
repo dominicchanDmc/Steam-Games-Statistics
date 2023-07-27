@@ -1,23 +1,28 @@
 # Steam-Games-Statistics
-<h2>Background</h2>
+## Background 
 Steam is the world's most popular PC Gaming hub, with over 7,000 games and a community of millions of gamers. It includes everything from big companies to individual, great data statistics tools can help companies to find out the market needs.
 
 The website likely fetches data from <a href='https://www.kaggle.com/datasets/mikekzan/steam-games-dlcs?select=steam.csv'>kaggle</a> related to video games, such as their names, release dates, ratings, supported languages, categories, and tags. Users can search for specific games, compare two games, or perform statistical analysis on game data. The app offers options for filtering, sorting, and displaying the data in both tabular and chart formats.
-<h2>Live version</h2>
+## Live version 
 Live version can be seen on <a href='https://dominicchandmc.github.io/Steam-Games-Statistics/'>this link</a>
 <h2>Instructions</h2>
 Navigate through the slides to search, compare and statistics. Click on the "home" button to navigate back to the beggining.
 Recommend do the searching first, that select 2 game to compare.
 
-<h2>Technologies</h2>
+## Technologies
 In this website,I have use 2 Libraries:
-<ul>
-  <li><b>Chat.js:</b>Rendering charts and graphs on the web page. </li>
-   <li><b>Font Awesome:</b>The commom and easy to understand icon
-</li>
-</ul>
-<h2>Technical Features</h2>
-Dynamically generate HTML elements with appropriate attributes and content. These helper functions abstract away the complexities of element creation and make the code more maintainable and organized. By passing the necessary parameters, the functions construct the desired HTML components, which are then appended to the DOM.
+
+- **Chat.js**: Rendering charts and graphs on the web page.
+- **Font Awesome**: The commom and easy to understand icon
+
+## Technical Features 
+### Dynamic Building of HTML Elements
+
+Writing HTML elements manually can lead to a lot of boilerplate code, especially when dealing with large datasets, so dynamically generate HTML elements with appropriate attributes and content is important.
+
+These helper functions abstract away the complexities of element creation and make the code more maintainable and organized. By passing the necessary parameters, the functions construct the desired HTML components, which are then appended to the DOM.
+
+Example is define 4 const to build a 1 row 3 col table. I just want to change the value of the obj to control the table.
 
 ```JavaScript
 const compareName2Obj = Helper.buildObjHelper({tag:"input",id:"gameCompare2",inputType:"text",classArr:["CompareCol-300"],lableName:"Game 2:",readonly:"true",colSpan:2});
@@ -103,71 +108,9 @@ export function buildElement(buildObj){
     return newElement;
 }
 ```
-Takes user inputs for search criteria (e.g., game name, release date, rating, categories, etc.) and returns a structured search object (SearchObj). This object is then used to perform searches on the game data, filtering out irrelevant entries and displaying the matching results.
-```JavaScript
-export function searchObjArrHelper(source) {
-    //source
-    let gameName = document.getElementById("gameName");
-    let releaseFrom = document.getElementById("releaseFrom");;
-    let categories = document.getElementById("categories");
-    let orderBy = document.getElementById("orderBy");
 
-    let searchObj = new SearchObj();
-    searchObj.source = source;
-    searchObj.gameName = gameName.value;
-    searchObj.releaseFrom = releaseFrom.value;
-    searchObj.releaseTo = releaseTo.value;
-    searchObj.operator = operator.value;
-    searchObj.rating = rating.value;
-    searchObj.languages = languages.value;
-    searchObj.categories = categories.value;
-    searchObj.orderBy = orderBy.value;    
-    return searchObj;
-}
 
-class SearchObj{
-    checkOnlyOneCriteria(source,num) {
-        let count = 0;
-    
-        if (source === "search"){
-            if (this.gameName) count++;
-            if (this.releaseFrom) count++;
-            if (this.releaseTo) count++;
-            if (this.operator || this.rating) count++;
-            if (this.languages) count++;
-            if (this.categories) count++;
-        }
-        return count === num;
-    }
-    getCheckedPropertiesArray(source) {
-        const checkedProperties = [];
-        for (const property in this) {
-            if (this[property]) {
-                checkedProperties.push(property);
-            }
-        }
-        let filter_checkedProperties;
-        if (source === "compare"){
-             filter_checkedProperties = checkedProperties.filter((item)=>{
-                if (item ==="gameCompare1" || item ==="gameCompare2"
-                ||item ==="radioBtn" || item ==="source")
-                    return false;
-                else
-                    return true;
-            });
-        }
-        return filter_checkedProperties;
-    }
-    areOnlyFiveFieldsChecked() {
-        const requiredFields = ["rating", "total_negative", "total_positive", "review_score", "average_forever"];
-        const checkedFields = this.getCheckedPropertiesArray("compare");
-        
-        return checkedFields.every(field => requiredFields.includes(field)); 
-      }
-}
-
-```
-<h2>Screenshots</h2>
+## Screenshots
 <img
   src="/assets/Screenshot1.png"
   title="Screenshot1"
@@ -176,10 +119,6 @@ class SearchObj{
   src="/assets/Screenshot2.png"
   title="Screenshot2"
   style="display: inline-block; margin: 0 auto; max-width: 300px">
-<h2>Future  Features</h2>
-<ul>
-  <li><b>Enhance user experience:</b> Enhance the layout to make paging for search result (now limit 100 record)
-</li>
-  <li><b>Export the statistics result:</b> Export to file
-</li>
-</ul>
+## Future  Features
+-  **Enhance user experience**:  Enhance the layout to make paging for search result (now limit 100 record)
+-  **Export the statistics result**:  Export to file
