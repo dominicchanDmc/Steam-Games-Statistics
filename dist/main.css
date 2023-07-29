@@ -229,35 +229,35 @@ body .user-input-table {
   align-items: center;
   border-bottom: 1px solid #ddd;
 }
-body .user-input-table tr {
+body .user-input-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  color: white;
+  font-size: 18px;
+}
+body .user-input-table button {
+  font-family: cursive;
+}
+body .user-input-table td, body .user-input-table th {
+  text-align: left;
   border-bottom: 1px solid #ddd;
-}
-body .user-input-table td {
-  padding: 8px;
-}
-body .user-input-table label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 4px;
+  padding-bottom: 11px;
+  padding-top: 10px;
 }
 body .user-input-table input {
-  width: 100%;
-  padding: 4px 8px;
+  margin-right: 0px;
+  margin-left: 0px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
 }
 body .user-input-table select {
   width: 150;
+  padding: 4px 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-}
-body .user-input-table input[type=text] {
-  width: 200px;
-}
-body .user-input-table input[type=month] {
-  width: 140px;
 }
 body .user-input-table input[type=number] {
   width: 100px;
@@ -289,6 +289,10 @@ body .searchPage {
   background-color: #3f3f3f;
   margin-top: 40px;
   padding-left: 100px;
+}
+body .searchPage label {
+  color: white;
+  padding: 10px;
 }
 body .searchPage #searchResultP {
   color: white;

@@ -93,14 +93,23 @@ export function createTableTr(trCreateObjArr) {
                 newTd.appendChild(searchBtn);
                 masterTr.appendChild(newTd);
             }
-            else if (tdCreateObj[0].id === "tb"){
-                //for compareRadio
+            else if (tdCreateObj[0].id === "tb"
+            ||tdCreateObj[0].id === "dlcY"){
+                //for compareRadio / searchRadio
                 let newTd =  buildElement(new BuildObj("td"));
-                let labelObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Display By:"}));
-                let labelTbObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Table",lableName:"tb"}));
-                let labelChObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Chart",lableName:"ch"}));
+                let labelObj,labelTbObj,labelChObj;
+                if (tdCreateObj[0].id === "tb"){
+                    labelObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Display By:"}));
+                    labelTbObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Table",lableName:"tb"}));
+                    labelChObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Chart",lableName:"ch"}));                
+                    newTd.colSpan = 2;  
+                }
+                else if(tdCreateObj[0].id === "dlcY") {
+                    labelObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Include DLC:"}));
+                    labelTbObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"Yes",lableName:"dlcY"}));
+                    labelChObj = buildElement(Helper.buildObjHelper({tag:"label",innerHTML:"No",lableName:"dlcN"}));                
+                }
                 newTd.appendChild(labelObj);    
-                newTd.colSpan = 2;  
                 let radioBtn = buildElement(tdCreateObj[0]);
                 let radioBtn2 = buildElement(tdCreateObj[1]);
                 newTd.appendChild(labelTbObj);

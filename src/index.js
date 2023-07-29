@@ -40,10 +40,12 @@ const categoriesInputObj = Helper.buildObjHelper({tag:"select",id:"categories",o
 const orderInputObj = Helper.buildObjHelper({tag:"select",id:"orderBy",options:orderList,lableName:"Order by:"});
 
 const searchBtnObj = Helper.buildObjHelper({tag:"button",classArr:["searchCriteriaBtn"], id:"searchBtn",innerHTML:"Search"});
-const searchBtnIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-magnifying-glass"]});
+const searchBtnIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-magnifying-glass"],skipTd:true});
+const radioBtnDLCYObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"dlcY",value:"Yes", attributes: { name: "includeDLC", value: "Yes", id: "dlcY" ,checked:"checked"}});
+const radioBtnDLCNObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"dlcN",value:"No", attributes: { name: "includeDLC", value: "No", id: "dlcN" }});
 
 const searchCriteriaCreateArr = [[nameInputObj,releaseFromInputObj,releaseToInputObj]
-,[[ratingInputObj,numberInputObj],languagesInputObj,categoriesInputObj],[orderInputObj,[searchBtnObj,searchBtnIconObj]]];
+,[[ratingInputObj,numberInputObj],languagesInputObj,categoriesInputObj],[[radioBtnDLCYObj,radioBtnDLCNObj],orderInputObj,[searchBtnObj,searchBtnIconObj]]];
 //searchResultList
 const headerTrNameObj = Helper.buildObjHelper({tag:"input",inputType:"text",classArr:["searchListCol-150"],value:"Name",readonly:"true"});
 const headerTrReleaseDateObj = Helper.buildObjHelper({tag:"input",classArr:["searchListCol-80"],inputType:"text",value:"Release Date",readonly:"true"});
@@ -333,7 +335,7 @@ function statistData(dataSet) {
 
     const filteredData = filterData(searchObj,dataSet);
     const criteriaDataHash= Helper.rebuildHash(getCriteriaDataHash(filteredData,criteria));
-    // console.log(filteredData);
+            // console.log(filteredData);
 
     let chartType ="doughnut";
     // if (criteria === "tags")
@@ -452,7 +454,7 @@ function filterData(criteria, dataSet) {
           (operator === "greater" && item.rating > rating) ||
           (operator === "smaller" && item.rating < rating)
         ) && 
-        // (item.type==='game') &&
+         (criteria.radioBtn !=="No" || item.type==='game') &&
         (!criteria.languages || criteria.languages.length === 0 || 
             Helper.dataTranArray(item.supported_languages).some(sub=> languagesHash[criteria.languages].includes(sub)) && item.supported_languages) &&
         (!criteria.categories || criteria.categories.length === 0 || 
@@ -519,7 +521,7 @@ function displaySeachResult(filteredData) {
 
 function displayDetial(name) {
     let game = dataSet[name];
-    // console.log(game);
+     console.log(game);
     const detialPage = document.getElementById("detialPage");
 
     const nameObj = Helper.buildObjHelper({tag:"input",classArr:["detialCol-1000"],inputType:"text",value:game.name,readonly:"true",lableName:"Name:",colSpan:"4"});

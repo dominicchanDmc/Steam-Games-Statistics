@@ -47,6 +47,8 @@ export function searchObjArrHelper(source) {
     let languages = document.getElementById("languages");
     let categories = document.getElementById("categories");
     let orderBy = document.getElementById("orderBy");
+    const radioBtndlcY = document.getElementById('dlcY');
+    const radioBtndlcN = document.getElementById('dlcN');
 
     //compare
     const gameCompare1 = document.getElementById('gameCompare1');
@@ -89,6 +91,10 @@ export function searchObjArrHelper(source) {
         searchObj.languages = languages.value;
         searchObj.categories = categories.value;
         searchObj.orderBy = orderBy.value;
+        if (radioBtndlcY.checked)
+            searchObj.radioBtn = radioBtndlcY.value;
+        else
+            searchObj.radioBtn = radioBtndlcN.value;
     }
     else if (source === "compare"){
         searchObj.gameCompare1 = gameCompare1.value;

@@ -177,45 +177,71 @@ body {
       align-items: center;
       border-bottom: 1px solid #ddd;
 
-      tr {
-        border-bottom: 1px solid #ddd;
-
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 30px;
+        color: white;
+        font-size: 18px;
       }
-      td {
-          padding: 8px;
-        }
-
-      label {
-          font-weight: bold;
-          display: block;
-          margin-bottom: 4px;
-        }
+      button{
+        font-family: cursive;
+      }
+      td,th {
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 11px;
+        padding-top: 10px;
+      }
       input{
-          width: 100%;
-          padding: 4px 8px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          box-sizing: border-box;
-        }
+        margin-right: 0px;
+        margin-left: 0px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
       select{
-          width: 150;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          box-sizing: border-box;
-        }
+        width: 150;
+        padding: 4px 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      input[type="number"] {
+        width: 100px;
+        text-align: right;
+      }
+      // label {
+      //     font-weight: bold;
+      //     display: block;
+      //     margin-bottom: 4px;
+      //   }
+      // input{
+      //     width: 100%;
+      //     padding: 4px 8px;
+      //     border: 1px solid #ccc;
+      //     border-radius: 4px;
+      //     box-sizing: border-box;
+      //   }
+      // select{
+      //     width: 150;
+      //     border: 1px solid #ccc;
+      //     border-radius: 4px;
+      //     box-sizing: border-box;
+      //   }
       
-      input[type="text"] {
-          width: 200px;
-        }
+      // input[type="text"] {
+      //     width: 200px;
+      //   }
       
-      input[type="month"] {
-          width: 140px;
-        }
+      // input[type="month"] {
+      //     width: 140px;
+      //   }
       
-        input[type="number"] {
-          width: 100px;
-          text-align: right;
-        }
+      //   input[type="number"] {
+      //     width: 100px;
+      //     text-align: right;
+      //   }
         .searchCriteriaBtn {
           background-color: #2a63ec;
           color: #fff;
@@ -245,7 +271,11 @@ body {
         background-color: #3f3f3f;
         margin-top: 40px;
         padding-left: 100px;
-
+        
+        label {
+          color: white;
+          padding: 10px
+        }
         #searchResultP {   
           color: white;   
           font-size: 30px;
