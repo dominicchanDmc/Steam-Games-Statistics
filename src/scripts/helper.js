@@ -77,6 +77,8 @@ export function searchObjArrHelper(source) {
     const statistCategoriesRad = document.getElementById('statistCategoriesRad');
     const statistGenresRad = document.getElementById('statistGenresRad');
     const statistTagsRad = document.getElementById('statistTagsRad');
+    const radioBtndlcYSt = document.getElementById('dlcYSt');
+    const radioBtndlcNSt = document.getElementById('dlcNSt');
 
 
     let searchObj = new SearchObj();
@@ -92,9 +94,9 @@ export function searchObjArrHelper(source) {
         searchObj.categories = categories.value;
         searchObj.orderBy = orderBy.value;
         if (radioBtndlcY.checked)
-            searchObj.radioBtn = radioBtndlcY.value;
+            searchObj.radioBtnDlc = radioBtndlcY.value;
         else
-            searchObj.radioBtn = radioBtndlcN.value;
+            searchObj.radioBtnDlc = radioBtndlcN.value;
     }
     else if (source === "compare"){
         searchObj.gameCompare1 = gameCompare1.value;
@@ -131,6 +133,11 @@ export function searchObjArrHelper(source) {
             searchObj.radioBtn = statistGenresRad.value;
         else if (statistTagsRad.checked)
             searchObj.radioBtn = statistTagsRad.value;
+
+        if (radioBtndlcYSt.checked)
+            searchObj.radioBtnDlc = radioBtndlcYSt.value;
+        else
+            searchObj.radioBtnDlc = radioBtndlcNSt.value;
     }
 
     return searchObj;
@@ -210,7 +217,8 @@ export function rebuildHash(originalHash) {
 
 export function dataTranArray(dataString) {
   let finalArr = [];
-  let dataStringCut = stringCut(dataString);
+  if (dataString){
+      let dataStringCut = stringCut(dataString);
     if (dataStringCut){
         let stringSpilt = dataStringCut.split(',');
         if (Array.isArray(stringSpilt))
@@ -219,4 +227,5 @@ export function dataTranArray(dataString) {
             finalArr.push(stringSpilt); 
     }
     return finalArr;
+  }
 }

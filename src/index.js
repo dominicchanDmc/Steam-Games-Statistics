@@ -94,13 +94,15 @@ const statistGenresRadObj = Helper.buildObjHelper({tag:"input",inputType:"radio"
 const statistTagsRadObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"statistTagsRad",value:"tags",lableName:"Tags", skipTd:false, attributes: {value: "tags", id: "tags",name:"statistRad"}});
 const statistObj = Helper.buildObjHelper({tag:"button",classArr:["statistCriteriaBtn"], id:"statistBtn",innerHTML:"Statistics"});
 const statistIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-chart-simple"],skipTd:true});
+const radioBtnDLCYStObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"dlcYSt",value:"Yes", attributes: { name: "includeDLCSt", value: "Yes", id: "dlcYSt" ,checked:"checked"}});
+const radioBtnDLCNStObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"dlcNSt",value:"No", attributes: { name: "includeDLCSt", value: "No", id: "dlcNSt" }});
 
 
 const statistCriteriaCreateArr = [[filterTitleObj]
  ,[[filterRatingObj,filterNumberObj],filterReleaseFromObj,filterReleaseToObj]
  ,[criteriaTitleObj]
 ,[[statistSupportedLanguagesRadObj,statistCategoriesRadObj
-,statistGenresRadObj,statistTagsRadObj]],[[statistObj,statistIconObj]]];
+,statistGenresRadObj,statistTagsRadObj]],[[radioBtnDLCYStObj,radioBtnDLCNStObj],[statistObj,statistIconObj]]];
 
 
 const dataSet = await getData();
@@ -454,11 +456,11 @@ function filterData(criteria, dataSet) {
           (operator === "greater" && item.rating > rating) ||
           (operator === "smaller" && item.rating < rating)
         ) && 
-         (criteria.radioBtn !=="No" || item.type==='game') &&
-        (!criteria.languages || criteria.languages.length === 0 || 
-            Helper.dataTranArray(item.supported_languages).some(sub=> languagesHash[criteria.languages].includes(sub)) && item.supported_languages) &&
-        (!criteria.categories || criteria.categories.length === 0 || 
-            Helper.dataTranArray(item.categories).some(sub =>categoriesHash[criteria.categories].includes(sub)) && item.categories))
+         (criteria.radioBtnDlc !=="No" || item.type==='game') &&
+        (!criteria.languages || criteria.languages.length === 0 || item.supported_languages &&
+            Helper.dataTranArray(item.supported_languages).some(sub=> languagesHash[criteria.languages].includes(sub))) &&
+        (!criteria.categories || criteria.categories.length === 0 || item.categories &&
+            Helper.dataTranArray(item.categories).some(sub =>categoriesHash[criteria.categories].includes(sub))))
        {
         return true;
       }
