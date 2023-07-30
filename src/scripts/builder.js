@@ -175,9 +175,12 @@ export function createTableTdInner(tdCreateObj) {
         labelmasterTd.colSpan = tdCreateObj.colSpan;
     if (tdCreateObj.lableName){
         let labelObjClass=[];
+        let lableId = null;
         if (tdCreateObj.lableClass)
             labelObjClass = tdCreateObj.lableClass;
-        let labelObj = new BuildObj("label",labelObjClass,null,null,tdCreateObj.lableName,tdCreateObj.id);
+        if (tdCreateObj.lableId)
+            lableId = tdCreateObj.lableId;
+        let labelObj = new BuildObj("label",labelObjClass,null,lableId,tdCreateObj.lableName,tdCreateObj.id);
         let labelTd =  buildElement(labelObj);
         if (tdCreateObj.skipTd)
             returnArr.push(labelTd);

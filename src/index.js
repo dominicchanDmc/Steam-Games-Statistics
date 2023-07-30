@@ -63,23 +63,24 @@ const radioBtnTbObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"t
 const radioBtnChartObj = Helper.buildObjHelper({tag:"input",inputType:"radio",id:"ch",value:"Chart", attributes: { name: "displayBy", value: "ch", id: "ch" }});
 const compareBtnObj = Helper.buildObjHelper({tag:"button",classArr:["compareCriteriaBtn"], id:"compareBtn",innerHTML:"Compare"});
 const compareBtnIconObj = Helper.buildObjHelper({tag:"i",classArr:["fa-solid", "fa-table"],skipTd:true});
-const ownersChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"ownersChb",value:"owners",lableName:"Owners",skipTd:false, attributes: {value: "owners", id: "ownersChb" }});
-const releaseDateChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"releaseDateChb",value:"releaseDate",lableName:"Release Date", skipTd:false, attributes: {value: "releaseDate", id: "releaseDateChb"}});
-const priceChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"priceChb",value:"price",lableName:"Price",skipTd:false, attributes: {value: "price", id: "priceChb" }});
-const supportedLanguagesChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"supportedLanguagesChb",value:"supportedLanguages",lableName:"Supported Languages", skipTd:false, attributes: {value: "supportedLanguages", id: "supportedLanguages"}});
-const categoriesChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"categoriesChb",value:"categories",lableName:"Categories",skipTd:false, attributes: {value: "categories", id: "categoriesChb" }});
-const genresChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"genresChb",value:"genres",lableName:"Genres", skipTd:false, attributes: {value: "genres", id: "genres"}});
-const tagsChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"tagsChb",value:"tags",lableName:"Tags", skipTd:false, attributes: {value: "tags", id: "tags"}});
-const averageForeverChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"averageForeverChb",value:"averageForever",lableName:"User Average Forever (C)", skipTd:false, attributes: {value: "averageForeverChbObj", id: "averageForeverChbObj"}});
-const totalNegativeChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"totalNegativeChb",value:"totalNegative",lableName:"Total Negative (C)",skipTd:false, attributes: {value: "totalNegative", id: "totalNegativeChb" }});
-const totalPositiveChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"totalPositiveChb",value:"totalPositive",lableName:"Total Positive (C)", skipTd:false, attributes: {value: "totalPositive", id: "totalPositive"}});
-const reviewScoreChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"reviewScoreChb",value:"reviewScore",lableName:"Review Score (C)", skipTd:false, attributes: {value: "reviewScore", id: "reviewScore"}});
-const ratingChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"ratingChb",value:"rating",lableName:"Rating (C)", skipTd:false, attributes: {value: "ratingChbObj", id: "ratingChbObj"}});
+const ownersChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"ownersChb",classArr:["compareChbClass"],value:"owners",lableName:"Owners",skipTd:false, attributes: {value: "owners", id: "ownersChb" }});
+const releaseDateChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"releaseDateChb",classArr:["compareChbClass"],value:"releaseDate",lableName:"Release Date", skipTd:false, attributes: {value: "releaseDate", id: "releaseDateChb"}});
+const priceChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"priceChb",classArr:["compareChbClass"],value:"price",lableName:"Price",skipTd:false, attributes: {value: "price", id: "priceChb" }});
+const supportedLanguagesChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"supportedLanguagesChb",classArr:["compareChbClass"],value:"supportedLanguages",lableName:"Supported Languages", skipTd:false, attributes: {value: "supportedLanguages", id: "supportedLanguages"}});
+const categoriesChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"categoriesChb",classArr:["compareChbClass"],value:"categories",lableName:"Categories",skipTd:false, attributes: {value: "categories", id: "categoriesChb" }});
+const genresChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"genresChb",classArr:["compareChbClass"],value:"genres",lableName:"Genres", skipTd:false, attributes: {value: "genres", id: "genres"}});
+const tagsChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"tagsChb",classArr:["compareChbClass"],value:"tags",lableName:"Tags", skipTd:false, attributes: {value: "tags", id: "tags"}});
+const averageForeverChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",classArr:["compareChbClass"],id:"averageForeverChb",value:"averageForever",lableName:"User Average Forever (C)", skipTd:false, attributes: {value: "averageForeverChbObj", id: "averageForeverChbObj"}});
+const totalNegativeChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",classArr:["compareChbClass"],id:"totalNegativeChb",value:"totalNegative",lableName:"Total Negative (C)",skipTd:false, attributes: {value: "totalNegative", id: "totalNegativeChb" }});
+const totalPositiveChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",classArr:["compareChbClass"],id:"totalPositiveChb",value:"totalPositive",lableName:"Total Positive (C)", skipTd:false, attributes: {value: "totalPositive", id: "totalPositive"}});
+const reviewScoreChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",classArr:["compareChbClass"],id:"reviewScoreChb",value:"reviewScore",lableName:"Review Score (C)", skipTd:false, attributes: {value: "reviewScore", id: "reviewScore"}});
+const ratingChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",classArr:["compareChbClass"],id:"ratingChb",value:"rating",lableName:"Rating (C)", skipTd:false, attributes: {value: "ratingChbObj", id: "ratingChbObj"}});
+const masterChbObj = Helper.buildObjHelper({tag:"input",inputType:"checkbox",id:"compareMasterCheckbox",lableName:"Check All",lableId:"compareMasterCheckboxLabel", attributes: {id: "compareMasterCheckbox"}});
 
 const compareCriteriaCreateArr = [[releaseDateChbObj,ownersChbObj,ratingChbObj,priceChbObj]
 ,[totalPositiveChbObj,totalNegativeChbObj,reviewScoreChbObj,averageForeverChbObj]
 ,[supportedLanguagesChbObj,categoriesChbObj,tagsChbObj,genresChbObj]
-,[[radioBtnTbObj,radioBtnChartObj],[compareBtnObj,compareBtnIconObj]]];
+,[[radioBtnTbObj,radioBtnChartObj],masterChbObj,[compareBtnObj,compareBtnIconObj]]];
 //statistFilter
 const filterTitleObj = Helper.buildObjHelper({tag:"label",classArr:["filterLabel"],innerHTML:"Data Filter",readonly:"true",colSpan:4,trClass:["filterTitle"]});
 const filterReleaseFromObj = Helper.buildObjHelper({tag:"input",id:"filterReleaseFrom",inputType:"month",lableName:"Release From:"});
@@ -244,6 +245,7 @@ const searchSearchArea = document.querySelector("#search-searchArea");
             compareData(dataSet);
          })
 
+         document.getElementById("compareMasterCheckbox").addEventListener("change", toggleCheckboxes);
 
     }
     
@@ -523,7 +525,7 @@ function displaySeachResult(filteredData) {
 
 function displayDetial(name) {
     let game = dataSet[name];
-     console.log(game);
+    //  console.log(game);
     const detialPage = document.getElementById("detialPage");
 
     const nameObj = Helper.buildObjHelper({tag:"input",classArr:["detialCol-1000"],inputType:"text",value:game.name,readonly:"true",lableName:"Name:",colSpan:"4"});
@@ -668,4 +670,15 @@ function appendCanvas(propertyList,type) {
     }
 }
 
- 
+function toggleCheckboxes() {
+    const masterCheckbox = document.getElementById("compareMasterCheckbox");
+    const masterCheckboxLabel = document.getElementById("compareMasterCheckboxLabel");
+    const compareCheckboxes = document.getElementsByClassName("compareChbClass");
+    const displayText = masterCheckbox.checked ? "Uncheck All" : "Check All";
+  
+    for (let i = 0; i < compareCheckboxes.length; i++) {
+      compareCheckboxes[i].checked = masterCheckbox.checked;
+    }
+  
+    masterCheckboxLabel.innerHTML = displayText;
+  }
