@@ -214,6 +214,25 @@ export function rebuildHash(originalHash) {
     return rebuiltHash;
   }
 
+export function openModal(message) {
+    const modal = document.getElementById("myModal");
+    const modalMessageElement = document.getElementById("modalMessage");
+
+    modalMessageElement.textContent = message;
+    modal.style.display = "block";
+
+    const closeBtn = document.getElementById("closeBtn");
+    closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+
+    // Close the modal when the user clicks outside of it
+    window.addEventListener("click", (event) => {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+}
 
 export function dataTranArray(dataString) {
   let finalArr = [];

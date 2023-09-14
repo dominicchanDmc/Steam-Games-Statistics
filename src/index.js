@@ -15,7 +15,7 @@ async function getData (){
 document.addEventListener("DOMContentLoaded", async () => {
 
 //pullDownList 
-const operatorList = Helper.optionObjHashHelper({greaterEqual:"Greater and Equal (>=)",greater:"Greater (>)",samller:"Samller (<)"});
+const operatorList = Helper.optionObjHashHelper({greaterEqual:"Greater Equal (>=)",greater:"Greater (>)",samller:"Samller (<)"});
 const languagesValue = ["English","French","German","Italian","Japanese","Korean","Russian","Simplified Chinese","Traditional Chinese"];
 const languagesKey = ["Eng","Fre","Ger","Ita","Jap","Koean","Rus","SC","TC"];
 const languagesList = Helper.optionObjArrHelper(languagesValue,languagesKey);
@@ -269,7 +269,7 @@ function populateStatistPage(createStr) {
 function searchData(dataSet) {
     const searchObj = Helper.searchObjArrHelper("search");
     if (searchObj.checkOnlyOneCriteria("search",0)){
-        alert("At least choose one Criteria");
+        Helper.openModal("At least choose one Criteria");
         return;
     }
     if (!searchVaildation(searchObj))
@@ -293,12 +293,12 @@ function compareData(dataSet) {
         return;
     }
     if (searchObj.checkOnlyOneCriteria("compare",0)){
-        alert("At least choose one Criteria");
+        Helper.openModal("At least choose one Criteria");
         return;
     }
     if (searchObj.radioBtn === "Chart" &&
      !searchObj.areOnlyFiveFieldsChecked()){
-        alert("Display By Chart only support the criteria with (C)");
+        Helper.openModal("Display By Chart only support the criteria with (C)");
         return;
     }
        
@@ -324,7 +324,7 @@ function statistData(dataSet) {
     if (!searchVaildation(searchObj))
         return;
     if (searchObj.checkOnlyOneCriteria("statist",0)){
-        alert("At least choose one Criteria");
+        Helper.openModal("At least choose one Criteria");
         return;
     }
 
@@ -610,14 +610,14 @@ function searchVaildation(searchObj){
 
     if (releaseFrom && releaseTo){
         if (releaseTo < releaseFrom){
-            alert('Release To must later than Release From')
+            Helper.openModal('Release To must later than Release From')
             return false;
         }
     }
 
     if ((operator && !rating)||
      (!operator && rating)){
-        alert('Missing Operator or Rating')
+        Helper.openModal('Missing Operator or Rating')
             return false;
      }
 
@@ -629,7 +629,7 @@ function addToCompare(name) {
     const gameCompare2 = document.getElementById("gameCompare2");
     const comparePage = document.getElementById("comparePage");
     if (gameCompare1.value === name || gameCompare2.value === name){
-        alert("This game alreadly added");
+        Helper.openModal("This game alreadly added");
         return;
     }
 
@@ -637,7 +637,7 @@ function addToCompare(name) {
         gameCompare1.value = name;      
         compareCount +=1;
         if (compareCount === 1)
-            alert("add success, you can add 1 more game for compare");
+            Helper.openModal("add success, you can add 1 more game for compare");
         else if (compareCount === 2){
             const answer = window.confirm("add success, do you compare now?");
             if (answer)
