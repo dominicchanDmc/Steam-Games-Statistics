@@ -643,7 +643,7 @@ function addToCompare(name) {
 
     if (gameCompare1.value === name || gameCompare2.value === name){
         Helper.openModal("This game alreadly added");
-        return;
+        return; 
     }
 
     if (!gameCompare1.value){
