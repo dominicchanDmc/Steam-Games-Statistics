@@ -234,6 +234,49 @@ export function openModal(message) {
     });
 }
 
+// function openCustomModal(message, onConfirm, onCancel) {
+//     const modal = document.getElementById("myModal");
+//     const modalMessageElement = document.getElementById("modalMessage");
+//     const confirmBtn = document.getElementById("confirmBtn");
+//     const cancelBtn = document.getElementById("cancelBtn");
+
+//     // Update the message content
+//     modalMessageElement.textContent = message;
+
+//     // Display the modal
+//     modal.style.display = "block";
+
+//     // Button click event handlers
+//     confirmBtn.addEventListener("click", () => {
+//         if (onConfirm && typeof onConfirm === "function") {
+//             onConfirm();
+//         }
+//         modal.style.display = "none";
+//     });
+
+//     cancelBtn.addEventListener("click", () => {
+//         if (onCancel && typeof onCancel === "function") {
+//             onCancel();
+//         }
+//         modal.style.display = "none";
+//     });
+// }
+
+// // Button click event handler to open the custom modal
+// const openModalBtn = document.getElementById("openModalBtn");
+// openModalBtn.addEventListener("click", () => {
+//     openCustomModal(
+//         "Must select 2 games, go select now?",
+//         () => {
+//             const searchPage = document.getElementById("searchPage");
+//             searchPage.scrollIntoView();
+//         },
+//         () => {
+//             // Handle the cancel action (if needed)
+//         }
+//     );
+// });
+
 export function dataTranArray(dataString) {
   let finalArr = [];
   if (dataString){

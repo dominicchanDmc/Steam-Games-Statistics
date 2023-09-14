@@ -4,6 +4,7 @@ import SearchObj from "./scripts/searchObj.js"
 import * as Helper from "./scripts/helper.js"
 import * as Builder from "./scripts/builder.js"
 import * as Chart from "./scripts/chart.js"
+import ConfirmModal from './scripts/confirmModal';
 
 async function getData (){
     const request = await fetch("./data/steamData-after2019.json")    
@@ -15,7 +16,7 @@ async function getData (){
 document.addEventListener("DOMContentLoaded", async () => {
 
 //pullDownList 
-const operatorList = Helper.optionObjHashHelper({greaterEqual:"Greater Equal (>=)",greater:"Greater (>)",samller:"Samller (<)"});
+const operatorList = Helper.optionObjHashHelper({greaterEqual:"Greater And Equal (>=)",greater:"Greater (>)",samller:"Samller (<)"});
 const languagesValue = ["English","French","German","Italian","Japanese","Korean","Russian","Simplified Chinese","Traditional Chinese"];
 const languagesKey = ["Eng","Fre","Ger","Ita","Jap","Koean","Rus","SC","TC"];
 const languagesList = Helper.optionObjArrHelper(languagesValue,languagesKey);
@@ -104,7 +105,6 @@ const statistCriteriaCreateArr = [[filterTitleObj]
  ,[criteriaTitleObj]
 ,[[statistSupportedLanguagesRadObj,statistCategoriesRadObj
 ,statistGenresRadObj,statistTagsRadObj]],[[radioBtnDLCYStObj,radioBtnDLCNStObj],[statistObj,statistIconObj]]];
-
 
 const dataSet = await getData();
 const navBtn = document.getElementById("navBtn");
@@ -283,14 +283,25 @@ function searchData(dataSet) {
 
 function compareData(dataSet) {
     const searchObj = Helper.searchObjArrHelper("compare");
+    const confirmModal = new ConfirmModal();
 
     if (!searchObj.gameCompare1 || !gameCompare2){
-       const answer =  window.confirm(("Must select 2 games, go select now?"));
-       if (answer){
-        const searchPage = document.getElementById("searchPage");
-        searchPage.scrollIntoView();
-       }
-        return;
+    //    const answer =  window.confirm(("Must select 2 games, go select now?"));
+    confirmModal.open(
+        "Must select 2 games, go select now?",
+        () => {
+            const searchPage = document.getElementById("searchPage");
+            searchPage.scrollIntoView();
+        },
+        () => {
+            return;
+        }
+    );
+    //    if (answer){
+    //     const searchPage = document.getElementById("searchPage");
+    //     searchPage.scrollIntoView();
+    //    }
+         return;
     }
     if (searchObj.checkOnlyOneCriteria("compare",0)){
         Helper.openModal("At least choose one Criteria");
@@ -628,6 +639,8 @@ function addToCompare(name) {
     const gameCompare1 = document.getElementById("gameCompare1");
     const gameCompare2 = document.getElementById("gameCompare2");
     const comparePage = document.getElementById("comparePage");
+    const confirmModal = new ConfirmModal();
+
     if (gameCompare1.value === name || gameCompare2.value === name){
         Helper.openModal("This game alreadly added");
         return;
@@ -639,20 +652,40 @@ function addToCompare(name) {
         if (compareCount === 1)
             Helper.openModal("add success, you can add 1 more game for compare");
         else if (compareCount === 2){
-            const answer = window.confirm("add success, do you compare now?");
-            if (answer)
-            comparePage.scrollIntoView();
+            // const answer = window.confirm("add success, do you compare now?");
+            confirmModal.open(
+                "Add success, do you compare now?",
+                () => {
+                    comparePage.scrollIntoView();
+                },
+                () => {
+                    return;
+                }
+            );
+            return;
+            // if (answer)
+            // comparePage.scrollIntoView();
         } 
     }
     else if (!gameCompare2.value){
         gameCompare2.value = name;
         compareCount +=1;
-        const answer = window.confirm("add success, do you compare now?");
-        if (answer)
-            comparePage.scrollIntoView();
+        confirmModal.open(
+            "Add success, do you compare now?",
+            () => {
+                comparePage.scrollIntoView();
+            },
+            () => {
+                return;
+            }
+        );
+        return;
+        // const answer = window.confirm("add success, do you compare now?");
+        // if (answer)
+            // comparePage.scrollIntoView();
     }
     else
-        alert("Only can compare between 2 game ");
+        Helper.openModal("Only can compare between 2 game ");
 }
 
 function appendCanvas(propertyList,type) {
