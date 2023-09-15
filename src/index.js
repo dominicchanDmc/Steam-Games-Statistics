@@ -119,6 +119,8 @@ const statistCriteriaCreateArr = [[filterTitleObj]
 ,statistGenresRadObj,statistTagsRadObj]],[[radioBtnDLCYStObj,radioBtnDLCNStObj],[statistObj,statistIconObj]]];
 
 const dataSet = await getData();
+const dataSetNameArr = Object.keys(dataSet);
+
 const navBtn = document.getElementById("navBtn");
 const frontPageBtn = document.querySelector(".frontPageBtn");
 const searchSearchArea = document.querySelector("#search-searchArea");
@@ -711,8 +713,7 @@ function displayDetial(name) {
     populateSearchPage(searchCriteriaCreateArr);
     populateComparePage(compareCriteriaCreateArr);
     populateStatistPage(statistCriteriaCreateArr);
-    autocomplete(document.getElementById("gameName"), countries);
-
+    autocomplete(document.getElementById("gameName"), dataSetNameArr);
 });
 
 function searchVaildation(searchObj){
