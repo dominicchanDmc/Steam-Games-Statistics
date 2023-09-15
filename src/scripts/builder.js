@@ -190,6 +190,15 @@ export function createTableTdInner(tdCreateObj) {
         let innterTd = buildElement(tdCreateObj);
         if (tdCreateObj.skipTd)
             returnArr.push(innterTd);
+        else if (tdCreateObj.id ==='gameName'){
+            // let autoCompleteDiv = Helper.buildObjHelper({tag:"div",id:"autocompleteDiv",classArr:["autocomplete"]});
+            // let autoCompleteDiv = '<div class="autocomplete" style="width:300px;"></div>'
+            let autoCompleteDiv =  buildElement(new BuildObj("div"));
+            autoCompleteDiv.classList.add(["autocomplete"]);
+            autoCompleteDiv.id = "autocompleteDiv";
+            autoCompleteDiv.appendChild(innterTd);
+            labelmasterTd.appendChild(autoCompleteDiv);
+        }
         else
             labelmasterTd.appendChild(innterTd);
 
