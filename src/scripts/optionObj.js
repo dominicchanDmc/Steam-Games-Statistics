@@ -3,6 +3,6 @@ class OptionObj{
         this.displayText = displayText;
         this.value = value;
     }
-}
+} 
 
 export default OptionObj;

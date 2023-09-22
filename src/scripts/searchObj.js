@@ -22,7 +22,7 @@ class SearchObj{
             if (this.operator || this.rating) count++;
             if (this.languages) count++;
             if (this.categories) count++;
-        }
+        } 
         else if (source === "compare"){
             if (this.owners) count++;
             if (this.release_date) count++;

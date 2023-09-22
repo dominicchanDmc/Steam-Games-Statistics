@@ -826,6 +826,6 @@ function toggleCheckboxes() {
     }
   
     masterCheckboxLabel.innerHTML = displayText;
-  }
+  } 
 
 
