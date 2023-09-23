@@ -2,4 +2,4 @@ class chartObj{
     
 } 
 
-export default chartObj; 
+export default chartObj;  
