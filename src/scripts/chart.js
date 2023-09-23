@@ -4,7 +4,7 @@ export function buildCompareChart(chartObj,i) {
     const colorList = ["skyblue","lavenderblush","wheat","powderblue","silver"];
     new Chart(chartObj.ctx, {
       type: chartObj.type,
-      data: {
+      data: { 
         labels: [chartObj.game1Data.name,chartObj.game2Data.name],
         datasets: [{
           label: Helper.stringTran(chartObj.compareCol),

@@ -26,7 +26,7 @@ export function optionObjArrHelper(valueList,keyList) {
         optionObjList.push(optionObj);
     }
     return optionObjList;
-}
+} 
 
 export function buildObjHelper(createHash) {
     let buildObj = new BuildObj();
