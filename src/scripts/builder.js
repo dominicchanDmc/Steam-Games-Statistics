@@ -184,9 +184,9 @@ export function createTableTdInner(tdCreateObj) {
         let labelTd =  buildElement(labelObj);
         if (tdCreateObj.skipTd)
             returnArr.push(labelTd);
-        else
+        else 
             labelmasterTd.appendChild(labelTd);
-    }  
+    }   
         let innterTd = buildElement(tdCreateObj);
         if (tdCreateObj.skipTd)
             returnArr.push(innterTd);

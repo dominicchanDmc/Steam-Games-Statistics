@@ -30,7 +30,7 @@ export function optionObjArrHelper(valueList,keyList) {
 
 export function buildObjHelper(createHash) {
     let buildObj = new BuildObj();
-
+ 
     for (const key in createHash) {
         buildObj[key] = createHash[key];
     }

@@ -6,7 +6,7 @@ export function buildCompareChart(chartObj,i) {
       type: chartObj.type,
       data: { 
         labels: [chartObj.game1Data.name,chartObj.game2Data.name],
-        datasets: [{
+        datasets: [{ 
           label: Helper.stringTran(chartObj.compareCol),
           data: [chartObj.game1Data[chartObj.compareCol],
           chartObj.game2Data[chartObj.compareCol]],
