@@ -72,8 +72,8 @@ export function createTableTdInner(tdCreateObj) {
     if (!tdCreateObj.skipTd)
             returnArr.push(labelmasterTd);
     return returnArr;
-}
-
+} 
+ 
 export function buildElement(buildObj){
     let newElement = document.createElement(buildObj.tag);
     if (buildObj.tag === "select"){
