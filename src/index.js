@@ -777,7 +777,7 @@ function addToCompare(name) {
             return;
             // if (answer)
             // comparePage.scrollIntoView();
-        } 
+        }
     }
     else if (!gameCompare2.value){
         gameCompare2.value = name;
