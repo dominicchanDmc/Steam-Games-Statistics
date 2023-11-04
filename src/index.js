@@ -783,7 +783,7 @@ function addToCompare(name) {
         gameCompare2.value = name;
         compareCount +=1;
         confirmModal.open(
-            "Add success, do you compare now?",
+            "Add success, do you compare now?", 
             () => {
                 comparePage.scrollIntoView();
             },
