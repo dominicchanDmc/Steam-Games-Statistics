@@ -781,7 +781,7 @@ function addToCompare(name) {
     }
     else if (!gameCompare2.value){
         gameCompare2.value = name;
-        compareCount +=1;
+        compareCount +=1; 
         confirmModal.open(
             "Add success, do you compare now?", 
             () => {
