@@ -774,7 +774,7 @@ function addToCompare(name) {
                     return;
                 }
             );
-            return; 
+            return;  
             // if (answer)
             // comparePage.scrollIntoView();
         } 
