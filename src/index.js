@@ -772,7 +772,7 @@ function addToCompare(name) {
                 },
                 () => {
                     return;
-                }
+                } 
             ); 
             return;
             // if (answer)
