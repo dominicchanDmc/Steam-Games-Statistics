@@ -784,7 +784,7 @@ function addToCompare(name) {
         compareCount +=1; 
         confirmModal.open(
             "Add success, do you compare now?", 
-            () => {
+            () => { 
                 comparePage.scrollIntoView();
             },
             () => {
