@@ -786,7 +786,7 @@ function addToCompare(name) {
             "Add success, do you compare now?", 
             () => { 
                 comparePage.scrollIntoView();
-            },
+            }, 
             () => {
                 return;
             }
