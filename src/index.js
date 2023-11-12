@@ -787,7 +787,7 @@ function addToCompare(name) {
             () => { 
                 comparePage.scrollIntoView();
             }, 
-            () => {
+            () => { 
                 return;
             }
         );
